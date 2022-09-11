@@ -1,20 +1,10 @@
 import React from "react";
-import reactLogo from "../assets/react.svg";
-import "../App.css";
 
 const Home = () => {
   return (
     <>
-      <div className="App">
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src="/vite.svg" className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://reactjs.org" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-        </div>
-        <h1>DII PROJECT</h1>
+      <div>
+        <h1 className="text-red-800">asfsad</h1>
       </div>
     </>
   );
