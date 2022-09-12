@@ -2,13 +2,7 @@ import { Navbar, Dropdown, Avatar, Link, Text } from "@nextui-org/react";
 import { Logo } from "./Logo.jsx";
 
 export default function NavbarComponent({ nameWhichActive }) {
-  const collapseItems = [
-    "Profile",
-    "Dashboard",
-    "Deployments",
-    "My Settings",
-    "Log Out",
-  ];
+  const collapseItems = ["Home", "Feed", "Diary", "My Settings", "Log Out"];
 
   const navItem = [
     {
@@ -108,7 +102,7 @@ export default function NavbarComponent({ nameWhichActive }) {
               css={{
                 color: index === collapseItems.length - 1 ? "$error" : "",
               }}
-              isActive={index === 2}
+              isActive={item === nameWhichActive}
             >
               <Link
                 color="inherit"

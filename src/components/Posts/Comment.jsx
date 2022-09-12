@@ -7,7 +7,7 @@ const Comment = ({ comment }) => {
   console.log(comment);
   return (
     <>
-      <div className="grid grid-cols-12 my-4">
+      <div className="grid grid-cols-12 my-4 mr-4">
         <div className="flex justify-center items-baseline col-span-2">
           <Avatar url={comment.profileImage} size="2.5" />
         </div>

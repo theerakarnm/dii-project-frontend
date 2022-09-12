@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import pTypes from "prop-types";
 
-import { Input, Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import Comment from "./Comment";
 import Avatar from "../Avatar";
+import OptionDropdown from "./OptionDropdown";
 
 const props = {
   postData: pTypes.shape({
@@ -21,6 +22,8 @@ const props = {
 const Post = ({ postData }) => {
   const [margin, setMargin] = useState("0.5rem");
 
+  const optionDropdownItem = ["Edit Post", "Delete Post"];
+
   return (
     <>
       {postData.imageUrl ? (
@@ -28,13 +31,20 @@ const Post = ({ postData }) => {
       ) : (
         <></>
       )}
-      <div className="px-6 py-4">
+      <div className="pl-6 pr-2 py-4">
         <div className="font-normal text-md mb-2">
-          <div className="flex items-center">
-            <Avatar url={postData.profileImage} />
-            <div className="ml-3 flex flex-col">
-              <span>{postData.name}</span>
-              <span className="text-gray-400 text-xs">{postData.dateTime}</span>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center">
+              <Avatar url={postData.profileImage} />
+              <div className="ml-3 flex flex-col">
+                <span>{postData.name}</span>
+                <span className="text-gray-400 text-xs">
+                  {postData.dateTime}
+                </span>
+              </div>
+            </div>
+            <div>
+              <OptionDropdown content={optionDropdownItem} />
             </div>
           </div>
         </div>
@@ -44,7 +54,7 @@ const Post = ({ postData }) => {
           style={{
             marginTop: margin,
           }}
-          className="transition-all"
+          className="transition-all pr-4"
         >
           <Input
             onFocus={() => setMargin("2.7rem")}
@@ -53,10 +63,17 @@ const Post = ({ postData }) => {
             underlined
             labelPlaceholder="Type your Comment..."
             color="default"
+            contentRightStyling={{
+              cursor: "pointer",
+            }}
             contentRight={
-              <Button color="secondary" auto>
-                Secondary
-              </Button>
+              <div>
+                <img
+                  className="cursor-pointer hover:mb-2 transition-all"
+                  src="/sendIcon.svg"
+                  alt="send comment icon"
+                />
+              </div>
             }
           />
         </div>
