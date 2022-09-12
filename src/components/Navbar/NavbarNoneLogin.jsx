@@ -1,5 +1,5 @@
 import { Navbar, Dropdown, Button, Link, Text } from "@nextui-org/react";
-import { AcmeLogo } from "./AcmeLogo.jsx";
+import { AcmeLogo } from "./Logo.jsx";
 
 export default function NavbarComponent() {
   const content = [
