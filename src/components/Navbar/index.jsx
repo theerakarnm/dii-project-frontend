@@ -5,26 +5,26 @@ export default function NavbarComponent({ nameWhichActive }) {
   const navItem = [
     {
       name: "Home",
-      href: "/",
+      href: "/#/",
     },
     {
       name: "Feed",
-      href: "/feed",
+      href: "/#/feed",
     },
     {
       name: "Diary",
-      href: "/diary",
+      href: "/#/diary",
     },
   ];
   const collapseItems = [
     ...navItem,
     {
       name: "My Settings",
-      href: "/setting",
+      href: "/#/setting",
     },
     {
       name: "Log Out",
-      href: "/logout",
+      href: "/#/logout",
     },
   ];
 
@@ -39,7 +39,7 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <a className="flex items-center" href="/">
+          <a className="flex items-center" href="/#/">
             <Logo />
             <Text b color="inherit" hideIn="xs">
               S-LOG
