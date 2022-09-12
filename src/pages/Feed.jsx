@@ -19,7 +19,7 @@ const Feed = () => {
 
           {mockData.map((item) => {
             return (
-              <PostLayout>
+              <PostLayout key={item.id}>
                 <Post postData={item} />
               </PostLayout>
             );

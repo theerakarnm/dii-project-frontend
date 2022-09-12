@@ -55,11 +55,19 @@ export default function NavbarComponent({ nameWhichActive }) {
           {navItem.map((item) => {
             if (nameWhichActive === item.name)
               return (
-                <Navbar.Link isActive href={item.href}>
+                <Navbar.Link
+                  key={`${item.name}navItem`}
+                  isActive
+                  href={item.href}
+                >
                   {item.name}
                 </Navbar.Link>
               );
-            return <Navbar.Link href={item.href}>{item.name}</Navbar.Link>;
+            return (
+              <Navbar.Link key={`${item.name}navItem`} href={item.href}>
+                {item.name}
+              </Navbar.Link>
+            );
           })}
         </Navbar.Content>
         <Navbar.Content
@@ -108,7 +116,7 @@ export default function NavbarComponent({ nameWhichActive }) {
         <Navbar.Collapse>
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
-              key={item.name}
+              key={`${item.name}-${item.href}`}
               activeColor="secondary"
               css={{
                 color: index === collapseItems.length - 1 ? "$error" : "",

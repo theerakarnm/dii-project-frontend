@@ -81,7 +81,7 @@ const Post = ({ postData }) => {
           />
         </div>
         {postData.comment.map((cmt) => (
-          <Comment comment={cmt} />
+          <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
         ))}
       </div>
     </>
