@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 const Home = () => {
   return (
     <>
-      <Navbar />
+      <Navbar nameWhichActive={"Home"} />
       <div>
         <h1 className="text-red-800">asfsad</h1>
       </div>

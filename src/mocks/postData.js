@@ -29,7 +29,7 @@ const mockData = [
     profileImage: "https://i.imgur.com/n5gaKP6.jpeg",
     dateTime: "03 Jul 2022",
     postContent: "Paragraphs are the building blocks building  of papers",
-    imageUrl: "https://i.imgur.com/ByY57Hd.jpeg",
+    imageUrl: "",
     comment: [
       {
         name: "Jame Tirakarn",
