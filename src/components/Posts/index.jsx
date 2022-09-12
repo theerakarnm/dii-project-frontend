@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import pTypes from "prop-types";
 
-import { Input } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import Comment from "./Comment";
 import Avatar from "../Avatar";
 
@@ -51,8 +51,13 @@ const Post = ({ postData }) => {
             onBlur={() => setMargin("0.5rem")}
             fullWidth
             underlined
-            labelPlaceholder="Default"
+            labelPlaceholder="Type your Comment..."
             color="default"
+            contentRight={
+              <Button color="secondary" auto>
+                Secondary
+              </Button>
+            }
           />
         </div>
         {postData.comment.map((cmt) => (

@@ -10,7 +10,7 @@ const Feed = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar nameWhichActive={"Feed"} />
       <Container>
         <div className="flex flex-col gap-5 justify-center items-center">
           {mockData.map((item) => {
