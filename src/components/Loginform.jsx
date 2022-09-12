@@ -7,9 +7,9 @@ function onSubmit() {}
 const LoginForm = () => {
   return (
     <div className="h-screen bg-[f9fafe] flex flex-col justify-center items-center">
-      <div className="bg-white max-w-xl  w-[55%] h-[55%] flex flex-col  p-8 rounded-lg shadow-xl">
+      <div className="bg-white max-w-xl  w-[38rem] h-[38rem] flex flex-col  p-8 rounded-lg shadow-xl">
         <div className="w-full flex justify-center">
-          <div className="w-[150px]">
+          <div className="w-[11rem]">
             <Image
               width={autoprefixer}
               height={autoprefixer}
@@ -35,7 +35,7 @@ const LoginForm = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-center items-center my-10">
+          <div className="flex flex-col justify-center items-center my-12">
             <input
               className="w-full p-3 border rounded text-[1.25rem]"
               type="password"
@@ -51,7 +51,7 @@ const LoginForm = () => {
               name="bt_submit"
               id="bt_submit"
             >
-              Submit
+              Login
             </button>
           </div>
 
