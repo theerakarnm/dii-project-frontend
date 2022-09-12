@@ -84,19 +84,19 @@ export default function Regis() {
                     </div>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                            <input className="h-4 w-4 text-blue-400 rounded"
+                            <input className="h-4 w-4 text-purple-400 rounded"
                                 type="checkbox"
                                 value={true}
                             />
                             <label className="ml-2 text-sm text-gray-600">Remember Me</label>
                         </div>
                         <div className="flex items-center">
-                            <a href="#" className="font-medium text-sm text-blue-500">Forgot password ?</a>
+                            <a href="#" className="font-medium text-sm text-purple-500">Forgot password ?</a>
                         </div>
 
                     </div>
                     <div>
-                        <button className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-medium" >Submit</button>
+                        <button className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded-md text-white text-medium" >Submit</button>
                     </div>
                 </form>
             </div>
