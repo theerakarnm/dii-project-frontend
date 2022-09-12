@@ -2,8 +2,6 @@ import { Navbar, Dropdown, Avatar, Link, Text } from "@nextui-org/react";
 import { Logo } from "./Logo.jsx";
 
 export default function NavbarComponent({ nameWhichActive }) {
-  const collapseItems = ["Home", "Feed", "Diary", "My Settings", "Log Out"];
-
   const navItem = [
     {
       name: "Home",
@@ -18,6 +16,17 @@ export default function NavbarComponent({ nameWhichActive }) {
       href: "/diary",
     },
   ];
+  const collapseItems = [
+    ...navItem,
+    {
+      name: "My Settings",
+      href: "/setting",
+    },
+    {
+      name: "Log Out",
+      href: "/logout",
+    },
+  ];
 
   return (
     <>
@@ -30,10 +39,12 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <Logo />
-          <Text b color="inherit" hideIn="xs">
-            S-LOG
-          </Text>
+          <a className="flex items-center" href="/">
+            <Logo />
+            <Text b color="inherit" hideIn="xs">
+              S-LOG
+            </Text>
+          </a>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
@@ -97,21 +108,21 @@ export default function NavbarComponent({ nameWhichActive }) {
         <Navbar.Collapse>
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
-              key={item}
+              key={item.name}
               activeColor="secondary"
               css={{
                 color: index === collapseItems.length - 1 ? "$error" : "",
               }}
-              isActive={item === nameWhichActive}
+              isActive={item.name === nameWhichActive}
             >
               <Link
                 color="inherit"
                 css={{
                   minWidth: "100%",
                 }}
-                href="#"
+                href={item.href}
               >
-                {item}
+                {item.name}
               </Link>
             </Navbar.CollapseItem>
           ))}
