@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Navbar from "../components/Navbar";
 import Container from "../layouts/Container";
 import Post from "../components/Posts";
