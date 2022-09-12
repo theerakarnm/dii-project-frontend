@@ -29,7 +29,9 @@ const Post = ({ postData }) => {
       {postData.imageUrl ? (
         <img className="w-full" src={postData.imageUrl} alt="Content Image" />
       ) : (
-        <></>
+        <>
+          <div className="w-full sm:w-[1000px]"></div>
+        </>
       )}
       <div className="pl-6 pr-2 py-4">
         <div className="font-normal text-md mb-2">
@@ -48,7 +50,9 @@ const Post = ({ postData }) => {
             </div>
           </div>
         </div>
-        <p className="text-gray-700 text-base mb-6">{postData.postContent}</p>
+        <p className="text-gray-700 text-base mb-6 mr-4 mt-4">
+          {postData.postContent}
+        </p>
         {/* <Divider /> */}
         <div
           style={{
