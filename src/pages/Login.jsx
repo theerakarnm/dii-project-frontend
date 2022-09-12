@@ -63,7 +63,7 @@ const Login = ({ setAuth }) => {
             </Typography>
           </Divider>
 
-          <LoginForm setAuth={setAuth} />
+          <LoginForm />
 
           <Typography
             component={motion.p}
