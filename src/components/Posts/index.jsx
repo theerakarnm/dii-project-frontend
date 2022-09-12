@@ -1,6 +1,7 @@
-import React from "react";
-import { Divider, TextField } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import pTypes from "prop-types";
+
+import { Input } from "@nextui-org/react";
 import Comment from "./Comment";
 import Avatar from "../Avatar";
 
@@ -18,7 +19,7 @@ const props = {
 };
 
 const Post = ({ postData }) => {
-  console.log(postData);
+  const [margin, setMargin] = useState("0.5rem");
 
   return (
     <>
@@ -38,14 +39,20 @@ const Post = ({ postData }) => {
           </div>
         </div>
         <p className="text-gray-700 text-base mb-6">{postData.postContent}</p>
-        <Divider />
-        <div className="mt-2">
-          <TextField
-            className="w-full text-sm"
-            id="standard-basic"
-            label="Comment"
-            variant="standard"
-            size="small"
+        {/* <Divider /> */}
+        <div
+          style={{
+            marginTop: margin,
+          }}
+          className="transition-all"
+        >
+          <Input
+            onFocus={() => setMargin("2.7rem")}
+            onBlur={() => setMargin("0.5rem")}
+            fullWidth
+            underlined
+            labelPlaceholder="Default"
+            color="default"
           />
         </div>
         {postData.comment.map((cmt) => (
