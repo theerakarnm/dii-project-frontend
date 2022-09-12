@@ -21,7 +21,7 @@ export default function Regis() {
 
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+        <div className="min-h-screen bg-gray-300 flex flex-col justify-center">
             <div className="max-w-xl w-full mx-auto  bg-white p-8 border border-gray-100 rounded-[15px]">
                 {/* Head Sign up */}
                 <div className="max-w-md w-full mx-auto mb-[20px]">
