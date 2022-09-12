@@ -31,6 +31,7 @@ const NewPost = () => {
             css={{
               width: "100%",
             }}
+            className="hover:ring-1 ring-purple-300"
             labelPlaceholder="Share something about today..."
             status="Share something about today..."
             onFocus={() => setMargin("2.75rem")}
