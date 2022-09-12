@@ -13,7 +13,7 @@ const LoginForm = () => {
             <Image
               width={autoprefixer}
               height={autoprefixer}
-              src="/src/assets/pureLogo.png"
+              src="/Logo.png"
               alt="logo"
               objectFit="cover"
             />
