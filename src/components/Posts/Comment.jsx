@@ -4,7 +4,7 @@ import Avatar from "../Avatar";
 //TODO : add prop type
 
 const Comment = ({ comment }) => {
-  console.log(comment);
+  // console.log(comment);
   return (
     <>
       <div className="grid grid-cols-12 my-4 mr-4">

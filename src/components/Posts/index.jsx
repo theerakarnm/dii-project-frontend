@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import pTypes from "prop-types";
 
 import { Input } from "@nextui-org/react";
@@ -21,7 +21,6 @@ const props = {
 
 const Post = ({ postData }) => {
   const [margin, setMargin] = useState("0.5rem");
-
   const optionDropdownItem = ["Edit Post", "Delete Post"];
 
   return (

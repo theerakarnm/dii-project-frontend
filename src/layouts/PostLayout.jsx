@@ -3,7 +3,9 @@ import pt from "prop-types";
 
 const PostLayout = ({ children }) => {
   return (
-    <div className="max-w-lg rounded overflow-hidden shadow-lg">{children}</div>
+    <div className="max-w-lg w-full rounded overflow-hidden shadow-lg">
+      {children}
+    </div>
   );
 };
 
