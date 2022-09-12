@@ -47,7 +47,7 @@ const LoginForm = () => {
 
           <div className="flex flex-col justify-center items-center mt-10">
             <button
-              className="w-full p-3 bg-purple-200 hover:bg-purple-300 rounded text-[1.25rem]"
+              className="w-full p-3 transition-all bg-purple-500 hover:bg-purple-600 text-white rounded text-[1.25rem]"
               name="bt_submit"
               id="bt_submit"
             >
