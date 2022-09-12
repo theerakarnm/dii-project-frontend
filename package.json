@@ -8,9 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/material": "^5.10.4",
     "@nextui-org/react": "^1.0.0-beta.10",
     "framer-motion": "^7.3.2",
     "prop-types": "^15.8.1",
