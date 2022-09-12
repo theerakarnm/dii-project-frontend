@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Regis from "./pages/Regis";
+import Feed from "./pages/Feed";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Regis />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/feed" element={<Feed />} />
     </Routes>
   );
 }
