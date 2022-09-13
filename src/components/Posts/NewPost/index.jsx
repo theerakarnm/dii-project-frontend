@@ -1,25 +1,40 @@
 import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import { Textarea } from "@nextui-org/react";
+import ModalDragFile from "./ModalDragFile";
+import { useDropzone } from "react-dropzone";
+
+import fileToBase64 from "../../../libs/FileConverter";
 
 const NewPost = () => {
   const [margin, setMargin] = useState(".75rem");
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
+  const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState("");
+
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
+    setImage("");
+    console.log("closed");
+  };
+
+  const onDrop = useCallback(async (acceptedFiles) => {
     console.log(acceptedFiles);
+    console.log(await fileToBase64(acceptedFiles[0]));
+    setImage(await fileToBase64(acceptedFiles[acceptedFiles.length - 1]));
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    // <div {...getRootProps()}>
-    //   <input {...getInputProps()} />
-    //   {isDragActive ? (
-    //     <p>Drop the files here ...</p>
-    //   ) : (
-    //     <p>Drag 'n' drop some files here, or click to select files</p>
-    //   )}
-    // </div>
     <>
+      <ModalDragFile
+        visible={visible}
+        closeHandler={closeHandler}
+        getInputProps={getInputProps}
+        getRootProps={getRootProps}
+        isDragActive={isDragActive}
+        image={image}
+      />
       <div
         style={{
           paddingTop: margin,
@@ -38,6 +53,7 @@ const NewPost = () => {
             onBlur={() => setMargin(".75rem")}
           />
         </div>
+        <div onClick={handler}>file</div>
       </div>
     </>
   );

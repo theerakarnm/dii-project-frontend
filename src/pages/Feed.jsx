@@ -5,7 +5,7 @@ import Container from "../layouts/Container";
 import Post from "../components/Posts";
 import mockData from "../mocks/postData";
 import PostLayout from "../layouts/PostLayout";
-import NewPost from "../components/NewPost";
+import NewPost from "../components/Posts/NewPost";
 
 const Feed = () => {
   // TODO : check login
