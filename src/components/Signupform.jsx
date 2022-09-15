@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 
-export default function Regis() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [userName, setUserName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+const Signupform = () => {
+    const [value, setValue] = useState({
+        firstName: "",
+        lastName: "",
+        email: "", 
+        username: "",
+        password: "",
+        confirmPassword: "",
+    });
+    
+    function onSubmit(event) {
+        event.preventDefault();
+        console.log(value);
+    }
 
-
-    const onSubmit = (event) => {
-        if (confirmPassword !== password) {
-            event.preventDefault();
-            console.log('Please enter your password again');
-        }
-        else {
-            console.log({ firstName, lastName, email, password, });
-        }
-    };
+    const onChange = (event) => {
+        setValue({
+          ...value,
+          [event.target.name]: event.target.value,
+        });
+      };
 
 
     return (
@@ -35,8 +38,8 @@ export default function Regis() {
                                 placeholder="First Name"
                                 type="text"
                                 name="firstName" id="firstName"
-                                value={firstName}
-                                onChange={(event) => setFirstName(event.target.value)}
+                                value={value.firstName}
+                                onChange={onChange}
                             />
                         </div>
                         <div className="flex items-center w-[48%] ml-[2%]">
@@ -44,8 +47,8 @@ export default function Regis() {
                                 placeholder="Last Name"
                                 type="text"
                                 name="lastName" id="lastName"
-                                value={lastName}
-                                onChange={(event) => setLastName(event.target.value)}
+                                value={value.lastName}
+                                onChange={onChange}
                             />
                         </div>
                     </div>
@@ -54,46 +57,41 @@ export default function Regis() {
                         <input className="w-full p-2 border border-gray-300 rounded" placeholder="Email"
                             type="email"
                             name="email" id="email"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
+                            value={value.email}
+                            onChange={onChange}
                         />
                     </div>
                     <div>
                         <input className="w-full p-2 border border-gray-300 rounded" placeholder="User Name"
                             type="text"
                             name="userName" id="userName"
-                            value={userName}
-                            onChange={(event) => setUserName(event.target.value)}
+                            value={value.username}
+                            onChange={onChange}
                         />
                     </div>
                     <div>
                         <input className="w-full p-2 border border-gray-300 rounded" placeholder="Password"
                             type="password"
                             name="password" id="password"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
+                            value={value.password}
+                            onChange={onChange}
                         />
                     </div>
                     <div>
                         <input className="w-full p-2 border border-gray-300 rounded" placeholder="Confirm Password"
                             type="password"
                             name="confirmPassword" id="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(event) => setConfirmPassword(event.target.value)}
+                            value={value.confirmPassword}
+                            onChange={onChange}
                         />
                     </div>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
                             <input className="h-4 w-4 text-purple-400 rounded"
                                 type="checkbox"
-                                value={true}
                             />
                             <label className="ml-2 text-sm text-purple-600">Remember Me</label>
                         </div>
-                        <div className="flex items-center">
-                            <a href="#" className="font-medium text-sm text-purple-500">Forgot password ?</a>
-                        </div>
-
                     </div>
                     <div>
                         <button className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded-md text-white text-medium" >Submit</button>
@@ -104,3 +102,5 @@ export default function Regis() {
         </div>
     );
 };
+
+export default Signupform;

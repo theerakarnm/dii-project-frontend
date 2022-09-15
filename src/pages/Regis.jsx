@@ -1,9 +1,9 @@
-import RegisFrom from "../components/Signupform";
+import Signupform from "../components/Signupform";
 
-export default function Login() {
+export default function Regis() {
   return (
     <div>
-      <RegisFrom />
+      <Signupform />
     </div>
   );
 }
