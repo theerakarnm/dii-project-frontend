@@ -88,7 +88,7 @@ export default function Regis() {
                                 type="checkbox"
                                 value={true}
                             />
-                            <label className="ml-2 text-sm text-gray-600">Remember Me</label>
+                            <label className="ml-2 text-sm text-purple-600">Remember Me</label>
                         </div>
                         <div className="flex items-center">
                             <a href="#" className="font-medium text-sm text-purple-500">Forgot password ?</a>
