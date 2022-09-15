@@ -16,7 +16,6 @@ const Feed = () => {
       <Container>
         <div className="flex flex-col gap-5 justify-center items-center">
           <NewPost />
-
           {mockData.map((item) => {
             return (
               <PostLayout key={item.id}>
