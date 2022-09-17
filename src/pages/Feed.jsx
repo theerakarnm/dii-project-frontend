@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import Container from '../layouts/Container';
 import Post from '../components/Posts';
-import mockData from '../mocks/postData';
+// import mockData from '../mocks/postData';
 import PostLayout from '../layouts/PostLayout';
 import NewPost from '../components/Posts/NewPost';
-import axios from 'axios';
+import ComplexWithAnimation from '../components/Skeleton';
 
 const Feed = () => {
   // TODO : check login
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const resData = async () => {
+      setIsLoading(true);
       const result = await axios.get('http://localhost:8083/post/popular', {
         headers: {
           Authorization:
@@ -23,6 +25,7 @@ const Feed = () => {
         },
       });
       setData(result.data.data);
+      setIsLoading(true);
     };
 
     resData();
@@ -34,8 +37,8 @@ const Feed = () => {
       <Container>
         <div className="flex flex-col gap-5 justify-center items-center">
           <NewPost />
-          {loading ? (
-            <p>Loading</p>
+          {isLoading ? (
+            <ComplexWithAnimation />
           ) : (
             data.map((item) => {
               return (
