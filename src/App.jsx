@@ -1,17 +1,18 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-import Home from "./pages/Home";
-import Feed from "./pages/Feed";
-import Regis from "./pages/Regis";
-import Login from "./pages/Login";
+import Home from './pages/Home';
+import Feed from './pages/Feed';
+import Regis from './pages/Regis';
+import Login from './pages/Login';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/feed" element={<Feed />} />
-      <Route path="/regis" element={<Regis />} />
-      <Route path="/Login" element={<Login />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/feed' element={<Feed />} />
+      <Route path='/regis' element={<Regis />} />
+      <Route path='/login' element={<Login />} />
     </Routes>
   );
 }
