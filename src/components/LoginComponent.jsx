@@ -10,7 +10,7 @@ const LoginComponent = () => {
   });
   const [isError, setIsError] = useState({
     username: {
-      error: true,
+      error: false,
       msg: "Please fill out this field",
     },
     password: {
