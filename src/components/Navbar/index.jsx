@@ -1,56 +1,65 @@
-import { Navbar, Dropdown, Avatar, Link, Text } from "@nextui-org/react";
-import { Logo } from "./Logo.jsx";
+import { Navbar, Dropdown, Avatar, Link, Text } from '@nextui-org/react';
+import Cookies from 'js-cookie';
+import { Logo } from './Logo.jsx';
 
 export default function NavbarComponent({ nameWhichActive }) {
+  const cookieData = JSON.parse(Cookies.get('login_data'));
+  console.log(cookieData);
   const navItem = [
     {
-      name: "Home",
-      href: "/#/",
+      name: 'Home',
+      href: '/#/',
     },
     {
-      name: "Feed",
-      href: "/#/feed",
+      name: 'Feed',
+      href: '/#/feed',
     },
     {
-      name: "Diary",
-      href: "/#/diary",
+      name: 'Diary',
+      href: '/#/diary',
     },
   ];
   const collapseItems = [
     ...navItem,
     {
-      name: "My Settings",
-      href: "/#/setting",
+      name: 'My Settings',
+      href: '/#/setting',
     },
     {
-      name: "Log Out",
-      href: "/#/logout",
+      name: 'Log Out',
+      href: '/#/logout',
     },
   ];
 
+  const handlerLogout = () => {
+    Cookies.remove('login_data');
+
+    window.location.replace('/#/login');
+  };
+
   return (
     <>
-      <Navbar variant="sticky">
-        <Navbar.Toggle showIn="xs" />
+      <Navbar variant='sticky'>
+        <Navbar.Toggle showIn='xs' />
         <Navbar.Brand
           css={{
-            "@xs": {
-              w: "12%",
+            '@xs': {
+              w: '12%',
             },
           }}
         >
-          <a className="flex items-center" href="/#/">
+          <a className='flex items-center' href='/#/'>
             <Logo />
-            <Text b color="inherit" hideIn="xs">
+            <Text b color='inherit' hideIn='xs'>
               S-LOG
             </Text>
           </a>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
-          activeColor="secondary"
-          hideIn="xs"
-          variant="highlight-rounded"
+          activeColor='secondary'
+          hideIn='xs'
+          variant='highlight-rounded'
         >
           {navItem.map((item) => {
             if (nameWhichActive === item.name)
@@ -72,43 +81,42 @@ export default function NavbarComponent({ nameWhichActive }) {
         </Navbar.Content>
         <Navbar.Content
           css={{
-            "@xs": {
-              w: "12%",
-              jc: "flex-end",
+            '@xs': {
+              w: '12%',
+              jc: 'flex-end',
             },
           }}
         >
-          <Dropdown placement="bottom-right">
+          <Dropdown placement='bottom-right'>
             <Navbar.Item>
               <Dropdown.Trigger>
                 <Avatar
                   bordered
-                  as="button"
-                  color="secondary"
-                  size="md"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  as='button'
+                  color='secondary'
+                  size='md'
+                  src={cookieData.imageUrl}
                 />
               </Dropdown.Trigger>
             </Navbar.Item>
             <Dropdown.Menu
-              aria-label="User menu actions"
-              color="secondary"
+              aria-label='User menu actions'
+              color='secondary'
               onAction={(actionKey) => console.log({ actionKey })}
             >
-              <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                <Text b color="inherit" css={{ d: "flex" }}>
+              <Dropdown.Item key='profile' css={{ height: '$18' }}>
+                <Text b color='inherit' css={{ d: 'flex' }}>
                   Signed in as
                 </Text>
-                <Text b color="inherit" css={{ d: "flex" }}>
-                  zoey@example.com
+                <Text b color='inherit' css={{ d: 'flex' }}>
+                  {cookieData.email}
                 </Text>
               </Dropdown.Item>
-              <Dropdown.Item key="settings" withDivider>
+              <Dropdown.Item key='settings' withDivider>
                 My Settings
               </Dropdown.Item>
-
-              <Dropdown.Item key="logout" withDivider color="error">
-                Log Out
+              <Dropdown.Item key='logout' withDivider color='error'>
+                <button onClick={handlerLogout}>Log Out</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -117,16 +125,16 @@ export default function NavbarComponent({ nameWhichActive }) {
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
               key={`${item.name}-${item.href}`}
-              activeColor="secondary"
+              activeColor='secondary'
               css={{
-                color: index === collapseItems.length - 1 ? "$error" : "",
+                color: index === collapseItems.length - 1 ? '$error' : '',
               }}
               isActive={item.name === nameWhichActive}
             >
               <Link
-                color="inherit"
+                color='inherit'
                 css={{
-                  minWidth: "100%",
+                  minWidth: '100%',
                 }}
                 href={item.href}
               >
