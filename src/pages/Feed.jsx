@@ -25,7 +25,7 @@ const Feed = () => {
         },
       });
       setData(result.data.data);
-      setIsLoading(true);
+      setIsLoading(false);
     };
 
     resData();
@@ -35,7 +35,7 @@ const Feed = () => {
     <>
       <Navbar nameWhichActive={'Feed'} />
       <Container>
-        <div className="flex flex-col gap-5 justify-center items-center">
+        <div className='flex flex-col gap-5 justify-center items-center'>
           <NewPost />
           {isLoading ? (
             <ComplexWithAnimation />
