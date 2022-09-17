@@ -3,11 +3,7 @@
 import React from "react";
 
 const Diary = () => {
-  return (
-   
-
-
-  );
+  return <></>;
 };
 
 export default Diary;
