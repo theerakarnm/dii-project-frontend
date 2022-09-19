@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Textarea, Text, Card, Modal, Image } from "@nextui-org/react";
-import { m } from "framer-motion";
+
 
 
 
@@ -22,27 +22,25 @@ const Homeform = () => {
           <div className=" w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 ">
 
             <div className="md:p-2 p-1">
-              <Text
-                h1
-                className="md:text-[2rem] text-[1.5rem]"
-                weight="bold"
-                css={{
-                  textGradient: "45deg, $purple600 -20%, $pink600 100%",
-                }}
+              <Text h1 className="md:text-[2rem] text-[1.5rem]" weight="bold"
+                css={{ textGradient: "45deg, $purple600 -20%, $pink600 100%",}}
               >
-                <p><span className="">Nuthipong</span> <span className="">Pinyai</span> </p>
-              </Text>
-              <Text
-                h1
-                className="md:text-[1rem] text-[0.8rem] "
-                css={{
-                  textGradient: "45deg, $purple600 -20%, $pink600 100%",
-                }}
+                
+                {/* Nuthipong Pinyai */}
 
-                weight="bold"
-              >
-                click_ntp@testmail.com
               </Text>
+              <Text h1 className="md:text-[1rem] text-[0.8rem] "
+                css={{ textGradient: "45deg, $purple600 -20%, $pink600 100%", }} weight="bold">
+
+                click_ntp@testmail.com
+
+              </Text>
+
+
+              <div className="w-full h-auto border-1">
+                
+              </div>
+
             </div>
 
             <div className=" flex justify-center items-center ">
@@ -80,68 +78,10 @@ const Homeform = () => {
 
           <div className="w-full h-full  grid gap-4 md:grid-cols-3 grid-cols-2 px-5">
 
-            <div className="  flex items-center">
-              <Card isPressable onClick={handler}
-                css={{ w: "100%", h: "85%", }}
-              >
-                <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-
-                </Card.Header>
-                <Card.Body css={{ p: 0 }}>
-                  <Card.Image
-                    src="https://earena.com/media/team/logo/500x500.jpeg"
-                    width="100%"
-                    height="100%"
-                    objectFit="cover"
-                    alt="Card example background"
-                  />
-                </Card.Body>
-              </Card>
-
-              <Modal noPadding open={visible} onClose={closeHandler}
-              >
-                <Modal.Body>
-                      <div className="w-[50rem] h-[50rem] bg-slate-500">
-
-                      </div>
-                </Modal.Body>
-              </Modal>
-
-            </div>
-            
-
-            <div className="  flex items-center">
-              <Card isPressable onClick={handler}
-                css={{ w: "100%", h: "85%", }}
-              >
-                <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-
-                </Card.Header>
-                <Card.Body css={{ p: 0 }}>
-                  <Card.Image
-                    src="https://i2.wp.com/dynamicwork.net/wp/wp-content/uploads/2013/10/500x500.gif?ssl=1"
-                    width="100%"
-                    height="100%"
-                    objectFit="cover"
-                    alt="Card example background"
-                  />
-                </Card.Body>
-              </Card>
-
-              <Modal noPadding open={visible} onClose={closeHandler}
-              >
-                <Modal.Body>
-                      <div className="w-[50rem] h-[50rem] bg-slate-500">
-
-                      </div>
-                </Modal.Body>
-              </Modal>
-
-            </div>
-            
-
 
           </div>
+
+
 
         </div>
       </div>

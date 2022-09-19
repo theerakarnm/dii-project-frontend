@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import Navbar from '../components/Navbar';
 import Container from '../layouts/Container';
@@ -18,7 +19,11 @@ const Feed = () => {
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
-      const result = await axios.get('http://localhost:8083/post/popular', {
+      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
+
+      console.log(JSON.parse(Cookies.get('login_data')) )
+
+      const result = await axios.get(apiUrl, {
         headers: {
           Authorization:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvdXJ0aDIyMDY0NSIsImVtYWlsIjoiZm91cnRoNDY2NEBnbWFpbC5jb20iLCJpYXQiOjE2NjMyMzEyMjgsImV4cCI6MTY2NDA5NTIyOH0.k_zDfMTKZGwS44LN7n-rFnbVTDiguZb1aXFG0A3K7Eo',
