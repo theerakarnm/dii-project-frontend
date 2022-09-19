@@ -95,14 +95,27 @@ const NewPost = () => {
         <hr className=' mt-3' />
         <div className='flex justify-between items-center'>
           <div
-            className='h-[2rem] mt-2 ml-1 cursor-pointer flex items-center text-gray-500 hover:text-purple-400 transition-all'
+            className='h-[2rem] p-1 mt-2 ml-1 cursor-pointer flex items-center text-gray-500 hover:text-purple-400 transition-all'
             onClick={handler}
           >
-            <img
-              className='h-full'
-              src='/icons8-image-96.png'
-              alt='image insert icon'
-            />
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              class='icon icon-tabler icon-tabler-photo'
+              width='44'
+              height='44'
+              viewBox='0 0 24 24'
+              stroke-width='1.5'
+              stroke='#a905b6'
+              fill='none'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            >
+              <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+              <line x1='15' y1='8' x2='15.01' y2='8' />
+              <rect x='4' y='4' width='16' height='16' rx='3' />
+              <path d='M4 15l4 -4a3 5 0 0 1 3 0l5 5' />
+              <path d='M14 14l1 -1a3 5 0 0 1 3 0l2 2' />
+            </svg>
             <span className='text-xs ml-1 sm:text-sm text-ellipsis whitespace-nowrap max-w-[7rem] sm:max-w-[16rem] overflow-hidden'>
               {!file.name ? 'Insert Image' : file.name}
             </span>
