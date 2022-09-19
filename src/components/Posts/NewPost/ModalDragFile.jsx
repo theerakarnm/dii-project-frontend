@@ -46,7 +46,7 @@ export default function ModalDragFile({
                     <img
                       className='w-full h-full rounded shadow'
                       src={image}
-                      alt='preview image'
+                      alt='preview'
                     />
                   )}
                 </div>

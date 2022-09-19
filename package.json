@@ -9,6 +9,15 @@
     "preview": "vite preview",
     "prepare": "husky install"
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "no-unused-vars": "off"
+    }
+  },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.10",
     "axios": "^0.27.2",

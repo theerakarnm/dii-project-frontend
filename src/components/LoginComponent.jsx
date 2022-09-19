@@ -25,7 +25,7 @@ const LoginComponent = () => {
       const res = await axios.post(apiUrl, valueInput);
 
       setBtnLoading(false);
-      if (res.status != 200) {
+      if (res.status !== 200) {
         setIsError(true);
         return;
       }

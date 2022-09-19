@@ -50,7 +50,7 @@ const Signupform = () => {
       setBtnLoading(true);
       console.log(value);
       Object.entries(value).forEach(([key, item]) => {
-        if (item.trim() == '') {
+        if (item.trim() === '') {
           setInputError({
             ...inputError,
             [key]: {
@@ -97,7 +97,7 @@ const Signupform = () => {
 
       console.log(res);
 
-      if (res.status != 201) throw new Error('register failed');
+      if (res.status !== 201) throw new Error('register failed');
       setBtnLoading(false);
       window.location.replace('/#/login');
     } catch (e) {

@@ -30,7 +30,7 @@ const Post = ({ postData }) => {
   return (
     <>
       {postData.imageUrl ? (
-        <img className='w-full' src={postData.imageUrl} alt='Content Image' />
+        <img className='w-full' src={postData.imageUrl} alt='Content' />
       ) : (
         <>
           <div className='w-full sm:w-[1000px]'></div>
@@ -48,7 +48,7 @@ const Post = ({ postData }) => {
                 </span>
               </div>
             </div>
-            {postData.username == cookieData.username ? (
+            {postData.username === cookieData.username ? (
               <div>
                 <OptionDropdown content={optionDropdownItem} />
               </div>
