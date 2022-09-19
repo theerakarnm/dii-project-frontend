@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import { getCookie } from '../libs/getterSetterCookie';
 import Navbar from '../components/Navbar';
 import Container from '../layouts/Container';
 import Post from '../components/Posts';
-// import mockData from '../mocks/postData';
 import PostLayout from '../layouts/PostLayout';
 import NewPost from '../components/Posts/NewPost';
 import ComplexWithAnimation from '../components/Skeleton';
@@ -19,14 +19,24 @@ const Feed = () => {
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
+<<<<<<< HEAD
       const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
 
       console.log(JSON.parse(Cookies.get('login_data')) )
 
+=======
+      const cookieData = getCookie('login_data');
+
+      if (!cookieData) {
+        window.location.replace('/#/login');
+        return;
+      }
+
+      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
+>>>>>>> 75fd54d66d24f8853c094e46894a5e563bea565c
       const result = await axios.get(apiUrl, {
         headers: {
-          Authorization:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvdXJ0aDIyMDY0NSIsImVtYWlsIjoiZm91cnRoNDY2NEBnbWFpbC5jb20iLCJpYXQiOjE2NjMyMzEyMjgsImV4cCI6MTY2NDA5NTIyOH0.k_zDfMTKZGwS44LN7n-rFnbVTDiguZb1aXFG0A3K7Eo',
+          Authorization: cookieData.token,
         },
       });
       setData(result.data.data);

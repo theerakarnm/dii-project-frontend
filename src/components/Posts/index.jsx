@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
-import pTypes from "prop-types";
+import React, { useCallback, useState } from 'react';
+import pTypes from 'prop-types';
 
-import { Input } from "@nextui-org/react";
-import Comment from "./Comment";
-import Avatar from "../Avatar";
-import OptionDropdown from "./OptionDropdown";
+import { Input } from '@nextui-org/react';
+import Comment from './Comment';
+import Avatar from '../Avatar';
+import OptionDropdown from './OptionDropdown';
+import { getCookie } from '../../libs/getterSetterCookie';
 
 const props = {
   postData: pTypes.shape({
@@ -20,36 +21,43 @@ const props = {
 };
 
 const Post = ({ postData }) => {
-  const [margin, setMargin] = useState("0.5rem");
-  const optionDropdownItem = ["Edit Post", "Delete Post"];
+  const [margin, setMargin] = useState('0.5rem');
+  const optionDropdownItem = ['Edit Post', 'Delete Post'];
+  const cookieData = getCookie('login_data');
+
+  //TODO : DELETE AND EDIT
 
   return (
     <>
       {postData.imageUrl ? (
-        <img className="w-full" src={postData.imageUrl} alt="Content Image" />
+        <img className='w-full' src={postData.imageUrl} alt='Content Image' />
       ) : (
         <>
-          <div className="w-full sm:w-[1000px]"></div>
+          <div className='w-full sm:w-[1000px]'></div>
         </>
       )}
-      <div className="pl-6 pr-2 py-4">
-        <div className="font-normal text-md mb-2">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center">
+      <div className='pl-6 pr-2 py-4'>
+        <div className='font-normal text-md mb-2'>
+          <div className='flex items-start justify-between'>
+            <div className='flex items-center'>
               <Avatar url={postData.profileImage} />
-              <div className="ml-3 flex flex-col">
+              <div className='ml-3 flex flex-col'>
                 <span>{postData.name}</span>
-                <span className="text-gray-400 text-xs">
+                <span className='text-gray-400 text-xs'>
                   {postData.dateTime}
                 </span>
               </div>
             </div>
-            <div>
-              <OptionDropdown content={optionDropdownItem} />
-            </div>
+            {postData.username == cookieData.username ? (
+              <div>
+                <OptionDropdown content={optionDropdownItem} />
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
-        <p className="text-gray-700 text-base mb-6 mr-4 mt-4">
+        <p className='text-gray-700 text-base mb-6 mr-4 mt-4'>
           {postData.postContent}
         </p>
         {/* <Divider /> */}
@@ -57,24 +65,24 @@ const Post = ({ postData }) => {
           style={{
             marginTop: margin,
           }}
-          className="transition-all pr-4"
+          className='transition-all pr-4'
         >
           <Input
-            onFocus={() => setMargin("2.7rem")}
-            onBlur={() => setMargin("0.5rem")}
+            onFocus={() => setMargin('2.7rem')}
+            onBlur={() => setMargin('0.5rem')}
             fullWidth
             underlined
-            labelPlaceholder="Type your Comment..."
-            color="default"
+            labelPlaceholder='Type your Comment...'
+            color='default'
             contentRightStyling={{
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
             contentRight={
               <div>
                 <img
-                  className="cursor-pointer hover:mb-2 transition-all"
-                  src="/sendIcon.svg"
-                  alt="send comment icon"
+                  className='cursor-pointer hover:mb-2 transition-all'
+                  src='/sendIcon.svg'
+                  alt='send comment icon'
                 />
               </div>
             }
