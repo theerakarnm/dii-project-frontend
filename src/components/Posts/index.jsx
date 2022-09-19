@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import pTypes from 'prop-types';
+import axios from 'axios';
 
 import { Input } from '@nextui-org/react';
 import Comment from './Comment';
 import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
 import { getCookie } from '../../libs/getterSetterCookie';
+import { Favorite } from '../Utils';
 
 const props = {
   postData: pTypes.shape({
@@ -15,6 +17,11 @@ const props = {
     profileImage: pTypes.string.isRequired,
     dateTime: pTypes.string.isRequired,
     postContent: pTypes.string.isRequired,
+    isLike: pTypes.bool.isRequired,
+    likeContent: pTypes.shape({
+      likeCount: pTypes.number.isRequired,
+      likedBy: pTypes.array.isRequired,
+    }),
     imageUrl: pTypes.string,
     comment: pTypes.array,
   }),
@@ -24,8 +31,53 @@ const Post = ({ postData }) => {
   const [margin, setMargin] = useState('0.5rem');
   const optionDropdownItem = ['Edit Post', 'Delete Post'];
   const cookieData = getCookie('login_data');
+  const [isLike, setIsLike] = useState(postData.isLike);
+  const [likeCount, setLikeCount] = useState(postData.likeContent.likeCount);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
 
   //TODO : DELETE AND EDIT
+
+  const likeHandler = async () => {
+    try {
+      setIsLikeLoading(true);
+      isLike
+        ? setLikeCount((prev) => prev - 1)
+        : setLikeCount((prev) => prev + 1);
+      setIsLike(!isLike);
+
+      const numSend = isLike ? -1 : 1;
+      //TODO: send data to backend
+
+      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/like`;
+      const config = {
+        headers: {
+          Authorization: cookieData.token,
+        },
+      };
+      const res = await axios.patch(
+        apiUrl,
+        {
+          postId: postData.id,
+          num: numSend,
+        },
+        config
+      );
+
+      if (res.status !== 200) {
+        isLike
+          ? setLikeCount((prev) => prev - 1)
+          : setLikeCount((prev) => prev + 1);
+        setIsLike(!isLike);
+        setIsLikeLoading(false);
+        throw new Error('failed to like');
+      }
+
+      setIsLikeLoading(false);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  };
 
   return (
     <>
@@ -65,8 +117,38 @@ const Post = ({ postData }) => {
           style={{
             marginTop: margin,
           }}
-          className='transition-all pr-4'
+          className='transition-all pr-4 flex'
         >
+          {isLikeLoading ? (
+            <div className='animate-spin'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                class='icon icon-tabler icon-tabler-loader'
+                width='44'
+                height='44'
+                viewBox='0 0 24 24'
+                stroke-width='1'
+                stroke='#6f32be'
+                fill='none'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              >
+                <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                <line x1='12' y1='6' x2='12' y2='3' />
+                <line x1='16.25' y1='7.75' x2='18.4' y2='5.6' />
+                <line x1='18' y1='12' x2='21' y2='12' />
+                <line x1='16.25' y1='16.25' x2='18.4' y2='18.4' />
+                <line x1='12' y1='18' x2='12' y2='21' />
+                <line x1='7.75' y1='16.25' x2='5.6' y2='18.4' />
+                <line x1='6' y1='12' x2='3' y2='12' />
+                <line x1='7.75' y1='7.75' x2='5.6' y2='5.6' />
+              </svg>
+            </div>
+          ) : (
+            <div onClick={likeHandler} className='w-10 mr-3 cursor-pointer'>
+              <Favorite isLiked={isLike} />
+            </div>
+          )}
           <Input
             onFocus={() => setMargin('2.7rem')}
             onBlur={() => setMargin('0.5rem')}
@@ -87,6 +169,11 @@ const Post = ({ postData }) => {
               </div>
             }
           />
+        </div>
+        <div className='mt-2 flex justify-end mr-3'>
+          <small className='text-gray-400 text-[0.9rem]'>{`${likeCount} ${
+            likeCount > 1 ? 'likes' : 'like'
+          }`}</small>
         </div>
         {postData.comment.map((cmt) => (
           <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />

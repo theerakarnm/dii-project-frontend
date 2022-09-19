@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Modal, Button, Text, Input, Row, Checkbox } from '@nextui-org/react';
 
 export default function ModalDragFile({
