@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import pTypes from 'prop-types';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
 import { getCookie } from '../../libs/getterSetterCookie';
 import { Favorite } from '../Utils';
+import _m from 'moment';
 
 const props = {
   postData: pTypes.shape({
@@ -34,8 +35,15 @@ const Post = ({ postData }) => {
   const [isLike, setIsLike] = useState(postData.isLike);
   const [likeCount, setLikeCount] = useState(postData.likeContent.likeCount);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const [commentContent, setCommentContent] = useState('');
+  const [comment, setComment] = useState(postData.comment);
 
   //TODO : DELETE AND EDIT
+  const config = {
+    headers: {
+      Authorization: cookieData.token,
+    },
+  };
 
   const likeHandler = async () => {
     try {
@@ -46,14 +54,9 @@ const Post = ({ postData }) => {
       setIsLike(!isLike);
 
       const numSend = isLike ? -1 : 1;
-      //TODO: send data to backend
 
       const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/like`;
-      const config = {
-        headers: {
-          Authorization: cookieData.token,
-        },
-      };
+
       const res = await axios.patch(
         apiUrl,
         {
@@ -75,8 +78,49 @@ const Post = ({ postData }) => {
       setIsLikeLoading(false);
     } catch (e) {
       console.error(e);
+      // TODO : handler error
       return;
     }
+  };
+
+  const addCommentHandler = async () => {
+    try {
+      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/comment/add`;
+      const res = await axios.post(
+        apiUrl,
+        {
+          postId: postData.id,
+          content: commentContent,
+        },
+        config
+      );
+
+      if (res.status !== 200) {
+        throw new Error('failed to comment');
+      }
+
+      setComment((prev) => {
+        return [
+          {
+            name: `${cookieData.firstName} ${cookieData.lastName}`,
+            profileImage: cookieData.imageUrl,
+            content: commentContent,
+            dateTime: _m().fromNow(),
+          },
+          ...prev,
+        ];
+      });
+
+      setCommentContent('');
+    } catch (e) {
+      console.log(e);
+      // TODO : handler error
+      return;
+    }
+  };
+
+  const commentChangeHandler = (e) => {
+    setCommentContent(e.target.value);
   };
 
   return (
@@ -156,11 +200,13 @@ const Post = ({ postData }) => {
             underlined
             labelPlaceholder='Type your Comment...'
             color='default'
+            onChange={commentChangeHandler}
+            value={commentContent}
             contentRightStyling={{
               cursor: 'pointer',
             }}
             contentRight={
-              <div>
+              <div onClick={addCommentHandler}>
                 <img
                   className='cursor-pointer hover:mb-2 transition-all'
                   src='/sendIcon.svg'
@@ -175,7 +221,7 @@ const Post = ({ postData }) => {
             likeCount > 1 ? 'likes' : 'like'
           }`}</small>
         </div>
-        {postData.comment.map((cmt) => (
+        {comment.map((cmt) => (
           <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
         ))}
       </div>
