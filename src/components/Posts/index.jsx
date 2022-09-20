@@ -37,6 +37,7 @@ const Post = ({ postData }) => {
   const [isLikeLoading, setIsLikeLoading] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const [comment, setComment] = useState(postData.comment);
+  const [isLoadingComment, setIsLoadingComment] = useState(false);
 
   //TODO : DELETE AND EDIT
   const config = {
@@ -85,6 +86,21 @@ const Post = ({ postData }) => {
 
   const addCommentHandler = async () => {
     try {
+      setCommentContent('');
+      setComment((prev) => {
+        return [
+          {
+            name: `${cookieData.firstName} ${cookieData.lastName}`,
+            profileImage: cookieData.imageUrl,
+            content: commentContent,
+            dateTime: _m().fromNow(),
+            error: false,
+          },
+          ...prev,
+        ];
+      });
+      setIsLoadingComment(true);
+
       const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/comment/add`;
       const res = await axios.post(
         apiUrl,
@@ -95,26 +111,35 @@ const Post = ({ postData }) => {
         config
       );
 
-      if (res.status !== 200) {
+      if (res.status !== 201) {
+        setComment((prev) => (prev[0].error = true));
+        setComment((prev) =>
+          prev.map((item, idex) => {
+            return idex === 0
+              ? {
+                  ...item,
+                  error: true,
+                }
+              : item;
+          })
+        );
         throw new Error('failed to comment');
       }
 
-      setComment((prev) => {
-        return [
-          {
-            name: `${cookieData.firstName} ${cookieData.lastName}`,
-            profileImage: cookieData.imageUrl,
-            content: commentContent,
-            dateTime: _m().fromNow(),
-          },
-          ...prev,
-        ];
-      });
-
-      setCommentContent('');
+      setIsLoadingComment(false);
     } catch (e) {
       console.log(e);
-      // TODO : handler error
+      setComment((prev) =>
+        prev.map((item, idex) => {
+          return idex === 0
+            ? {
+                ...item,
+                error: true,
+              }
+            : item;
+        })
+      );
+      setIsLoadingComment(false);
       return;
     }
   };
@@ -221,9 +246,17 @@ const Post = ({ postData }) => {
             likeCount > 1 ? 'likes' : 'like'
           }`}</small>
         </div>
-        {comment.map((cmt) => (
-          <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
-        ))}
+        {comment.map((cmt, ind) => {
+          return ind === 0 ? (
+            <Comment
+              key={`${cmt.name}-${cmt.dateTime}`}
+              loading={isLoadingComment}
+              comment={cmt}
+            />
+          ) : (
+            <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
+          );
+        })}
       </div>
     </>
   );
