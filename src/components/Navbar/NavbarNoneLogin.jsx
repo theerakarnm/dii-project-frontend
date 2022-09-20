@@ -1,53 +1,79 @@
-import { Navbar, Dropdown, Button, Link, Text } from "@nextui-org/react";
-import { AcmeLogo } from "./Logo.jsx";
+import { Navbar, Dropdown, Avatar, Link, Text } from '@nextui-org/react';
+import Cookies from 'js-cookie';
+import { Logo } from './Logo.jsx';
 
-export default function NavbarComponent() {
-  const content = [
+export default function NavbarComponent({ nameWhichActive }) {
+  const collapseItems = [
     {
-      id: 1,
-      content: "Home",
+      name: 'Sign in',
+      href: '/#/login',
     },
     {
-      id: 2,
-      content: "Feed",
-    },
-    {
-      id: 3,
-      content: "Diary",
+      name: 'Sign up',
+      href: '/#/regis',
     },
   ];
 
   return (
     <>
-      <Navbar isBordered variant="sticky">
-        <Navbar.Brand>
-          <AcmeLogo />
-          <Text b color="inherit" hideIn="xs">
-            ACME
-          </Text>
-        </Navbar.Brand>
-        <Navbar.Content
-          enableCursorHighlight
-          activeColor="secondary"
-          hideIn="xs"
-          variant="underline"
+      <Navbar variant='sticky'>
+        <Navbar.Toggle showIn='xs' />
+        <Navbar.Brand
+          css={{
+            '@xs': {
+              w: '12%',
+            },
+          }}
         >
-          <Navbar.Link isActive href="#">
-            Customers
+          <a className='flex items-center' href='/#/'>
+            <Logo />
+            <Text b color='inherit' hideIn='xs'>
+              S-LOG
+            </Text>
+          </a>
+        </Navbar.Brand>
+        <Navbar.Content></Navbar.Content>
+        <Navbar.Content
+          hideIn='xs'
+          css={{
+            '@xs': {
+              w: '30%',
+              jc: 'flex-end',
+            },
+          }}
+        >
+          <Navbar.Link className='underline' href={'/#/login'}>
+            Sign in
           </Navbar.Link>
-          <Navbar.Link href="#">Pricing</Navbar.Link>
-          <Navbar.Link href="#">Company</Navbar.Link>
-        </Navbar.Content>
-        <Navbar.Content>
-          <Navbar.Link color="inherit" href="#">
-            Login
+          <Navbar.Link
+            className='bg-purple-400 px-8 py-4 text-white rounded'
+            href={'/#/regis'}
+          >
+            Sign up
           </Navbar.Link>
-          <Navbar.Item>
-            <Button auto flat as={Link} href="#">
-              Sign Up
-            </Button>
-          </Navbar.Item>
         </Navbar.Content>
+        <Navbar.Collapse>
+          {collapseItems.map((item, index) => (
+            <Navbar.CollapseItem
+              key={`${item.name}-${item.href}`}
+              activeColor='secondary'
+              css={{
+                color: index === collapseItems.length - 1 ? '$secondary' : '',
+              }}
+              isActive={item.name === nameWhichActive}
+            >
+              <Link
+                color='inherit'
+                css={{
+                  minWidth: '100%',
+                }}
+                href={item.href}
+              >
+                {item.name}
+              </Link>
+            </Navbar.CollapseItem>
+          ))}
+        </Navbar.Collapse>
       </Navbar>
     </>
   );
