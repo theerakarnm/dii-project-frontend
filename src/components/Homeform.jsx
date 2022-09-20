@@ -14,6 +14,8 @@ const Homeform = () => {
   const cookie = getCookie('login_data');
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
+  const open = () => setCardOpen(true);
+  const [cardOpen, setCardOpen] = React.useState(false);
   const closeHandler = () => {
     setVisible(false);
     console.log('closed');
