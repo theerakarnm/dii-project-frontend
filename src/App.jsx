@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Feed from './pages/Feed';
 import Regis from './pages/Regis';
 import Login from './pages/Login';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path='/feed' element={<Feed />} />
       <Route path='/regis' element={<Regis />} />
       <Route path='/login' element={<Login />} />
+      <Route path='*' element={<PageNotFound />} />
     </Routes>
   );
 }
