@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-// import dotenv from 'dotenv';
 import Cookies from 'js-cookie';
-// dotenv.config;
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
 
-import { Image, Loading } from '@nextui-org/react';
+import { Image, Loading, Text } from '@nextui-org/react';
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
@@ -68,9 +66,15 @@ const LoginComponent = () => {
               <form onSubmit={onSubmit}>
                 <div className='w-full p-2 rounded '>
                   <div className='flex flex-col justify-center items-center pb-6'>
-                    <h1 className='text-3xl mx-4 sm:text-4xl font-bold text-center'>
+                    <Text
+                      className='text-3xl text-center md:text-4xl mx-4'
+                      css={{
+                        textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                      }}
+                      weight='bold'
+                    >
                       Sign in to your account
-                    </h1>
+                    </Text>
                   </div>
                 </div>
                 <div

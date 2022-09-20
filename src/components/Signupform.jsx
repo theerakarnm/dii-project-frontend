@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Text } from '@nextui-org/react';
 
 import validateEmail from '../libs/validateEmail';
 import { Loading } from '@nextui-org/react';
@@ -119,7 +120,16 @@ const Signupform = () => {
       <div className='max-w-xl w-full mx-auto  bg-white p-8 rounded-lg drop-shadow-xl border'>
         {/* Head Sign up */}
         <div className='max-w-md w-full mx-auto mb-[20px]'>
-          <div className='text-center font-medium text-3xl'>SIGN UP</div>
+          <Text
+            h1
+            className='md:text-[2rem] text-[1.5rem] text-center'
+            weight='bold'
+            css={{
+              textGradient: '45deg, $purple600 -20%, $pink600 100%',
+            }}
+          >
+            <p>Sign up</p>
+          </Text>
         </div>
         {/* from sign up */}
         <form className='space-y-6 mt-4' onSubmit={onSubmit}>
