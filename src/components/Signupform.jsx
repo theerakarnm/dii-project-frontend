@@ -123,10 +123,10 @@ const Signupform = () => {
         </div>
         {/* from sign up */}
         <form className='space-y-6 mt-4' onSubmit={onSubmit}>
-          <div className='flex items-center'>
-            <div className='flex items-center w-[48%] mr-[2%]'>
+          <div className='flex flex-col md:flex-row items-center justify-between'>
+            <div className='flex items-center w-full md:w-[48%]'>
               <input
-                className={`w-full p-2 border border-gray-300 rounded ${
+                className={`w-full p-2 border mb-6 md:mb-0 border-gray-300 rounded ${
                   inputError.firstName.error ? 'ring-2 ring-red-400' : ''
                 }`}
                 placeholder='First Name'
@@ -138,7 +138,7 @@ const Signupform = () => {
               />
               <small className='text-red-500'>{inputError.firstName.msg}</small>
             </div>
-            <div className='flex items-center w-[48%] ml-[2%]'>
+            <div className='flex items-center w-full md:w-[48%]'>
               <input
                 className={`w-full p-2 border border-gray-300 rounded ${
                   inputError.lastName.error ? 'ring-2 ring-red-400' : ''
