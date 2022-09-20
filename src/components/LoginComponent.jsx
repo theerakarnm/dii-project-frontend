@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 // dotenv.config;
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
+import { Text } from '@nextui-org/react';
 
 import { Image, Loading } from '@nextui-org/react';
 

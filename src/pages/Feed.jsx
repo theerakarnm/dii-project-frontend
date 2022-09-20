@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import Navbar from '../components/Navbar';
