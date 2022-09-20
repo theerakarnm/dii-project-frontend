@@ -16,7 +16,7 @@ export default function NavbarComponent({ nameWhichActive }) {
 
   return (
     <>
-      <Navbar variant='sticky'>
+      <Navbar>
         <Navbar.Toggle showIn='xs' />
         <Navbar.Brand
           css={{
