@@ -19,12 +19,6 @@ const Feed = () => {
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
-<<<<<<< HEAD
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
-
-      console.log(JSON.parse(Cookies.get('login_data')) )
-
-=======
       const cookieData = getCookie('login_data');
 
       if (!cookieData) {
@@ -33,7 +27,6 @@ const Feed = () => {
       }
 
       const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
->>>>>>> 75fd54d66d24f8853c094e46894a5e563bea565c
       const result = await axios.get(apiUrl, {
         headers: {
           Authorization: cookieData.token,
