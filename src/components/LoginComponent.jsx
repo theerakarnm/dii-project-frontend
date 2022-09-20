@@ -12,6 +12,7 @@ const LoginComponent = () => {
     password: '',
   });
   const [isError, setIsError] = useState(false);
+  const [globalError, setGlobalError] = useState('');
   const [btnLoading, setBtnLoading] = useState(false);
 
   async function onSubmit(event) {
@@ -33,12 +34,14 @@ const LoginComponent = () => {
       Cookies.set('login_data', JSON.stringify(res.data.data));
       window.location.replace('/');
     } catch (e) {
+      setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
       setBtnLoading(false);
       return;
     }
   }
 
   const onChangeHandle = (event) => {
+    setGlobalError('');
     setValueInput({
       ...valueInput,
       [event.target.name]: event.target.value,
@@ -67,7 +70,11 @@ const LoginComponent = () => {
                   </h1>
                 </div>
               </div>
-              <div className='bg-white w-full h-[25rem] flex flex-col  p-8 rounded-lg shadow-xl'>
+              <div
+                className={`bg-white w-full h-full flex flex-col p-8 rounded-lg  ${
+                  !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
+                }`}
+              >
                 <div className='w-full p-2  rounded my-5'>
                   <div className='flex flex-col justify-center items-center my-10`'>
                     <input
@@ -118,8 +125,7 @@ const LoginComponent = () => {
                       {btnLoading ? <Loading size='sm' /> : 'Sign in'}
                     </button>
                   </div>
-
-                  <div className='flex flex-col justify-center items-center my-2'>
+                  <div className='flex flex-col justify-center items-center mt-3'>
                     <p>
                       Don't have an account ?
                       <a
@@ -129,6 +135,11 @@ const LoginComponent = () => {
                         Sign up
                       </a>
                     </p>
+                  </div>
+                  <div className='flex justify-center mt-3'>
+                    <small className='text-red-500 text-lg font-bold'>
+                      {globalError}
+                    </small>
                   </div>
                 </div>
               </div>
