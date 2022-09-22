@@ -4,9 +4,11 @@ import {
   Textarea,
   Text,
   Button,
+  Image,
   Modal,
   Card,
   Col,
+  Dropdown,
 } from '@nextui-org/react';
 import { getCookie } from '../libs/getterSetterCookie';
 
@@ -22,6 +24,12 @@ const Homeform = () => {
   const open = () => setCardOpen(true);
   const closeCard = () => {
     setCardOpen(false);
+  };
+
+  const [editOpen, setEditOpen] = React.useState(false);
+  const openEdit = () => setEditOpen(true);
+  const closeEdit = () => {
+    setEditOpen(false);
   };
 
   return (
@@ -139,7 +147,7 @@ const Homeform = () => {
                 </Card.Header>
                 <Card.Body css={{ p: 0 }}>
                   <Card.Image
-                    src='https://nextui.org/images/card-example-3.jpeg'
+                    src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
                     width='100%'
                     height='100%'
                     objectFit='cover'
@@ -149,7 +157,7 @@ const Homeform = () => {
               </Card>
             </div>
 
-            <div onClick={open} className='hover:cursor-pointer'>
+            <div onClick={open} className='hover:cursor-pointer' >
               <Card css={{ w: '100%' }}>
                 <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
                   <Col>
@@ -231,19 +239,67 @@ const Homeform = () => {
             </div>
           </div>
 
-          <div className='w-full max-w-lg h-full max-h-lg'>
+          <div className='w-full h-full max-h-lg'>
             <Modal
-              closeButton
               blur
+              className='md:max-w-[70rem] flex justify-center items-center mx-auto'
               aria-labelledby='modal-title'
               open={cardOpen}
               onClose={closeCard}
-              width='60%'
+              width='100%'
             >
-              <Modal.Body>
-                <div className='w-full h-full flex flex-row'>
-                  <div className='w-[60%] border-2 flex flex-col pt-2'></div>
-                  <div className='w-[40%] border-2'></div>
+              <Modal.Header className='m-0 p-0 w-full h-full pt-2 pl-2'>
+                <div className='w-full flex justify-between'>
+                  <div className='w-full border-2 flex justify-start items-center'>
+                    <div className=''>
+                      <Avatar
+                        src={`${cookie.imageUrl}`}
+                        color='secondary'
+                        bordered
+                      />
+                    </div>
+                    <div className='pl-2'>
+                      <Text
+                        h1
+                        className='text-[1.3rem] font-[Nunito]'
+                        weight='bold'
+                        css={{
+                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                        }}
+                      >
+                        {`${cookie.firstName} ${cookie.lastName}`}
+                      </Text>
+                    </div>
+                  </div>
+                  <div className='w-full flex justify-end'>
+                    <Button auto
+                      onClick={openEdit}
+                      className='text-purple-600 text-xl'
+                    >
+                      ...
+                    </Button>
+                  </div>
+                </div>
+
+              </Modal.Header>
+              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-2'>
+                <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
+                  <div className='md:max-w-[60%] w-full  border-2 flex flex-col'>
+                    <div className='w-full h-full flex justify-center items-center bg-black rounded-lg'>
+                      <img
+                        className='w-full-image md:max-h-full max-h-[20rem] rounded-lg'
+                        src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+                      />
+                    </div>
+                  </div>
+                  <div className='md:max-w-[40%] md:min-w-[400px] w-full border-2'>
+                      <div className='w-full '>
+
+                      </div>
+                      <div>
+
+                      </div>
+                  </div>
                 </div>
               </Modal.Body>
             </Modal>
@@ -273,6 +329,31 @@ const Homeform = () => {
               </Modal.Body>
             </Modal>
           </div>
+
+          <div className=''>
+            <Modal
+              aria-labelledby='modal-title'
+              open={editOpen}
+              onClose={closeEdit}
+            >
+              <Modal.Body 
+              className='m-0 p-0'>
+                <div className='w-full h-full'>
+                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'>
+                      Edit Post
+                  </div>
+                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300 text-red-700'>
+                      Delete Post
+                  </div>
+                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300' onClick={closeEdit}>
+                      Cancel
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>y   
+          </div>
+
+          
         </div>
       </div>
     </>
