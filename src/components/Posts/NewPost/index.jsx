@@ -6,8 +6,9 @@ import axios from 'axios';
 
 import fileToBase64 from '../../../libs/FileConverter';
 import { getCookie } from '../../../libs/getterSetterCookie';
+import moment from 'moment/moment';
 
-const NewPost = () => {
+const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [margin, setMargin] = useState('0.75rem');
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState('');
@@ -26,6 +27,26 @@ const NewPost = () => {
     data.append('textContent', textValue);
     data.append('file', file);
 
+    setIsFirstPostLoading(true);
+    setPost((prev) => [
+      {
+        id: Math.random().toString(36),
+        username: cookieData.username,
+        name: `${cookieData.firstName} ${cookieData.lastName}`,
+        profileImage: `${cookieData.imageUrl}`,
+        dateTime: moment().fromNow(),
+        postContent: textValue,
+        isLike: false,
+        likeContent: {
+          likeCount: 0,
+          likedBy: [],
+        },
+        imageUrl: image,
+        comment: [],
+      },
+      ...prev,
+    ]);
+
     try {
       axios.post(apiUrl, data, {
         headers: {
@@ -33,6 +54,7 @@ const NewPost = () => {
           Authorization: cookieData.token,
         },
       });
+      setIsFirstPostLoading(false);
     } catch (e) {
       console.error(e);
       return;
@@ -100,7 +122,7 @@ const NewPost = () => {
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              class='icon icon-tabler icon-tabler-photo'
+              className='icon icon-tabler icon-tabler-photo'
               width='44'
               height='44'
               viewBox='0 0 24 24'
@@ -122,12 +144,12 @@ const NewPost = () => {
           </div>
           <div className='h-[2.5rem] mt-2 ml-1 cursor-pointer flex items-center text-gray-500 hover:text-purple-400 transition-all'>
             <button
-              class='h-full relative inline-flex items-center px-8 py-3 overflow-hidden text-white bg-purple-600 rounded group active:bg-purple-500 focus:outline-none focus:ring'
+              className='h-full relative inline-flex items-center px-8 py-3 overflow-hidden text-white bg-purple-600 rounded group active:bg-purple-500 focus:outline-none focus:ring'
               onClick={shareHandler}
             >
-              <span class='absolute right-0 transition-transform translate-x-full group-hover:-translate-x-4'>
+              <span className='absolute right-0 transition-transform translate-x-full group-hover:-translate-x-4'>
                 <svg
-                  class='w-5 h-5'
+                  className='w-5 h-5'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
@@ -142,7 +164,7 @@ const NewPost = () => {
                 </svg>
               </span>
 
-              <span class='text-sm font-medium transition-all group-hover:mr-4'>
+              <span className='text-sm font-medium transition-all group-hover:mr-4'>
                 Share
               </span>
             </button>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import Navbar from '../components/Navbar';
@@ -15,6 +14,7 @@ const Feed = () => {
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFirstPostLoading, setIsFirstPostLoading] = useState(false);
 
   useEffect(() => {
     const resData = async () => {
@@ -26,7 +26,7 @@ const Feed = () => {
         return;
       }
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/popular`;
+      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/recent`;
       const result = await axios.get(apiUrl, {
         headers: {
           Authorization: cookieData.token,
@@ -44,12 +44,22 @@ const Feed = () => {
       <Navbar nameWhichActive={'Feed'} />
       <Container>
         <div className='flex flex-col gap-5 justify-center items-center'>
-          <NewPost />
+          <NewPost
+            setIsFirstPostLoading={setIsFirstPostLoading}
+            setPost={setData}
+          />
           {isLoading ? (
             <ComplexWithAnimation />
           ) : (
-            data.map((item) => {
-              return (
+            data.map((item, i) => {
+              return i === 0 ? (
+                <PostLayout
+                  isFirstPostLoading={isFirstPostLoading}
+                  key={item.id}
+                >
+                  <Post postData={item} />
+                </PostLayout>
+              ) : (
                 <PostLayout key={item.id}>
                   <Post postData={item} />
                 </PostLayout>

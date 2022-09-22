@@ -29,9 +29,10 @@ const props = {
 };
 
 const Post = ({ postData }) => {
-  const [margin, setMargin] = useState('0.5rem');
-  const optionDropdownItem = ['Edit Post', 'Delete Post'];
   const cookieData = getCookie('login_data');
+  const optionDropdownItem = ['Edit Post', 'Delete Post'];
+
+  const [margin, setMargin] = useState('0.5rem');
   const [isLike, setIsLike] = useState(postData.isLike);
   const [likeCount, setLikeCount] = useState(postData.likeContent.likeCount);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
@@ -181,7 +182,6 @@ const Post = ({ postData }) => {
         <p className='text-gray-700 text-base mb-6 mr-4 mt-4'>
           {postData.postContent}
         </p>
-        {/* <Divider /> */}
         <div
           style={{
             marginTop: margin,
@@ -196,11 +196,11 @@ const Post = ({ postData }) => {
                 width='44'
                 height='44'
                 viewBox='0 0 24 24'
-                stroke-width='1'
+                strokeWidth='1'
                 stroke='#6f32be'
                 fill='none'
-                stroke-linecap='round'
-                stroke-linejoin='round'
+                strokeLinecap='round'
+                strokeLinejoin='round'
               >
                 <path stroke='none' d='M0 0h24v24H0z' fill='none' />
                 <line x1='12' y1='6' x2='12' y2='3' />
@@ -249,12 +249,12 @@ const Post = ({ postData }) => {
         {comment.map((cmt, ind) => {
           return ind === 0 ? (
             <Comment
-              key={`${cmt.name}-${cmt.dateTime}`}
+              key={`${cmt.id}`}
               loading={isLoadingComment}
               comment={cmt}
             />
           ) : (
-            <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
+            <Comment key={`${cmt.id}`} comment={cmt} />
           );
         })}
       </div>

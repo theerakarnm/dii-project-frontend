@@ -1,9 +1,8 @@
 export const Favorite = ({ isLiked = false }) => {
   return isLiked ? (
     <svg
-      className='w-full'
+      className='w-full icon icon-tabler icon-tabler-star'
       xmlns='http://www.w3.org/2000/svg'
-      class='icon icon-tabler icon-tabler-star'
       width='44'
       height='44'
       viewBox='0 0 24 24'
@@ -18,9 +17,8 @@ export const Favorite = ({ isLiked = false }) => {
     </svg>
   ) : (
     <svg
-      className='w-full'
+      className='w-full icon icon-tabler icon-tabler-star'
       xmlns='http://www.w3.org/2000/svg'
-      class='icon icon-tabler icon-tabler-star'
       width='44'
       height='44'
       viewBox='0 0 24 24'

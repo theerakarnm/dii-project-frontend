@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
 
 import { Image, Loading, Text } from '@nextui-org/react';
+import { setCookie } from '../libs/getterSetterCookie';
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
@@ -30,7 +30,7 @@ const LoginComponent = () => {
         return;
       }
 
-      Cookies.set('login_data', JSON.stringify(res.data.data));
+      setCookie('login_data', res.data.data);
       window.location.replace('/');
     } catch (e) {
       setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
