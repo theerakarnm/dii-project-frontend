@@ -231,9 +231,12 @@ const Post = ({ postData }) => {
               cursor: 'pointer',
             }}
             contentRight={
-              <div onClick={addCommentHandler}>
+              <div
+                className='w-full h-full cursor-pointer hover:-translate-y-[0.19rem] transition-all px-2'
+                onClick={addCommentHandler}
+              >
                 <img
-                  className='cursor-pointer hover:mb-2 transition-all'
+                  className='w-5 h-5'
                   src='/sendIcon.svg'
                   alt='send comment icon'
                 />

@@ -8,21 +8,19 @@ import Post from '../components/Posts';
 import PostLayout from '../layouts/PostLayout';
 import NewPost from '../components/Posts/NewPost';
 import ComplexWithAnimation from '../components/Skeleton';
+import NotLoginInfo from '../components/NotLoginInfo';
 
 const Feed = () => {
-  // TODO : check login
-
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFirstPostLoading, setIsFirstPostLoading] = useState(false);
+  const cookieData = getCookie('login_data');
 
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
-      const cookieData = getCookie('login_data');
 
       if (!cookieData) {
-        window.location.replace('/#/login');
         return;
       }
 
@@ -38,6 +36,10 @@ const Feed = () => {
 
     resData();
   }, []);
+
+  if (!cookieData) {
+    return <NotLoginInfo />;
+  }
 
   return (
     <>
