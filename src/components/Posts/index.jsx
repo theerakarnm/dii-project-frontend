@@ -28,7 +28,7 @@ const props = {
   }),
 };
 
-const Post = ({ postData }) => {
+const Post = ({ postData, openAllCommentModal }) => {
   const cookieData = getCookie('login_data');
   const optionDropdownItem = ['Edit Post', 'Delete Post'];
 
@@ -260,6 +260,16 @@ const Post = ({ postData }) => {
             <Comment key={`${cmt.id}`} comment={cmt} />
           );
         })}
+        {postData.hasMoreComment ? (
+          <small
+            onClick={openAllCommentModal}
+            className='underline cursor-pointer text-sky-500 hover:text-sky-600'
+          >
+            View all comment
+          </small>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );
