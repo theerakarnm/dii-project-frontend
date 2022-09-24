@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
+import { useState } from "react";
+import NavbarNoneLogin from "../components/Navbar/NavbarNoneLogin";
 
-import { Image, Loading, Text } from '@nextui-org/react';
-import { setCookie } from '../libs/getterSetterCookie';
-import { fetchApi } from '../helpers/fetchApi';
+import { Image, Loading, Text } from "@nextui-org/react";
+import { setCookie } from "../libs/getterSetterCookie";
+import { fetchApi } from "../helpers/fetchApi";
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const [isError, setIsError] = useState(false);
-  const [globalError, setGlobalError] = useState('');
+  const [globalError, setGlobalError] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
 
   async function onSubmit(event) {
@@ -21,8 +21,8 @@ const LoginComponent = () => {
       console.log(valueInput);
 
       const res = await fetchApi(
-        'post',
-        'api/v1/auth/login',
+        "post",
+        "api/v1/auth/login",
         false,
         valueInput
       );
@@ -33,8 +33,8 @@ const LoginComponent = () => {
         return;
       }
 
-      setCookie('login_data', res.data.data);
-      window.location.replace('/');
+      setCookie("login_data", res.data.data);
+      window.location.replace("/");
     } catch (e) {
       setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
       setBtnLoading(false);
@@ -43,7 +43,7 @@ const LoginComponent = () => {
   }
 
   const onChangeHandle = (event) => {
-    setGlobalError('');
+    setGlobalError("");
     setValueInput({
       ...valueInput,
       [event.target.name]: event.target.value,
@@ -52,29 +52,29 @@ const LoginComponent = () => {
 
   return (
     <>
-      <div className='h-screen w-screen'>
+      <div className="h-screen w-screen">
         <NavbarNoneLogin />
-        <div className='flex justify-center items-center'>
-          <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto'>
-            <div className='w-full flex flex-col m-5'>
-              <div className=''>
+        <div className="flex justify-center items-center">
+          <div className="max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto">
+            <div className="w-full flex flex-col m-5">
+              <div className="">
                 <Image
-                  width={'10rem'}
-                  height={'10rem'}
-                  src='/Logowithoutfont.png'
-                  alt='Your Company'
+                  width={"10rem"}
+                  height={"10rem"}
+                  src="/Logowithoutfont.png"
+                  alt="Your Company"
                 />
               </div>
 
               <form onSubmit={onSubmit}>
-                <div className='w-full p-2 rounded '>
-                  <div className='flex flex-col justify-center items-center pb-6'>
+                <div className="w-full p-2 rounded ">
+                  <div className="flex flex-col justify-center items-center pb-6">
                     <Text
-                      className='text-3xl text-center md:text-4xl mx-4'
+                      className="text-3xl text-center md:text-4xl mx-4"
                       css={{
-                        textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                        textGradient: "45deg, $purple600 -20%, $pink600 100%",
                       }}
-                      weight='bold'
+                      weight="bold"
                     >
                       Sign in to your account
                     </Text>
@@ -82,25 +82,25 @@ const LoginComponent = () => {
                 </div>
                 <div
                   className={`bg-white w-full h-full flex flex-col p-8 rounded-lg  ${
-                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
+                    !globalError ? "shadow-xl" : "shadow-red-400 shadow-lg"
                   }`}
                 >
-                  <div className='w-full p-2  rounded my-5'>
-                    <div className='flex flex-col justify-center items-center my-10`'>
+                  <div className="w-full p-2  rounded my-5">
+                    <div className="flex flex-col justify-center items-center my-10`">
                       <input
                         className={`w-full p-3 border rounded text-[1.25rem] ${
-                          isError ? 'ring-2 ring-red-400' : ''
+                          isError ? "ring-2 ring-red-400" : ""
                         }`}
-                        type='text'
-                        name='username'
-                        id='username'
+                        type="text"
+                        name="username"
+                        id="username"
                         onChange={onChangeHandle}
                         value={valueInput.username}
-                        placeholder='Username'
+                        placeholder="Username"
                       />
                       {isError ? (
-                        <div className='flex justify-start w-full pt-1 '>
-                          <small className='text-left text-red-400'>
+                        <div className="flex justify-start w-full pt-1 ">
+                          <small className="text-left text-red-400">
                             {isError}
                           </small>
                         </div>
@@ -109,45 +109,45 @@ const LoginComponent = () => {
                       )}
                     </div>
 
-                    <div className='flex flex-col justify-center items-center my-12'>
+                    <div className="flex flex-col justify-center items-center my-12">
                       <input
-                        className='w-full p-3 border rounded text-[1.25rem]'
-                        type='password'
-                        name='password'
-                        id='password'
+                        className="w-full p-3 border rounded text-[1.25rem]"
+                        type="password"
+                        name="password"
+                        id="password"
                         value={valueInput.password}
-                        placeholder='Password'
+                        placeholder="Password"
                         onChange={onChangeHandle}
                       />
                     </div>
 
-                    <div className='flex flex-col justify-center items-center mt-10'>
+                    <div className="flex flex-col justify-center items-center mt-10">
                       <button
                         className={`w-full flex justify-center items-center p-3 transition-all ${
                           btnLoading
-                            ? 'bg-gray-300'
-                            : 'bg-purple-500 hover:bg-purple-600'
+                            ? "bg-gray-300"
+                            : "bg-purple-500 hover:bg-purple-600"
                         }   text-white rounded text-[1.25rem]`}
-                        name='bt_submit'
-                        id='bt_submit'
-                        type='submit'
+                        name="bt_submit"
+                        id="bt_submit"
+                        type="submit"
                       >
-                        {btnLoading ? <Loading size='sm' /> : 'Sign in'}
+                        {btnLoading ? <Loading size="sm" /> : "Sign in"}
                       </button>
                     </div>
-                    <div className='flex flex-col justify-center items-center mt-3'>
+                    <div className="flex flex-col justify-center items-center mt-3">
                       <p>
                         Don't have an account ?
                         <a
-                          href='/#/regis'
-                          className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
+                          href="/#/regis"
+                          className=" text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1"
                         >
                           Sign up
                         </a>
                       </p>
                     </div>
-                    <div className='flex justify-center mt-3'>
-                      <small className='text-red-500 text-lg font-bold'>
+                    <div className="flex justify-center mt-3">
+                      <small className="text-red-500 text-lg font-bold">
                         {globalError}
                       </small>
                     </div>
