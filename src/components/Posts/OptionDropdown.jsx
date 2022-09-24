@@ -1,17 +1,15 @@
 import React from 'react';
 import { Dropdown } from '@nextui-org/react';
+import { fetchApi } from '../../helpers/fetchApi';
 
-const OptionDropdown = ({ content }) => {
-  const onSelect = (event) => {
-    console.log(event);
-  };
+const OptionDropdown = ({ onAction, content }) => {
   return (
     <>
       <Dropdown>
         <Dropdown.Button flat color={'secondary'}></Dropdown.Button>
         <Dropdown.Menu
           color={'secondary'}
-          onAction={onSelect}
+          onAction={onAction}
           aria-label='Static Actions'
         >
           {content.map((item, index) => {

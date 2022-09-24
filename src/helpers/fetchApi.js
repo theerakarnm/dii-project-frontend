@@ -10,19 +10,19 @@ export const fetchApi = async (
   const baseApiUrl = `${import.meta.env.VITE_API_HOSTNAME}`;
   const apiUrl = `${baseApiUrl}${path}`;
   const cookieData = getCookie('login_data');
-  const config = {
-    headers: {
-      Authorization: cookieData.token,
-    },
-  };
+  const config = withAuthHeader
+    ? {
+        headers: {
+          Authorization: cookieData.token,
+        },
+      }
+    : {};
 
-  if (method === 'get' || method === 'delete') {
-    return withAuthHeader
-      ? await axios[method](apiUrl, config)
-      : await axios[method](apiUrl);
-  }
+  console.log(`axios.${method}(${apiUrl}, ${body}, ${config})`);
+  console.log(body);
+  console.log(config);
 
-  return withAuthHeader
-    ? await axios[method](apiUrl, body, config)
-    : await axios[method](apiUrl, body);
+  return method === 'get' || method === 'delete'
+    ? await axios[method](apiUrl, config)
+    : await axios[method](apiUrl, body, config);
 };

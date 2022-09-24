@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import pTypes from 'prop-types';
 
-import { Input } from '@nextui-org/react';
+import { Input, Textarea } from '@nextui-org/react';
 import Comment from './Comment';
 import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
@@ -9,6 +9,7 @@ import { getCookie } from '../../libs/getterSetterCookie';
 import { Favorite } from '../Utils/Favorite';
 import _m from 'moment';
 import { fetchApi } from '../../helpers/fetchApi';
+import EditPostInput from './EditPostInput';
 
 const props = {
   postData: pTypes.shape({
@@ -39,6 +40,9 @@ const Post = ({ postData, openAllCommentModal }) => {
   const [commentContent, setCommentContent] = useState('');
   const [comment, setComment] = useState(postData.comment);
   const [isLoadingComment, setIsLoadingComment] = useState(false);
+  const [content, setContent] = useState(postData.postContent);
+
+  const [isAbleEdit, setIsAbleEdit] = useState(false);
 
   //TODO : DELETE AND EDIT
 
@@ -133,6 +137,20 @@ const Post = ({ postData, openAllCommentModal }) => {
     setCommentContent(e.target.value);
   };
 
+  const onAction = (key) => {
+    switch (key) {
+      case 'edit':
+        // fetchApi('put', `api/v1/post/${postData.id}`, true);
+        setIsAbleEdit(true);
+        break;
+      case 'delete':
+        fetchApi('delete', `api/v1/post/${postData.id}`, true);
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <>
       {postData.imageUrl ? (
@@ -156,16 +174,26 @@ const Post = ({ postData, openAllCommentModal }) => {
             </div>
             {postData.username === cookieData.username ? (
               <div>
-                <OptionDropdown content={optionDropdownItem} />
+                <OptionDropdown
+                  onAction={onAction}
+                  content={optionDropdownItem}
+                />
               </div>
             ) : (
               <></>
             )}
           </div>
         </div>
-        <p className='text-gray-700 text-base mb-6 mr-4 mt-4'>
-          {postData.postContent}
-        </p>
+        {!isAbleEdit ? (
+          <p className='text-gray-700 text-base mb-6 mr-4 mt-4'>{content}</p>
+        ) : (
+          <>
+            <EditPostInput
+              setter={{ setIsAbleEdit, setContent }}
+              initValue={content}
+            />
+          </>
+        )}
         <div
           style={{
             marginTop: margin,
