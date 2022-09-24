@@ -5,7 +5,7 @@ export default function DropdownCom({ setColor }) {
   const [selected, setSelected] = React.useState(new Set(['Black']));
 
   const menuItems = [
-    { key: 'Gray', name: 'Black' },
+    { key: 'Gray', name: 'Gray' },
     { key: 'Red', name: 'Red' },
     { key: 'Blue', name: 'Blue' },
     { key: 'Pink', name: 'Pink' },
