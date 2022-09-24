@@ -48,7 +48,7 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
     ]);
 
     try {
-      await fetchApi('post', 'api/v1/posts/add', true, data);
+      await fetchApi('post', 'api/v1/posts/', true, data);
 
       setIsFirstPostLoading(false);
     } catch (e) {
