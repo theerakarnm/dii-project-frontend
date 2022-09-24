@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import pTypes from 'prop-types';
-import axios from 'axios';
 
 import { Input } from '@nextui-org/react';
 import Comment from './Comment';
