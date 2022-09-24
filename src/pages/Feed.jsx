@@ -1,5 +1,4 @@
 import React, { useEffect, useState, createContext } from 'react';
-import axios from 'axios';
 import { useModal } from '@nextui-org/react';
 
 import { getCookie } from '../libs/getterSetterCookie';
@@ -11,6 +10,7 @@ import NewPost from '../components/Posts/NewPost';
 import ComplexWithAnimation from '../components/Skeleton';
 import AllCommentModel from '../components/Posts/AllCommentModel';
 import NotLoginInfo from '../components/NotLoginInfo';
+import { fetchApi } from '../helpers/fetchApi';
 
 const Feed = () => {
   const [data, setData] = useState([]);
@@ -32,12 +32,8 @@ const Feed = () => {
         return;
       }
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/recent`;
-      const result = await axios.get(apiUrl, {
-        headers: {
-          Authorization: cookieData.token,
-        },
-      });
+      const result = await fetchApi('get', 'posts/recent', true);
+
       setData(result.data.data);
       setIsLoading(false);
     };
@@ -53,26 +49,26 @@ const Feed = () => {
     setVisible(true);
   };
 
-  const getComment = async () => {
-    try {
-      setLoading(true);
-      const apiUrl = `${
-        import.meta.env.VITE_API_HOSTNAME
-      }post/comment/${postId}`;
-      const config = {
-        headers: {
-          Authorization: cookieData.token,
-        },
-      };
-      const res = await axios.get(apiUrl, config);
+  // const getComment = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const apiUrl = `${
+  //       import.meta.env.VITE_API_HOSTNAME
+  //     }post/comment/${postId}`;
+  //     const config = {
+  //       headers: {
+  //         Authorization: cookieData.token,
+  //       },
+  //     };
+  //     const res = await axios.get(apiUrl, config);
 
-      setAllComment(res.data.data);
-      setLoading(false);
-    } catch (e) {
-      console.error(e);
-      return;
-    }
-  };
+  //     setAllComment(res.data.data);
+  //     setLoading(false);
+  //   } catch (e) {
+  //     console.error(e);
+  //     return;
+  //   }
+  // };
 
   return (
     <>

@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react';
 import { Textarea } from '@nextui-org/react';
 import ModalDragFile from './ModalDragFile';
 import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
 
 import fileToBase64 from '../../../libs/FileConverter';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import moment from 'moment/moment';
+import { fetchApi } from '../../../helpers/fetchApi';
 
 const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [margin, setMargin] = useState('0.75rem');
@@ -19,9 +19,9 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
     setTextValue(event.target.value);
   };
 
-  const shareHandler = () => {
+  const shareHandler = async () => {
     const cookieData = getCookie('login_data');
-    const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/add`;
+    const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}api/v1/post/add`;
     let data = new FormData();
 
     data.append('textContent', textValue);
@@ -48,12 +48,8 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
     ]);
 
     try {
-      axios.post(apiUrl, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: cookieData.token,
-        },
-      });
+      await fetchApi('post', 'api/v1/post/add', true, data);
+
       setIsFirstPostLoading(false);
     } catch (e) {
       console.error(e);

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
 
 import { Image, Loading, Text } from '@nextui-org/react';
 import { setCookie } from '../libs/getterSetterCookie';
+import { fetchApi } from '../helpers/fetchApi';
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
@@ -20,9 +20,12 @@ const LoginComponent = () => {
       setBtnLoading(true);
       console.log(valueInput);
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}auth/login`;
-
-      const res = await axios.post(apiUrl, valueInput);
+      const res = await fetchApi(
+        'post',
+        'api/v1/auth/login',
+        false,
+        valueInput
+      );
 
       setBtnLoading(false);
       if (res.status !== 200) {
