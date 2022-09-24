@@ -4,7 +4,7 @@ import pt from 'prop-types';
 const PostLayout = ({ isFirstPostLoading, children }) => {
   return (
     <div
-      className={`max-w-lg w-full rounded overflow-hidden shadow-lg ${
+      className={`max-w-xl w-full rounded overflow-hidden shadow-lg ${
         isFirstPostLoading ? 'opacity-50' : ''
       }`}
     >

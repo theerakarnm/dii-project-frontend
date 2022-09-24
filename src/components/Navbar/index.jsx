@@ -108,7 +108,11 @@ export default function NavbarComponent({ nameWhichActive }) {
                 <Text b color='inherit' css={{ d: 'flex' }}>
                   Signed in as
                 </Text>
-                <Text b color='inherit' css={{ d: 'flex' }}>
+                <Text
+                  b
+                  className='flex text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[13rem] overflow-hidden'
+                  // color='inherit'
+                >
                   {cookieData.email}
                 </Text>
               </Dropdown.Item>

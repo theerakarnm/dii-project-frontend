@@ -92,7 +92,7 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
         style={{
           paddingTop: margin,
         }}
-        className='bg-white shadow rounded-lg max-w-lg w-full p-3 transition-all duration-300'
+        className='bg-white shadow rounded-lg max-w-xl w-full p-3 transition-all duration-300'
       >
         <div>
           <Textarea

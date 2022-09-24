@@ -1,30 +1,23 @@
-import SignatureCanvas from "react-signature-canvas";
+import SignatureCanvas from 'react-signature-canvas';
 
-import { useState, useMemo, useRef } from "react";
-import DropdownCom from "./Utils/Dropdown";
+import { useState, useMemo, useRef } from 'react';
+import DropdownCom from './Utils/Dropdown';
 
 const Drawing = ({ css }) => {
-  const [color, setColor] = useState(new Set(["black"]));
+  const [color, setColor] = useState('gray');
   const boardRef = useRef(null);
-
-  const selectedColor = useMemo(
-    () => Array.from(color).join(", ").replaceAll("_", " "),
-    [color]
-  );
 
   const onClearBoard = () => {
     boardRef.current.clear();
   };
 
-  console.log({ selectedColor });
-
   return (
     <>
       <div>
-        <div className="flex mb-2">
+        <div className='flex flex-col mb-2'>
           <DropdownCom setColor={setColor} />
           <button
-            className="bg-red-400 hover:bg-red-500 text-white px-3 py-1 rounded-xl ml-2"
+            className='bg-red-400 hover:bg-red-500 text-white px-3 py-1 rounded-xl ml-2 w-20 mt-4'
             onClick={onClearBoard}
           >
             clear
@@ -34,8 +27,8 @@ const Drawing = ({ css }) => {
           <SignatureCanvas
             ref={boardRef}
             throttle={5}
-            penColor={selectedColor.toLowerCase()}
-            canvasProps={{ width: 500, height: 400, className: "sigCanvas" }}
+            penColor={color.toLowerCase()}
+            canvasProps={{ width: 500, height: 400, className: 'sigCanvas' }}
           />
         </div>
       </div>

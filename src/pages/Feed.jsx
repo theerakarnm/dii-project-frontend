@@ -33,6 +33,7 @@ const Feed = () => {
       }
 
       const result = await fetchApi('get', 'api/v1/posts/recent', true);
+      const ss = await fetchApi('get', 'testGet');
 
       setData(result.data.data);
       setIsLoading(false);

@@ -56,7 +56,7 @@ const Post = ({ postData, openAllCommentModal }) => {
 
       const numSend = isLike ? -1 : 1;
 
-      const res = await fetchApi('patch', 'api/v1/posts/like', true, {
+      const res = await fetchApi('put', 'api/v1/posts/like', true, {
         postId: postData.id,
         num: numSend,
       });
