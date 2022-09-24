@@ -7,7 +7,7 @@ import Comment from './Comment';
 import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
 import { getCookie } from '../../libs/getterSetterCookie';
-import { Favorite } from '../Utils';
+import { Favorite } from '../Utils/Favorite';
 import _m from 'moment';
 
 const props = {
