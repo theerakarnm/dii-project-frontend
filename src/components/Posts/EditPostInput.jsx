@@ -1,9 +1,13 @@
 import { Textarea } from '@nextui-org/react';
 import React from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
+import { fetchApi } from '../../helpers/fetchApi';
+import contextStore from '../../context/contextStore';
 
 const EditPostInput = ({ setter, initValue }) => {
   const [value, setValue] = useState(initValue);
+  const postId = useContext(contextStore);
 
   const onType = (e) => {
     setValue(e.target.value);
@@ -13,9 +17,15 @@ const EditPostInput = ({ setter, initValue }) => {
     setter.setIsAbleEdit(false);
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     setter.setIsAbleEdit(false);
     setter.setContent(value);
+
+    console.log(`api/v1/posts/${postId}`);
+
+    fetchApi('put', `api/v1/posts/${postId}`, true, {
+      content: value,
+    });
   };
 
   return (
