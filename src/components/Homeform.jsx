@@ -4,26 +4,35 @@ import {
   Textarea,
   Text,
   Button,
-  Image,
   Modal,
   Card,
   Col,
-  Dropdown,
+  Input
 } from '@nextui-org/react';
 import { getCookie } from '../libs/getterSetterCookie';
 
+
 const Homeform = () => {
   const cookie = getCookie('login_data');
+
+
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
     console.log('closed');
   };
-  const [cardOpen, setCardOpen] = React.useState(false);
-  const open = () => setCardOpen(true);
-  const closeCard = () => {
-    setCardOpen(false);
+
+  const [cardImgOpen, setCardImgOpen] = React.useState(false);
+  const openImgCard = () => setCardImgOpen(true);
+  const closeCardImg = () => {
+    setCardImgOpen(false);
+  };
+
+  const [cardTextOpen, setCardTextOpen] = React.useState(false);
+  const openTextCard = () => setCardTextOpen(true);
+  const closeCardText = () => {
+    setCardTextOpen(false);
   };
 
   const [editOpen, setEditOpen] = React.useState(false);
@@ -126,26 +135,54 @@ const Homeform = () => {
             </div>
           </div>
 
-          <div className='w-full border-t border-purple-300 flex justify-center'></div>
-          <div className='w-full h-full  grid gap-5 md:grid-cols-3 grid-cols-2 px-5 mt-5'>
-            <div onClick={open} className='hover:cursor-pointer'>
+          <div className=' w-full h-[2px] bg-gradient-to-r p-[1px] from-[#7928ca] to-[#ff0080]'></div>
+
+          {/* card home page */}
+
+          <div className='w-full border-t flex justify-center md:pt-5 md:pb-2 md:my-2 '>
+            <div className='w-[25%] flex justify-center items-center'>
+
+              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-border-all " width={24} height={24} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <rect x={4} y={4} width={16} height={16} rx={2}></rect>
+                    <line x1={4} y1={12} x2={20} y2={12}></line>
+                    <line x1={12} y1={4} x2={12} y2={20}></line>
+                  </svg>
+                </div>
+                <div className='font-bold mx-1 text-[1.3rem] '>
+                  Post
+                </div>
+              </div>
+
+              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-notebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"></path>
+                    <line x1="13" y1="8" x2="15" y2="8"></line>
+                    <line x1="13" y1="12" x2="15" y2="12"></line>
+                  </svg>
+                </div>
+                <div className='font-bold mx-1 text-[1.3rem] '>
+                  Diary
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+
+            <div onClick={openImgCard} className='hover:cursor-pointer row-span-4 '>
               <Card css={{ w: '100%', h: '400px' }}>
-                <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight='bold'
-                      transform='uppercase'
-                      color='#ffffffAA'
-                    >
-                      Plant a tree
-                    </Text>
-                    <Text h4 color='white'>
-                      Contribute to the planet
-                    </Text>
-                  </Col>
-                </Card.Header>
                 <Card.Body css={{ p: 0 }}>
+                  <Text css={{ position: 'absolute', zIndex: 1, top: 5, w: '90%', h: '90%' }}
+                    className='text-white pt-2 pl-2 opacity-0 hover:opacity-100'>
+                    22/06/2002
+                  </Text>
                   <Card.Image
                     src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
                     width='100%'
@@ -157,101 +194,42 @@ const Homeform = () => {
               </Card>
             </div>
 
-            <div onClick={open} className='hover:cursor-pointer' >
-              <Card css={{ w: '100%' }}>
-                <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight='bold'
-                      transform='uppercase'
-                      color='#ffffffAA'
-                    >
-                      Plant a tree
-                    </Text>
-                    <Text h4 color='white'>
-                      Contribute to the planet
-                    </Text>
-                  </Col>
+            <div onClick={openTextCard} className='hover:cursor-pointer row-span-2'>
+              <Card css={{ w: '100%', h: '200px' }} className='border border-purple-500'>
+                <Card.Header>
+                  <Text css={{ position: 'absolute', zIndex: 1, top: 10, w: '100%', h: '100%' }}
+                    className=' text-black'>
+                    22/06/2002
+                  </Text>
                 </Card.Header>
-                <Card.Image
-                  src='https://nextui.org/images/card-example-3.jpeg'
-                  width='100%'
-                  height={340}
-                  objectFit='cover'
-                  alt='Card image background'
-                />
+                <Card.Body className='flex justify-center items-center'>
+                  <Text className=' border border-purple-500 w-full h-full  flex justify-center rounded-lg pt-2'>
+                    1+1=2
+                  </Text>
+                </Card.Body>
               </Card>
             </div>
 
-            <div onClick={open} className='hover:cursor-pointer'>
-              <Card css={{ w: '100%' }}>
-                <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight='bold'
-                      transform='uppercase'
-                      color='#ffffffAA'
-                    >
-                      Plant a tree
-                    </Text>
-                    <Text h4 color='white'>
-                      Contribute to the planet
-                    </Text>
-                  </Col>
-                </Card.Header>
-                <Card.Image
-                  src='https://nextui.org/images/card-example-3.jpeg'
-                  width='100%'
-                  height={340}
-                  objectFit='cover'
-                  alt='Card image background'
-                />
-              </Card>
-            </div>
 
-            <div onClick={open} className='hover:cursor-pointer'>
-              <Card css={{ w: '100%' }}>
-                <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight='bold'
-                      transform='uppercase'
-                      color='#ffffffAA'
-                    >
-                      Plant a tree
-                    </Text>
-                    <Text h4 color='white'>
-                      Contribute to the planet
-                    </Text>
-                  </Col>
-                </Card.Header>
-                <Card.Image
-                  src='https://nextui.org/images/card-example-3.jpeg'
-                  width='100%'
-                  height={340}
-                  objectFit='cover'
-                  alt='Card image background'
-                />
-              </Card>
-            </div>
+
           </div>
 
+
+          {/* Modal card-IMG post */}
           <div className='w-full h-full max-h-lg'>
             <Modal
               blur
-              className='md:max-w-[70rem] flex justify-center items-center mx-auto'
+              className='md:max-w-[80rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
               aria-labelledby='modal-title'
-              open={cardOpen}
-              onClose={closeCard}
+              open={cardImgOpen}
+              onClose={closeCardImg}
               width='100%'
             >
-              <Modal.Header className='m-0 p-0 w-full h-full pt-2 pl-2'>
+
+              <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
                 <div className='w-full flex justify-between'>
-                  <div className='w-full border-2 flex justify-start items-center'>
-                    <div className=''>
+                  <div className='w-full  flex justify-start items-center'>
+                    <div className='min-h-lg'>
                       <Avatar
                         src={`${cookie.imageUrl}`}
                         color='secondary'
@@ -261,7 +239,7 @@ const Homeform = () => {
                     <div className='pl-2'>
                       <Text
                         h1
-                        className='text-[1.3rem] font-[Nunito]'
+                        className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                         weight='bold'
                         css={{
                           textGradient: '45deg, $purple600 -20%, $pink600 100%',
@@ -271,7 +249,7 @@ const Homeform = () => {
                       </Text>
                     </div>
                   </div>
-                  <div className='w-full flex justify-end'>
+                  <div className='w-full flex justify-end items-center'>
                     <Button auto
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
@@ -282,29 +260,120 @@ const Homeform = () => {
                 </div>
 
               </Modal.Header>
-              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-2'>
+
+
+              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
                 <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
-                  <div className='md:max-w-[60%] w-full  border-2 flex flex-col'>
-                    <div className='w-full h-full flex justify-center items-center bg-black rounded-lg'>
+                  <div className='md:max-w-[60%] w-full  flex flex-col'>
+                    <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
                       <img
-                        className='w-full-image md:max-h-full max-h-[20rem] rounded-lg'
+                        className='w-full md:max-h-full rounded-lg'
                         src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
                       />
                     </div>
                   </div>
-                  <div className='md:max-w-[40%] md:min-w-[400px] w-full border-2'>
-                      <div className='w-full '>
-
+                  <div className='w-full '>
+                    <div className='w-full h-[90%] border pl-4 pt-2'>
+                        comment area
+                    </div>
+                    <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
+                      <div className='w-[95%] pl-5'>
+                        <input type="text" placeholder='Type your Comment...' className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none' />
                       </div>
-                      <div>
+                      <div className='flex justify-center items-center md:w-[5%] '>
+                        <img
+                          className='cursor-pointer hover:mb-2 transition-all md:w-[80%]'
+                          src='/sendIcon.svg'
+                          alt='send comment icon'
 
+                        />
                       </div>
+                    </div>
                   </div>
                 </div>
               </Modal.Body>
             </Modal>
           </div>
 
+          {/* Modal card-text post */}
+          <div className='w-full h-full max-h-lg'>
+            <Modal
+              blur
+              className='md:max-w-[50rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
+              aria-labelledby='modal-title'
+              open={cardTextOpen}
+              onClose={closeCardText}
+              width='100%'
+            >
+
+              <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
+                <div className='w-full flex justify-between'>
+                  <div className='w-full  flex justify-start items-center'>
+                    <div className='min-h-lg'>
+                      <Avatar
+                        src={`${cookie.imageUrl}`}
+                        color='secondary'
+                        bordered
+                      />
+                    </div>
+                    <div className='pl-2'>
+                      <Text
+                        h1
+                        className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
+                        weight='bold'
+                        css={{
+                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                        }}
+                      >
+                        {`${cookie.firstName} ${cookie.lastName}`}
+                      </Text>
+                    </div>
+                  </div>
+                  <div className='w-full flex justify-end items-center'>
+                    <Button auto
+                      onClick={openEdit}
+                      className='text-purple-600 text-xl'
+                    >
+                      ...
+                    </Button>
+                  </div>
+                </div>
+
+              </Modal.Header>
+
+
+              <Modal.Body className='h-full w-full flex justify-center items-center'>
+                <div className='flex justify-center items-center w-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
+                  <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-200 '>
+                    <div className='m-5'>
+                      2+2=4
+                    </div>
+                  </div>
+                </div>
+              </Modal.Body>
+
+              <Modal.Footer className='w-full flex justify-center items-center  pt-0'>
+                <div className='w-[98%] h-full bottom-0 flex justify-center items-center border-2'>
+                  comment area
+                </div>
+                <div className='w-[98%] bottom-0 flex justify-center items-center '>
+                  <div className='w-[95%] pl-5'>
+                    <input type="text" placeholder='Type your Comment...' className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none' />
+                  </div>
+                  <div className='flex justify-center items-center md:w-[5%] w-[8%]'>
+                    <img
+                      className='cursor-pointer hover:mb-2 transition-all w-[50%] '
+                      src='/sendIcon.svg'
+                      alt='send comment icon'
+
+                    />
+                  </div>
+                </div>
+              </Modal.Footer>
+            </Modal>
+          </div>
+
+          {/* Modal edit profile */}
           <div className='w-full max-w-lg h-full max-h-lg'>
             <Modal
               closeButton
@@ -330,30 +399,32 @@ const Homeform = () => {
             </Modal>
           </div>
 
+          {/* Model edit post */}
           <div className=''>
             <Modal
               aria-labelledby='modal-title'
               open={editOpen}
               onClose={closeEdit}
             >
-              <Modal.Body 
-              className='m-0 p-0'>
+              <Modal.Body
+                className='m-0 p-0'>
                 <div className='w-full h-full'>
                   <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'>
-                      Edit Post
+                    Edit Post
                   </div>
                   <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300 text-red-700'>
-                      Delete Post
+                    Delete Post
                   </div>
                   <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300' onClick={closeEdit}>
-                      Cancel
+                    Cancel
                   </div>
                 </div>
               </Modal.Body>
-            </Modal>y   
+            </Modal>
           </div>
 
-          
+
+
         </div>
       </div>
     </>
