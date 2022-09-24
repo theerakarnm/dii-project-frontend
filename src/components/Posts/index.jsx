@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import pTypes from 'prop-types';
-import axios from 'axios';
 
 import { Input } from '@nextui-org/react';
 import Comment from './Comment';
@@ -9,6 +8,7 @@ import OptionDropdown from './OptionDropdown';
 import { getCookie } from '../../libs/getterSetterCookie';
 import { Favorite } from '../Utils/Favorite';
 import _m from 'moment';
+import { fetchApi } from '../../helpers/fetchApi';
 
 const props = {
   postData: pTypes.shape({
@@ -41,11 +41,6 @@ const Post = ({ postData, openAllCommentModal }) => {
   const [isLoadingComment, setIsLoadingComment] = useState(false);
 
   //TODO : DELETE AND EDIT
-  const config = {
-    headers: {
-      Authorization: cookieData.token,
-    },
-  };
 
   const likeHandler = async () => {
     try {
@@ -57,16 +52,10 @@ const Post = ({ postData, openAllCommentModal }) => {
 
       const numSend = isLike ? -1 : 1;
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/like`;
-
-      const res = await axios.patch(
-        apiUrl,
-        {
-          postId: postData.id,
-          num: numSend,
-        },
-        config
-      );
+      const res = await fetchApi('patch', 'api/v1/posts/like', true, {
+        postId: postData.id,
+        num: numSend,
+      });
 
       if (res.status !== 200) {
         isLike
@@ -102,15 +91,10 @@ const Post = ({ postData, openAllCommentModal }) => {
       });
       setIsLoadingComment(true);
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/comment/add`;
-      const res = await axios.post(
-        apiUrl,
-        {
-          postId: postData.id,
-          content: commentContent,
-        },
-        config
-      );
+      const res = await fetchApi('post', 'api/v1/posts/comment/add', true, {
+        postId: postData.id,
+        content: commentContent,
+      });
 
       if (res.status !== 201) {
         setComment((prev) => (prev[0].error = true));

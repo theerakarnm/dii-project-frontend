@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Text } from '@nextui-org/react';
 
 import validateEmail from '../libs/validateEmail';
 import { Loading } from '@nextui-org/react';
+import { fetchApi } from '../helpers/fetchApi';
 
 const Signupform = () => {
   const [value, setValue] = useState({
@@ -85,10 +85,7 @@ const Signupform = () => {
       }
       console.log('test');
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}auth/register`;
-      console.log(apiUrl);
-
-      const res = await axios.post(apiUrl, {
+      const res = await fetchApi('post', 'api/v1/auth/register', false, {
         firstName: value.firstName,
         lastName: value.lastName,
         email: value.email,
