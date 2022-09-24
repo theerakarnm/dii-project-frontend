@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import { Textarea } from '@nextui-org/react';
 import ModalDragFile from './ModalDragFile';
 import { useDropzone } from 'react-dropzone';
@@ -6,6 +6,7 @@ import { useDropzone } from 'react-dropzone';
 import fileToBase64 from '../../../libs/FileConverter';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import moment from 'moment/moment';
+import FeedStore from '../../../context/contextStore_feed';
 import { fetchApi } from '../../../helpers/fetchApi';
 
 const NewPost = ({ setIsFirstPostLoading, setPost }) => {
@@ -14,6 +15,7 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [image, setImage] = useState('');
   const [textValue, setTextValue] = useState('');
   const [file, setFile] = useState({});
+  const { setAlertValue } = useContext(FeedStore);
 
   const textHandler = (event) => {
     setTextValue(event.target.value);
@@ -51,8 +53,18 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
       await fetchApi('post', 'api/v1/posts/', true, data);
 
       setIsFirstPostLoading(false);
+      setAlertValue({
+        isShow: true,
+        color: 'green',
+        context: 'Post has been published!',
+      });
     } catch (e) {
       console.error(e);
+      setAlertValue({
+        isShow: true,
+        color: 'red',
+        context: 'Post failed to published!',
+      });
       return;
     }
   };

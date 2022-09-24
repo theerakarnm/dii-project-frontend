@@ -4,10 +4,12 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { fetchApi } from '../../helpers/fetchApi';
 import contextStore from '../../context/contextStore';
+import FeedStore from '../../context/contextStore_feed';
 
 const EditPostInput = ({ setter, initValue }) => {
   const [value, setValue] = useState(initValue);
   const postId = useContext(contextStore);
+  const { setAlertValue } = useContext(FeedStore);
 
   const onType = (e) => {
     setValue(e.target.value);
@@ -23,9 +25,23 @@ const EditPostInput = ({ setter, initValue }) => {
 
     console.log(`api/v1/posts/${postId}`);
 
-    fetchApi('put', `api/v1/posts/${postId}`, true, {
-      content: value,
-    });
+    try {
+      const result = await fetchApi('put', `api/v1/posts/${postId}`, true, {
+        content: value,
+      });
+
+      setAlertValue({
+        isShow: true,
+        color: 'green',
+        context: 'Comment has been updated',
+      });
+    } catch (e) {
+      setAlertValue({
+        isShow: true,
+        color: 'red',
+        context: 'Comment failed to update',
+      });
+    }
   };
 
   return (

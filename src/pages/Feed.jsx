@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import { useModal } from '@nextui-org/react';
+import FeedStore from '../context/contextStore_feed';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import Navbar from '../components/Navbar';
@@ -11,6 +12,7 @@ import ComplexWithAnimation from '../components/Skeleton';
 import AllCommentModel from '../components/Posts/AllCommentModel';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
+import Alert from '../components/Alert';
 
 const Feed = () => {
   const [data, setData] = useState([]);
@@ -20,6 +22,11 @@ const Feed = () => {
   const [postId, setPostId] = useState('');
   const [loading, setLoading] = useState(false);
   const [allComment, setAllComment] = useState([]);
+  const [alertValue, setAlertValue] = useState({
+    isShow: false,
+    color: 'green',
+    context: '',
+  });
 
   const cookieData = getCookie('login_data');
   const modalPostId = createContext(postId);
@@ -73,44 +80,55 @@ const Feed = () => {
 
   return (
     <>
-      <Navbar nameWhichActive={'Feed'} />
-      <modalPostId.Provider>
-        <Container>
-          {bindings.open ? (
-            ''
-          ) : (
-            <AllCommentModel
-              bindings={bindings}
-              setVisible={setVisible}
-              loading={loading}
+      <FeedStore.Provider
+        value={{
+          setAlertValue,
+        }}
+      >
+        <modalPostId.Provider>
+          <Navbar nameWhichActive={'Feed'} />
+          <Container>
+            <Alert
+              isShow={alertValue.isShow}
+              color={alertValue.color}
+              context={alertValue.context}
             />
-          )}
-          <div className='flex flex-col gap-5 justify-center items-center'>
-            <NewPost
-              setIsFirstPostLoading={setIsFirstPostLoading}
-              setPost={setData}
-            />
-            {isLoading ? (
-              <ComplexWithAnimation />
+            {bindings.open ? (
+              ''
             ) : (
-              data.map((item, i) => {
-                return i === 0 ? (
-                  <PostLayout
-                    isFirstPostLoading={isFirstPostLoading}
-                    key={item.id}
-                  >
-                    <Post postData={item} />
-                  </PostLayout>
-                ) : (
-                  <PostLayout key={item.id}>
-                    <Post postData={item} />
-                  </PostLayout>
-                );
-              })
+              <AllCommentModel
+                bindings={bindings}
+                setVisible={setVisible}
+                loading={loading}
+              />
             )}
-          </div>
-        </Container>
-      </modalPostId.Provider>
+            <div className='flex flex-col gap-5 justify-center items-center'>
+              <NewPost
+                setIsFirstPostLoading={setIsFirstPostLoading}
+                setPost={setData}
+              />
+              {isLoading ? (
+                <ComplexWithAnimation />
+              ) : (
+                data.map((item, i) => {
+                  return i === 0 ? (
+                    <PostLayout
+                      isFirstPostLoading={isFirstPostLoading}
+                      key={item.id}
+                    >
+                      <Post postData={item} />
+                    </PostLayout>
+                  ) : (
+                    <PostLayout key={item.id}>
+                      <Post postData={item} />
+                    </PostLayout>
+                  );
+                })
+              )}
+            </div>
+          </Container>
+        </modalPostId.Provider>
+      </FeedStore.Provider>
     </>
   );
 };

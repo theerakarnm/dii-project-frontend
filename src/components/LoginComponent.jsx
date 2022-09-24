@@ -39,7 +39,7 @@ const LoginComponent = () => {
       window.location.replace('/');
     } catch (e) {
       console.log(e);
-      // setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
+      setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
       setBtnLoading(false);
       return;
     }
