@@ -5,8 +5,8 @@ import Navbar from "../components/Navbar";
 export default function Diary() {
   return (
     <>
-      <Navbar />
-      <div className="flex justify-center items-center w-screen h-screen">
+      <Navbar nameWhichActive={"Profile"} />
+      <div className='flex justify-center items-center w-screen h-screen'>
         <DiaryComponent />
       </div>
     </>
