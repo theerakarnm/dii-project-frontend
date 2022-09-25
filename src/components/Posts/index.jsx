@@ -48,8 +48,6 @@ const Post = ({ postData, openAllCommentModal }) => {
 
   const { setData } = useContext(FeedStore);
 
-  const { setData } = useContext(FeedStore);
-
   //TODO : DELETE AND EDIT
 
   const likeHandler = async () => {
@@ -169,20 +167,20 @@ const Post = ({ postData, openAllCommentModal }) => {
           }}
         >
           {postData.imageUrl ? (
-            <img className="w-full" src={postData.imageUrl} alt="Content" />
+            <img className='w-full' src={postData.imageUrl} alt='Content' />
           ) : (
             <>
-              <div className="w-full sm:w-[1000px]"></div>
+              <div className='w-full sm:w-[1000px]'></div>
             </>
           )}
-          <div className="pl-6 pr-2 py-4">
-            <div className="font-normal text-md mb-2">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center">
+          <div className='pl-6 pr-2 py-4'>
+            <div className='font-normal text-md mb-2'>
+              <div className='flex items-start justify-between'>
+                <div className='flex items-center'>
                   <Avatar url={postData.profileImage} />
-                  <div className="ml-3 flex flex-col">
+                  <div className='ml-3 flex flex-col'>
                     <span>{postData.name}</span>
-                    <span className="text-gray-400 text-xs">
+                    <span className='text-gray-400 text-xs'>
                       {postData.dateTime}
                     </span>
                   </div>
@@ -221,35 +219,35 @@ const Post = ({ postData, openAllCommentModal }) => {
               style={{
                 marginTop: margin,
               }}
-              className="transition-all pr-4 flex"
+              className='transition-all pr-4 flex'
             >
               {isLikeLoading ? (
-                <div className="animate-spin">
+                <div className='animate-spin'>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon icon-tabler icon-tabler-loader"
-                    width="44"
-                    height="44"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1"
-                    stroke="#6f32be"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    xmlns='http://www.w3.org/2000/svg'
+                    class='icon icon-tabler icon-tabler-loader'
+                    width='44'
+                    height='44'
+                    viewBox='0 0 24 24'
+                    strokeWidth='1'
+                    stroke='#6f32be'
+                    fill='none'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <line x1="12" y1="6" x2="12" y2="3" />
-                    <line x1="16.25" y1="7.75" x2="18.4" y2="5.6" />
-                    <line x1="18" y1="12" x2="21" y2="12" />
-                    <line x1="16.25" y1="16.25" x2="18.4" y2="18.4" />
-                    <line x1="12" y1="18" x2="12" y2="21" />
-                    <line x1="7.75" y1="16.25" x2="5.6" y2="18.4" />
-                    <line x1="6" y1="12" x2="3" y2="12" />
-                    <line x1="7.75" y1="7.75" x2="5.6" y2="5.6" />
+                    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                    <line x1='12' y1='6' x2='12' y2='3' />
+                    <line x1='16.25' y1='7.75' x2='18.4' y2='5.6' />
+                    <line x1='18' y1='12' x2='21' y2='12' />
+                    <line x1='16.25' y1='16.25' x2='18.4' y2='18.4' />
+                    <line x1='12' y1='18' x2='12' y2='21' />
+                    <line x1='7.75' y1='16.25' x2='5.6' y2='18.4' />
+                    <line x1='6' y1='12' x2='3' y2='12' />
+                    <line x1='7.75' y1='7.75' x2='5.6' y2='5.6' />
                   </svg>
                 </div>
               ) : (
-                <div onClick={likeHandler} className="w-10 mr-3 cursor-pointer">
+                <div onClick={likeHandler} className='w-10 mr-3 cursor-pointer'>
                   <Favorite isLiked={isLike} />
                 </div>
               )}
@@ -258,8 +256,8 @@ const Post = ({ postData, openAllCommentModal }) => {
                 onBlur={() => setMargin("0.5rem")}
                 fullWidth
                 underlined
-                labelPlaceholder="Type your Comment..."
-                color="default"
+                labelPlaceholder='Type your Comment...'
+                color='default'
                 onChange={commentChangeHandler}
                 value={commentContent}
                 contentRightStyling={{
@@ -267,20 +265,20 @@ const Post = ({ postData, openAllCommentModal }) => {
                 }}
                 contentRight={
                   <div
-                    className="w-full h-full cursor-pointer hover:-translate-y-[0.19rem] transition-all px-2"
+                    className='w-full h-full cursor-pointer hover:-translate-y-[0.19rem] transition-all px-2'
                     onClick={addCommentHandler}
                   >
                     <img
-                      className="w-5 h-5"
-                      src="/sendIcon.svg"
-                      alt="send comment icon"
+                      className='w-5 h-5'
+                      src='/sendIcon.svg'
+                      alt='send comment icon'
                     />
                   </div>
                 }
               />
             </div>
-            <div className="mt-2 flex justify-end mr-3">
-              <small className="text-gray-400 text-[0.9rem]">{`${likeCount} ${
+            <div className='mt-2 flex justify-end mr-3'>
+              <small className='text-gray-400 text-[0.9rem]'>{`${likeCount} ${
                 likeCount > 1 ? "likes" : "like"
               }`}</small>
             </div>
@@ -298,7 +296,7 @@ const Post = ({ postData, openAllCommentModal }) => {
             {postData.hasMoreComment ? (
               <small
                 onClick={openAllCommentModal}
-                className="underline cursor-pointer text-sky-500 hover:text-sky-600"
+                className='underline cursor-pointer text-sky-500 hover:text-sky-600'
               >
                 View all comment
               </small>
