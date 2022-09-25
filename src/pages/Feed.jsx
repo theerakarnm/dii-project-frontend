@@ -29,7 +29,6 @@ const Feed = () => {
   });
 
   const cookieData = getCookie('login_data');
-  const modalPostId = createContext(postId);
 
   useEffect(() => {
     const resData = async () => {
@@ -38,11 +37,10 @@ const Feed = () => {
       if (!cookieData) {
         return;
       }
-
       const result = await fetchApi('get', 'api/v1/posts/recent', true);
-      const ss = await fetchApi('get', 'testGet');
 
       setData(result.data.data);
+      console.log(result.data.data);
       setIsLoading(false);
     };
 
@@ -83,51 +81,47 @@ const Feed = () => {
       <FeedStore.Provider
         value={{
           setAlertValue,
+          setData,
         }}
       >
-        <modalPostId.Provider>
-          <Navbar nameWhichActive={'Feed'} />
-          <Container>
-            <Alert
-              isShow={alertValue.isShow}
-              color={alertValue.color}
-              context={alertValue.context}
+        <Navbar nameWhichActive={'Feed'} />
+        <Container>
+          <Alert
+            isShow={alertValue.isShow}
+            color={alertValue.color}
+            context={alertValue.context}
+          />
+
+          <AllCommentModel
+            bindings={bindings}
+            setVisible={setVisible}
+            loading={loading}
+          />
+          <div className='flex flex-col gap-5 justify-center items-center'>
+            <NewPost
+              setIsFirstPostLoading={setIsFirstPostLoading}
+              setPost={setData}
             />
-            {bindings.open ? (
-              ''
+            {isLoading ? (
+              <ComplexWithAnimation />
             ) : (
-              <AllCommentModel
-                bindings={bindings}
-                setVisible={setVisible}
-                loading={loading}
-              />
+              data.map((item, i) => {
+                return i === 0 ? (
+                  <PostLayout
+                    isFirstPostLoading={isFirstPostLoading}
+                    key={item.id}
+                  >
+                    <Post postData={item} />
+                  </PostLayout>
+                ) : (
+                  <PostLayout key={item.id}>
+                    <Post postData={item} />
+                  </PostLayout>
+                );
+              })
             )}
-            <div className='flex flex-col gap-5 justify-center items-center'>
-              <NewPost
-                setIsFirstPostLoading={setIsFirstPostLoading}
-                setPost={setData}
-              />
-              {isLoading ? (
-                <ComplexWithAnimation />
-              ) : (
-                data.map((item, i) => {
-                  return i === 0 ? (
-                    <PostLayout
-                      isFirstPostLoading={isFirstPostLoading}
-                      key={item.id}
-                    >
-                      <Post postData={item} />
-                    </PostLayout>
-                  ) : (
-                    <PostLayout key={item.id}>
-                      <Post postData={item} />
-                    </PostLayout>
-                  );
-                })
-              )}
-            </div>
-          </Container>
-        </modalPostId.Provider>
+          </div>
+        </Container>
       </FeedStore.Provider>
     </>
   );

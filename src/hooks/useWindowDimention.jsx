@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-export default function useWindowDimensions() {
+export default function useScreenDimension() {
   const hasWindow = typeof window !== 'undefined';
 
-  function getWindowDimensions() {
+  function getScreenDimension() {
     const width = hasWindow ? window.innerWidth : null;
     const height = hasWindow ? window.innerHeight : null;
     return {
@@ -13,13 +13,13 @@ export default function useWindowDimensions() {
   }
 
   const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
+    getScreenDimension()
   );
 
   useEffect(() => {
     if (hasWindow) {
       function handleResize() {
-        setWindowDimensions(getWindowDimensions());
+        setWindowDimensions(getScreenDimension());
       }
 
       window.addEventListener('resize', handleResize);
