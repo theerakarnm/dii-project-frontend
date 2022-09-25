@@ -1,17 +1,17 @@
-import React, { useState, useContext } from "react";
-import pTypes from "prop-types";
+import React, { useState, useContext } from 'react';
+import pTypes from 'prop-types';
 
-import { Input, Textarea } from "@nextui-org/react";
-import Comment from "./Comment";
-import Avatar from "../Avatar";
-import OptionDropdown from "./OptionDropdown";
-import { getCookie } from "../../libs/getterSetterCookie";
-import { Favorite } from "../Utils/Favorite";
-import _m from "moment";
-import { fetchApi } from "../../helpers/fetchApi";
-import EditPostInput from "./EditPostInput";
-import ContextStore from "../../context/contextStore";
-import FeedStore from "../../context/contextStore_feed";
+import { Input } from '@nextui-org/react';
+import Comment from './Comment';
+import Avatar from '../Avatar';
+import OptionDropdown from './OptionDropdown';
+import { getCookie } from '../../libs/getterSetterCookie';
+import { Favorite } from '../Utils/Favorite';
+import _m from 'moment';
+import { fetchApi } from '../../helpers/fetchApi';
+import EditPostInput from './EditPostInput';
+import ContextStore from '../../context/contextStore';
+import FeedStore from '../../context/contextStore_feed';
 
 const props = {
   postData: pTypes.shape({
@@ -31,22 +31,22 @@ const props = {
   }),
 };
 
-const Post = ({ postData, openAllCommentModal }) => {
-  const cookieData = getCookie("login_data");
-  const optionDropdownItem = ["Edit Post", "Delete Post"];
+const Post = ({ postData }) => {
+  const cookieData = getCookie('login_data');
+  const optionDropdownItem = ['Edit Post', 'Delete Post'];
 
-  const [margin, setMargin] = useState("0.5rem");
+  const [margin, setMargin] = useState('0.5rem');
   const [isLike, setIsLike] = useState(postData.isLike);
   const [likeCount, setLikeCount] = useState(postData.likeContent.likeCount);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
   const [isLoadingComment, setIsLoadingComment] = useState(false);
   const [entireLoading, setEntireLoading] = useState(false);
-  const [commentContent, setCommentContent] = useState("");
+  const [commentContent, setCommentContent] = useState('');
   const [comment, setComment] = useState(postData.comment);
   const [content, setContent] = useState(postData.postContent);
   const [isAbleEdit, setIsAbleEdit] = useState(false);
 
-  const { setData } = useContext(FeedStore);
+  const { setData, openAllCommentModal } = useContext(FeedStore);
 
   //TODO : DELETE AND EDIT
 
@@ -60,10 +60,14 @@ const Post = ({ postData, openAllCommentModal }) => {
 
       const numSend = isLike ? -1 : 1;
 
-      const res = await fetchApi("put", "api/v1/posts/like", true, {
-        postId: postData.id,
-        num: numSend,
-      });
+      const res = await fetchApi(
+        'put',
+        `api/v1/posts/like/${postData.id}`,
+        true,
+        {
+          num: numSend,
+        }
+      );
 
       if (res.status !== 200) {
         isLike
@@ -71,7 +75,7 @@ const Post = ({ postData, openAllCommentModal }) => {
           : setLikeCount((prev) => prev + 1);
         setIsLike(!isLike);
         setIsLikeLoading(false);
-        throw new Error("failed to like");
+        throw new Error('failed to like');
       }
 
       setIsLikeLoading(false);
@@ -84,7 +88,7 @@ const Post = ({ postData, openAllCommentModal }) => {
 
   const addCommentHandler = async () => {
     try {
-      setCommentContent("");
+      setCommentContent('');
       setComment((prev) => {
         return [
           {
@@ -99,7 +103,7 @@ const Post = ({ postData, openAllCommentModal }) => {
       });
       setIsLoadingComment(true);
 
-      const res = await fetchApi("post", "api/v1/posts/comment/add", true, {
+      const res = await fetchApi('post', 'api/v1/posts/comment/add', true, {
         postId: postData.id,
         content: commentContent,
       });
@@ -116,7 +120,7 @@ const Post = ({ postData, openAllCommentModal }) => {
               : item;
           })
         );
-        throw new Error("failed to comment");
+        throw new Error('failed to comment');
       }
 
       setIsLoadingComment(false);
@@ -143,13 +147,13 @@ const Post = ({ postData, openAllCommentModal }) => {
 
   const onAction = async (key) => {
     switch (key) {
-      case "edit":
+      case 'edit':
         setIsAbleEdit(true);
         break;
-      case "delete":
-        console.log("delete");
+      case 'delete':
+        console.log('delete');
         setEntireLoading(true);
-        await fetchApi("delete", `api/v1/posts/${postData.id}`, true);
+        await fetchApi('delete', `api/v1/posts/${postData.id}`, true);
         setData((prev) => prev.filter((item) => item.id !== postData.id));
         setEntireLoading(false);
         break;
@@ -200,8 +204,8 @@ const Post = ({ postData, openAllCommentModal }) => {
             {!isAbleEdit ? (
               <p
                 style={{
-                  fontSize: content.length < 35 ? "2rem" : "1rem",
-                  marginTop: content.length < 35 ? "1.5rem" : "0",
+                  fontSize: content.length < 35 ? '2rem' : '1rem',
+                  marginTop: content.length < 35 ? '1.5rem' : '0',
                 }}
                 className={`text-gray-700 text-base mb-6 mr-4 mt-4`}
               >
@@ -252,8 +256,8 @@ const Post = ({ postData, openAllCommentModal }) => {
                 </div>
               )}
               <Input
-                onFocus={() => setMargin("2.7rem")}
-                onBlur={() => setMargin("0.5rem")}
+                onFocus={() => setMargin('2.7rem')}
+                onBlur={() => setMargin('0.5rem')}
                 fullWidth
                 underlined
                 labelPlaceholder='Type your Comment...'
@@ -261,7 +265,7 @@ const Post = ({ postData, openAllCommentModal }) => {
                 onChange={commentChangeHandler}
                 value={commentContent}
                 contentRightStyling={{
-                  cursor: "pointer",
+                  cursor: 'pointer',
                 }}
                 contentRight={
                   <div
@@ -279,7 +283,7 @@ const Post = ({ postData, openAllCommentModal }) => {
             </div>
             <div className='mt-2 flex justify-end mr-3'>
               <small className='text-gray-400 text-[0.9rem]'>{`${likeCount} ${
-                likeCount > 1 ? "likes" : "like"
+                likeCount > 1 ? 'likes' : 'like'
               }`}</small>
             </div>
             {comment.map((cmt, ind) => {
@@ -295,7 +299,9 @@ const Post = ({ postData, openAllCommentModal }) => {
             })}
             {postData.hasMoreComment ? (
               <small
-                onClick={openAllCommentModal}
+                onClick={() => {
+                  openAllCommentModal(postData.id);
+                }}
                 className='underline cursor-pointer text-sky-500 hover:text-sky-600'
               >
                 View all comment
