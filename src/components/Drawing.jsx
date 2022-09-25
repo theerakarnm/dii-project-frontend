@@ -2,10 +2,14 @@ import SignatureCanvas from 'react-signature-canvas';
 
 import { useState, useMemo, useRef } from 'react';
 import DropdownCom from './Utils/Dropdown';
+import useWindowDimensions from '../hooks/useWindowDimention';
 
 const Drawing = ({ css }) => {
   const [color, setColor] = useState('gray');
   const boardRef = useRef(null);
+  const [dimension] = useWindowDimensions();
+
+  console.log({ dimension });
 
   const onClearBoard = () => {
     boardRef.current.clear();
@@ -23,12 +27,20 @@ const Drawing = ({ css }) => {
             clear
           </button>
         </div>
-        <div className={`bg-slate-50 ${{ css }}`}>
+        <div
+          className={`bg-[url('/src/assets/gridLine.png')] bg-cover bg-blend-overlay ${{
+            css,
+          }}`}
+        >
           <SignatureCanvas
             ref={boardRef}
             throttle={5}
             penColor={color.toLowerCase()}
-            canvasProps={{ width: 500, height: 400, className: 'sigCanvas' }}
+            canvasProps={{
+              width: dimension.width <= 767 ? dimension.width - 50 : 520,
+              height: 400,
+              className: 'sigCanvas',
+            }}
           />
         </div>
       </div>
