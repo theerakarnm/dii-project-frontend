@@ -1,21 +1,44 @@
 import { Textarea } from '@nextui-org/react';
 import React from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
+import { fetchApi } from '../../helpers/fetchApi';
+import contextStore from '../../context/contextStore';
+import FeedStore from '../../context/contextStore_feed';
 
 const EditPostInput = ({ setter, initValue }) => {
-  const [value, setValue] = useState(initValue);
+  const [values, setValues] = useState(initValue);
+  const postId = useContext(contextStore);
+  const { setAlertValue } = useContext(FeedStore);
 
   const onType = (e) => {
-    setValue(e.target.value);
+    setValues(e.target.value);
   };
 
   const onDiscard = () => {
     setter.setIsAbleEdit(false);
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
     setter.setIsAbleEdit(false);
-    setter.setContent(value);
+    setter.setEntireLoading(true);
+    console.log(`api/v1/posts/${postId}`);
+
+    try {
+      const result = await fetchApi('put', `api/v1/posts/${postId}`, true, {
+        content: values,
+      });
+
+      setter.setEntireLoading(false);
+      setter.setContent(values);
+      console.log(values);
+    } catch (e) {
+      setAlertValue({
+        isShow: true,
+        color: 'red',
+        context: 'Comment failed to update',
+      });
+    }
   };
 
   return (
@@ -25,7 +48,7 @@ const EditPostInput = ({ setter, initValue }) => {
           width: '100%',
         }}
         placeholder='edit here'
-        value={value}
+        value={values}
         onChange={onType}
         rows={4}
       />
