@@ -50,30 +50,23 @@ const Feed = () => {
     return <NotLoginInfo />;
   }
 
-  const openAllCommentModal = async () => {
+  const openAllCommentModal = async (postId) => {
     setVisible(true);
+    setLoading(true);
+    try {
+      const result = await fetchApi(
+        'get',
+        `api/v1/posts/comment/${postId}`,
+        true
+      );
+      console.log(result.data);
+      setAllComment(result.data.data);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      return;
+    }
   };
-
-  // const getComment = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const apiUrl = `${
-  //       import.meta.env.VITE_API_HOSTNAME
-  //     }post/comment/${postId}`;
-  //     const config = {
-  //       headers: {
-  //         Authorization: cookieData.token,
-  //       },
-  //     };
-  //     const res = await axios.get(apiUrl, config);
-
-  //     setAllComment(res.data.data);
-  //     setLoading(false);
-  //   } catch (e) {
-  //     console.error(e);
-  //     return;
-  //   }
-  // };
 
   return (
     <>
@@ -81,6 +74,7 @@ const Feed = () => {
         value={{
           setAlertValue,
           setData,
+          openAllCommentModal,
         }}
       >
         <Navbar nameWhichActive={'Feed'} />
@@ -90,11 +84,11 @@ const Feed = () => {
             color={alertValue.color}
             context={alertValue.context}
           />
-
           <AllCommentModel
             bindings={bindings}
             setVisible={setVisible}
             loading={loading}
+            allComment={allComment}
           />
           <div className='flex flex-col gap-5 justify-center items-center'>
             <NewPost

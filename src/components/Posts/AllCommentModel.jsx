@@ -6,10 +6,10 @@ import { getCookie } from '../../libs/getterSetterCookie';
 
 import Comment from './Comment';
 
-const AllCommentModel = ({ bindings, setVisible, loading }) => {
+const AllCommentModel = ({ bindings, setVisible, loading, allComment }) => {
   const cookieData = getCookie('login_data');
 
-  const [comment, setComment] = useState([]);
+  // const [comment, setComment] = useState([]);
 
   return (
     <div>
@@ -21,7 +21,7 @@ const AllCommentModel = ({ bindings, setVisible, loading }) => {
         {...bindings}
       >
         <Modal.Header>
-          <Text id='modal-title' size={18}>
+          <Text b id='modal-title' className='p-3' size={21}>
             All comment
           </Text>
         </Modal.Header>
@@ -50,15 +50,19 @@ const AllCommentModel = ({ bindings, setVisible, loading }) => {
               <line x1='7.75' y1='7.75' x2='5.6' y2='5.6' />
             </svg>
           ) : (
-            comment.map((cmt) => <Comment comment={cmt} />)
+            allComment.map((cmt) => <Comment comment={cmt} />)
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color='error' onClick={() => setVisible(false)}>
+          <Button
+            className='bg-red-400 hover:bg-red-500 text-white'
+            auto
+            flat
+            onClick={() => {
+              setVisible(false);
+            }}
+          >
             Close
-          </Button>
-          <Button auto onClick={() => setVisible(false)}>
-            Agree
           </Button>
         </Modal.Footer>
       </Modal>

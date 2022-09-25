@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import pTypes from 'prop-types';
 
-import { Input, Textarea } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
 import Comment from './Comment';
 import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
@@ -31,7 +31,7 @@ const props = {
   }),
 };
 
-const Post = ({ postData, openAllCommentModal }) => {
+const Post = ({ postData }) => {
   const cookieData = getCookie('login_data');
   const optionDropdownItem = ['Edit Post', 'Delete Post'];
 
@@ -46,7 +46,7 @@ const Post = ({ postData, openAllCommentModal }) => {
   const [content, setContent] = useState(postData.postContent);
   const [isAbleEdit, setIsAbleEdit] = useState(false);
 
-  const { setData } = useContext(FeedStore);
+  const { setData, openAllCommentModal } = useContext(FeedStore);
 
   //TODO : DELETE AND EDIT
 
@@ -299,7 +299,9 @@ const Post = ({ postData, openAllCommentModal }) => {
             })}
             {postData.hasMoreComment ? (
               <small
-                onClick={openAllCommentModal}
+                onClick={() => {
+                  openAllCommentModal(postData.id);
+                }}
                 className='underline cursor-pointer text-sky-500 hover:text-sky-600'
               >
                 View all comment
