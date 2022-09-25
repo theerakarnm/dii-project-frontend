@@ -1,40 +1,41 @@
-import { Navbar, Dropdown, Avatar, Link, Text } from '@nextui-org/react';
+import { Navbar, Dropdown, Avatar, Text } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Logo } from './Logo.jsx';
 
-export default function NavbarComponent({ nameWhichActive }) {
+export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
   const cookieData = JSON.parse(Cookies.get('login_data'));
-  console.log(cookieData);
   const navItem = [
     {
       name: 'Home',
-      href: '/#/',
+      to: '/',
     },
     {
       name: 'Feed',
-      href: '/#/feed',
+      to: '/feed',
     },
     {
       name: 'Diary',
-      href: '/#/diary',
+      to: '/diary',
     },
+    ...moreRoute,
   ];
   const collapseItems = [
     ...navItem,
     {
       name: 'My Settings',
-      href: '/#/setting',
+      to: '/setting',
     },
     {
       name: 'Log Out',
-      href: '/#/logout',
+      to: '/logout',
     },
   ];
 
   const handlerLogout = () => {
     Cookies.remove('login_data');
 
-    window.location.replace('/#/login');
+    window.location.replace('/login');
   };
 
   return (
@@ -48,12 +49,12 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <a className='flex items-center' href='/#/'>
+          <Link className='flex items-center' to='/'>
             <Logo />
             <Text b color='inherit' hideIn='xs'>
               S-LOG
             </Text>
-          </a>
+          </Link>
         </Navbar.Brand>
         <Navbar.Content
           enableCursorHighlight
@@ -64,17 +65,20 @@ export default function NavbarComponent({ nameWhichActive }) {
           {navItem.map((item) => {
             if (nameWhichActive === item.name)
               return (
-                <Navbar.Link
-                  key={`${item.name}navItem`}
-                  isActive
-                  href={item.href}
-                >
-                  {item.name}
+                <Navbar.Link key={`${item.name}navItem`} isActive>
+                  <Link
+                    className='flex justify-center items-center'
+                    to={item.to}
+                  >
+                    {item.name}
+                  </Link>
                 </Navbar.Link>
               );
             return (
-              <Navbar.Link key={`${item.name}navItem`} href={item.href}>
-                {item.name}
+              <Navbar.Link key={`${item.name}navItem`}>
+                <Link className='flex justify-center items-center' to={item.to}>
+                  {item.name}
+                </Link>
               </Navbar.Link>
             );
           })}
@@ -108,7 +112,11 @@ export default function NavbarComponent({ nameWhichActive }) {
                 <Text b color='inherit' css={{ d: 'flex' }}>
                   Signed in as
                 </Text>
-                <Text b color='inherit' css={{ d: 'flex' }}>
+                <Text
+                  b
+                  className='flex text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[13rem] overflow-hidden'
+                  // color='inherit'
+                >
                   {cookieData.email}
                 </Text>
               </Dropdown.Item>
@@ -124,7 +132,7 @@ export default function NavbarComponent({ nameWhichActive }) {
         <Navbar.Collapse>
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
-              key={`${item.name}-${item.href}`}
+              key={`${item.name}-${item.to}`}
               activeColor='secondary'
               css={{
                 color: index === collapseItems.length - 1 ? '$error' : '',
@@ -136,7 +144,7 @@ export default function NavbarComponent({ nameWhichActive }) {
                 css={{
                   minWidth: '100%',
                 }}
-                href={item.href}
+                to={item.to}
               >
                 {item.name}
               </Link>

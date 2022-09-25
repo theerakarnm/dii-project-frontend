@@ -1,9 +1,13 @@
-import React from "react";
-import pt from "prop-types";
+import React from 'react';
+import pt from 'prop-types';
 
-const PostLayout = ({ children }) => {
+const PostLayout = ({ isFirstPostLoading, children }) => {
   return (
-    <div className="max-w-lg w-full rounded overflow-hidden shadow-lg">
+    <div
+      className={`max-w-xl w-full rounded overflow-hidden shadow-lg ${
+        isFirstPostLoading ? 'opacity-50' : ''
+      }`}
+    >
       {children}
     </div>
   );

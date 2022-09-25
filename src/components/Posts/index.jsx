@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import pTypes from 'prop-types';
-import axios from 'axios';
+import React, { useState, useContext } from "react";
+import pTypes from "prop-types";
 
-import { Input } from '@nextui-org/react';
-import Comment from './Comment';
-import Avatar from '../Avatar';
-import OptionDropdown from './OptionDropdown';
-import { getCookie } from '../../libs/getterSetterCookie';
-import { Favorite } from '../Utils';
-import _m from 'moment';
+import { Input, Textarea } from "@nextui-org/react";
+import Comment from "./Comment";
+import Avatar from "../Avatar";
+import OptionDropdown from "./OptionDropdown";
+import { getCookie } from "../../libs/getterSetterCookie";
+import { Favorite } from "../Utils/Favorite";
+import _m from "moment";
+import { fetchApi } from "../../helpers/fetchApi";
+import EditPostInput from "./EditPostInput";
+import ContextStore from "../../context/contextStore";
+import FeedStore from "../../context/contextStore_feed";
 
 const props = {
   postData: pTypes.shape({
@@ -28,23 +31,24 @@ const props = {
   }),
 };
 
-const Post = ({ postData }) => {
-  const [margin, setMargin] = useState('0.5rem');
-  const optionDropdownItem = ['Edit Post', 'Delete Post'];
-  const cookieData = getCookie('login_data');
+const Post = ({ postData, openAllCommentModal }) => {
+  const cookieData = getCookie("login_data");
+  const optionDropdownItem = ["Edit Post", "Delete Post"];
+
+  const [margin, setMargin] = useState("0.5rem");
   const [isLike, setIsLike] = useState(postData.isLike);
   const [likeCount, setLikeCount] = useState(postData.likeContent.likeCount);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
-  const [commentContent, setCommentContent] = useState('');
-  const [comment, setComment] = useState(postData.comment);
   const [isLoadingComment, setIsLoadingComment] = useState(false);
+  const [entireLoading, setEntireLoading] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
+  const [comment, setComment] = useState(postData.comment);
+  const [content, setContent] = useState(postData.postContent);
+  const [isAbleEdit, setIsAbleEdit] = useState(false);
+
+  const { setData } = useContext(FeedStore);
 
   //TODO : DELETE AND EDIT
-  const config = {
-    headers: {
-      Authorization: cookieData.token,
-    },
-  };
 
   const likeHandler = async () => {
     try {
@@ -56,16 +60,10 @@ const Post = ({ postData }) => {
 
       const numSend = isLike ? -1 : 1;
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/like`;
-
-      const res = await axios.patch(
-        apiUrl,
-        {
-          postId: postData.id,
-          num: numSend,
-        },
-        config
-      );
+      const res = await fetchApi("put", "api/v1/posts/like", true, {
+        postId: postData.id,
+        num: numSend,
+      });
 
       if (res.status !== 200) {
         isLike
@@ -73,7 +71,7 @@ const Post = ({ postData }) => {
           : setLikeCount((prev) => prev + 1);
         setIsLike(!isLike);
         setIsLikeLoading(false);
-        throw new Error('failed to like');
+        throw new Error("failed to like");
       }
 
       setIsLikeLoading(false);
@@ -86,7 +84,7 @@ const Post = ({ postData }) => {
 
   const addCommentHandler = async () => {
     try {
-      setCommentContent('');
+      setCommentContent("");
       setComment((prev) => {
         return [
           {
@@ -101,15 +99,10 @@ const Post = ({ postData }) => {
       });
       setIsLoadingComment(true);
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/comment/add`;
-      const res = await axios.post(
-        apiUrl,
-        {
-          postId: postData.id,
-          content: commentContent,
-        },
-        config
-      );
+      const res = await fetchApi("post", "api/v1/posts/comment/add", true, {
+        postId: postData.id,
+        content: commentContent,
+      });
 
       if (res.status !== 201) {
         setComment((prev) => (prev[0].error = true));
@@ -123,7 +116,7 @@ const Post = ({ postData }) => {
               : item;
           })
         );
-        throw new Error('failed to comment');
+        throw new Error("failed to comment");
       }
 
       setIsLoadingComment(false);
@@ -148,116 +141,171 @@ const Post = ({ postData }) => {
     setCommentContent(e.target.value);
   };
 
+  const onAction = async (key) => {
+    switch (key) {
+      case "edit":
+        setIsAbleEdit(true);
+        break;
+      case "delete":
+        console.log("delete");
+        setEntireLoading(true);
+        await fetchApi("delete", `api/v1/posts/${postData.id}`, true);
+        setData((prev) => prev.filter((item) => item.id !== postData.id));
+        setEntireLoading(false);
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <>
-      {postData.imageUrl ? (
-        <img className='w-full' src={postData.imageUrl} alt='Content' />
-      ) : (
-        <>
-          <div className='w-full sm:w-[1000px]'></div>
-        </>
-      )}
-      <div className='pl-6 pr-2 py-4'>
-        <div className='font-normal text-md mb-2'>
-          <div className='flex items-start justify-between'>
-            <div className='flex items-center'>
-              <Avatar url={postData.profileImage} />
-              <div className='ml-3 flex flex-col'>
-                <span>{postData.name}</span>
-                <span className='text-gray-400 text-xs'>
-                  {postData.dateTime}
-                </span>
+      <ContextStore.Provider value={postData.id}>
+        <div
+          style={{
+            opacity: !entireLoading ? 1 : 0.5,
+          }}
+        >
+          {postData.imageUrl ? (
+            <img className='w-full' src={postData.imageUrl} alt='Content' />
+          ) : (
+            <>
+              <div className='w-full sm:w-[1000px]'></div>
+            </>
+          )}
+          <div className='pl-6 pr-2 py-4'>
+            <div className='font-normal text-md mb-2'>
+              <div className='flex items-start justify-between'>
+                <div className='flex items-center'>
+                  <Avatar url={postData.profileImage} />
+                  <div className='ml-3 flex flex-col'>
+                    <span>{postData.name}</span>
+                    <span className='text-gray-400 text-xs'>
+                      {postData.dateTime}
+                    </span>
+                  </div>
+                </div>
+                {postData.username === cookieData.username ? (
+                  <div>
+                    <OptionDropdown
+                      onAction={onAction}
+                      content={optionDropdownItem}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
-            {postData.username === cookieData.username ? (
-              <div>
-                <OptionDropdown content={optionDropdownItem} />
-              </div>
+            {!isAbleEdit ? (
+              <p
+                style={{
+                  fontSize: content.length < 35 ? "2rem" : "1rem",
+                  marginTop: content.length < 35 ? "1.5rem" : "0",
+                }}
+                className={`text-gray-700 text-base mb-6 mr-4 mt-4`}
+              >
+                {content}
+              </p>
+            ) : (
+              <>
+                <EditPostInput
+                  setter={{ setIsAbleEdit, setContent, setEntireLoading }}
+                  initValue={content}
+                />
+              </>
+            )}
+            <div
+              style={{
+                marginTop: margin,
+              }}
+              className='transition-all pr-4 flex'
+            >
+              {isLikeLoading ? (
+                <div className='animate-spin'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    class='icon icon-tabler icon-tabler-loader'
+                    width='44'
+                    height='44'
+                    viewBox='0 0 24 24'
+                    strokeWidth='1'
+                    stroke='#6f32be'
+                    fill='none'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  >
+                    <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                    <line x1='12' y1='6' x2='12' y2='3' />
+                    <line x1='16.25' y1='7.75' x2='18.4' y2='5.6' />
+                    <line x1='18' y1='12' x2='21' y2='12' />
+                    <line x1='16.25' y1='16.25' x2='18.4' y2='18.4' />
+                    <line x1='12' y1='18' x2='12' y2='21' />
+                    <line x1='7.75' y1='16.25' x2='5.6' y2='18.4' />
+                    <line x1='6' y1='12' x2='3' y2='12' />
+                    <line x1='7.75' y1='7.75' x2='5.6' y2='5.6' />
+                  </svg>
+                </div>
+              ) : (
+                <div onClick={likeHandler} className='w-10 mr-3 cursor-pointer'>
+                  <Favorite isLiked={isLike} />
+                </div>
+              )}
+              <Input
+                onFocus={() => setMargin("2.7rem")}
+                onBlur={() => setMargin("0.5rem")}
+                fullWidth
+                underlined
+                labelPlaceholder='Type your Comment...'
+                color='default'
+                onChange={commentChangeHandler}
+                value={commentContent}
+                contentRightStyling={{
+                  cursor: "pointer",
+                }}
+                contentRight={
+                  <div
+                    className='w-full h-full cursor-pointer hover:-translate-y-[0.19rem] transition-all px-2'
+                    onClick={addCommentHandler}
+                  >
+                    <img
+                      className='w-5 h-5'
+                      src='/sendIcon.svg'
+                      alt='send comment icon'
+                    />
+                  </div>
+                }
+              />
+            </div>
+            <div className='mt-2 flex justify-end mr-3'>
+              <small className='text-gray-400 text-[0.9rem]'>{`${likeCount} ${
+                likeCount > 1 ? "likes" : "like"
+              }`}</small>
+            </div>
+            {comment.map((cmt, ind) => {
+              return ind === 0 ? (
+                <Comment
+                  key={`${cmt.id}`}
+                  loading={isLoadingComment}
+                  comment={cmt}
+                />
+              ) : (
+                <Comment key={`${cmt.id}`} comment={cmt} />
+              );
+            })}
+            {postData.hasMoreComment ? (
+              <small
+                onClick={openAllCommentModal}
+                className='underline cursor-pointer text-sky-500 hover:text-sky-600'
+              >
+                View all comment
+              </small>
             ) : (
               <></>
             )}
           </div>
         </div>
-        <p className='text-gray-700 text-base mb-6 mr-4 mt-4'>
-          {postData.postContent}
-        </p>
-        {/* <Divider /> */}
-        <div
-          style={{
-            marginTop: margin,
-          }}
-          className='transition-all pr-4 flex'
-        >
-          {isLikeLoading ? (
-            <div className='animate-spin'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                class='icon icon-tabler icon-tabler-loader'
-                width='44'
-                height='44'
-                viewBox='0 0 24 24'
-                stroke-width='1'
-                stroke='#6f32be'
-                fill='none'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              >
-                <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-                <line x1='12' y1='6' x2='12' y2='3' />
-                <line x1='16.25' y1='7.75' x2='18.4' y2='5.6' />
-                <line x1='18' y1='12' x2='21' y2='12' />
-                <line x1='16.25' y1='16.25' x2='18.4' y2='18.4' />
-                <line x1='12' y1='18' x2='12' y2='21' />
-                <line x1='7.75' y1='16.25' x2='5.6' y2='18.4' />
-                <line x1='6' y1='12' x2='3' y2='12' />
-                <line x1='7.75' y1='7.75' x2='5.6' y2='5.6' />
-              </svg>
-            </div>
-          ) : (
-            <div onClick={likeHandler} className='w-10 mr-3 cursor-pointer'>
-              <Favorite isLiked={isLike} />
-            </div>
-          )}
-          <Input
-            onFocus={() => setMargin('2.7rem')}
-            onBlur={() => setMargin('0.5rem')}
-            fullWidth
-            underlined
-            labelPlaceholder='Type your Comment...'
-            color='default'
-            onChange={commentChangeHandler}
-            value={commentContent}
-            contentRightStyling={{
-              cursor: 'pointer',
-            }}
-            contentRight={
-              <div onClick={addCommentHandler}>
-                <img
-                  className='cursor-pointer hover:mb-2 transition-all'
-                  src='/sendIcon.svg'
-                  alt='send comment icon'
-                />
-              </div>
-            }
-          />
-        </div>
-        <div className='mt-2 flex justify-end mr-3'>
-          <small className='text-gray-400 text-[0.9rem]'>{`${likeCount} ${
-            likeCount > 1 ? 'likes' : 'like'
-          }`}</small>
-        </div>
-        {comment.map((cmt, ind) => {
-          return ind === 0 ? (
-            <Comment
-              key={`${cmt.name}-${cmt.dateTime}`}
-              loading={isLoadingComment}
-              comment={cmt}
-            />
-          ) : (
-            <Comment key={`${cmt.name}-${cmt.dateTime}`} comment={cmt} />
-          );
-        })}
-      </div>
+      </ContextStore.Provider>
     </>
   );
 };

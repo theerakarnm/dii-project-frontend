@@ -1,40 +1,70 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import { Textarea } from '@nextui-org/react';
 import ModalDragFile from './ModalDragFile';
 import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
 
 import fileToBase64 from '../../../libs/FileConverter';
 import { getCookie } from '../../../libs/getterSetterCookie';
+import moment from 'moment/moment';
+import FeedStore from '../../../context/contextStore_feed';
+import { fetchApi } from '../../../helpers/fetchApi';
 
-const NewPost = () => {
+const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [margin, setMargin] = useState('0.75rem');
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState('');
   const [textValue, setTextValue] = useState('');
   const [file, setFile] = useState({});
+  const { setAlertValue } = useContext(FeedStore);
 
   const textHandler = (event) => {
     setTextValue(event.target.value);
   };
 
-  const shareHandler = () => {
+  const shareHandler = async () => {
     const cookieData = getCookie('login_data');
-    const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}post/add`;
+    const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}api/v1/post/add`;
     let data = new FormData();
 
     data.append('textContent', textValue);
     data.append('file', file);
 
-    try {
-      axios.post(apiUrl, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: cookieData.token,
+    setIsFirstPostLoading(true);
+    setPost((prev) => [
+      {
+        id: Math.random().toString(36),
+        username: cookieData.username,
+        name: `${cookieData.firstName} ${cookieData.lastName}`,
+        profileImage: `${cookieData.imageUrl}`,
+        dateTime: moment().fromNow(),
+        postContent: textValue,
+        isLike: false,
+        likeContent: {
+          likeCount: 0,
+          likedBy: [],
         },
+        imageUrl: image,
+        comment: [],
+      },
+      ...prev,
+    ]);
+
+    try {
+      await fetchApi('post', 'api/v1/posts/', true, data);
+
+      setIsFirstPostLoading(false);
+      setAlertValue({
+        isShow: true,
+        color: 'green',
+        context: 'Post has been published!',
       });
     } catch (e) {
       console.error(e);
+      setAlertValue({
+        isShow: true,
+        color: 'red',
+        context: 'Post failed to published!',
+      });
       return;
     }
   };
@@ -74,7 +104,7 @@ const NewPost = () => {
         style={{
           paddingTop: margin,
         }}
-        className='bg-white shadow rounded-lg max-w-lg w-full p-3 transition-all duration-300'
+        className='bg-white shadow rounded-lg max-w-xl w-full p-3 transition-all duration-300'
       >
         <div>
           <Textarea
@@ -100,15 +130,15 @@ const NewPost = () => {
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              class='icon icon-tabler icon-tabler-photo'
+              className='icon icon-tabler icon-tabler-photo'
               width='44'
               height='44'
               viewBox='0 0 24 24'
-              stroke-width='1.5'
+              strokeWidth='1.5'
               stroke='#a905b6'
               fill='none'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             >
               <path stroke='none' d='M0 0h24v24H0z' fill='none' />
               <line x1='15' y1='8' x2='15.01' y2='8' />
@@ -122,27 +152,27 @@ const NewPost = () => {
           </div>
           <div className='h-[2.5rem] mt-2 ml-1 cursor-pointer flex items-center text-gray-500 hover:text-purple-400 transition-all'>
             <button
-              class='h-full relative inline-flex items-center px-8 py-3 overflow-hidden text-white bg-purple-600 rounded group active:bg-purple-500 focus:outline-none focus:ring'
+              className='h-full relative inline-flex items-center px-8 py-3 overflow-hidden text-white bg-purple-600 rounded group active:bg-purple-500 focus:outline-none focus:ring'
               onClick={shareHandler}
             >
-              <span class='absolute right-0 transition-transform translate-x-full group-hover:-translate-x-4'>
+              <span className='absolute right-0 transition-transform translate-x-full group-hover:-translate-x-4'>
                 <svg
-                  class='w-5 h-5'
+                  className='w-5 h-5'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'
                 >
                   <path
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
                     d='M17 8l4 4m0 0l-4 4m4-4H3'
                   />
                 </svg>
               </span>
 
-              <span class='text-sm font-medium transition-all group-hover:mr-4'>
+              <span className='text-sm font-medium transition-all group-hover:mr-4'>
                 Share
               </span>
             </button>

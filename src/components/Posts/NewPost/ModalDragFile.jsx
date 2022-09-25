@@ -10,7 +10,6 @@ export default function ModalDragFile({
   isDragActive,
   image,
 }) {
-  console.log(image);
   return (
     <div>
       <Modal

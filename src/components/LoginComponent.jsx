@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
+import { Link } from '@nextui-org/react';
 
 import { Image, Loading, Text } from '@nextui-org/react';
+import { setCookie } from '../libs/getterSetterCookie';
+import { fetchApi } from '../helpers/fetchApi';
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
@@ -18,11 +19,16 @@ const LoginComponent = () => {
     try {
       event.preventDefault();
       setBtnLoading(true);
-      console.log(valueInput);
+      console.log({ valueInput });
 
-      const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}auth/login`;
+      const res = await fetchApi(
+        'post',
+        'api/v1/auth/login',
+        false,
+        valueInput
+      );
 
-      const res = await axios.post(apiUrl, valueInput);
+      console.log(res);
 
       setBtnLoading(false);
       if (res.status !== 200) {
@@ -30,9 +36,10 @@ const LoginComponent = () => {
         return;
       }
 
-      Cookies.set('login_data', JSON.stringify(res.data.data));
+      setCookie('login_data', res.data.data);
       window.location.replace('/');
     } catch (e) {
+      console.log(e);
       setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
       setBtnLoading(false);
       return;
@@ -135,12 +142,12 @@ const LoginComponent = () => {
                     <div className='flex flex-col justify-center items-center mt-3'>
                       <p>
                         Don't have an account ?
-                        <a
-                          href='/#/regis'
+                        <Link
+                          to='/regis'
                           className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
                         >
                           Sign up
-                        </a>
+                        </Link>
                       </p>
                     </div>
                     <div className='flex justify-center mt-3'>
