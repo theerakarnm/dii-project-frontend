@@ -1,10 +1,14 @@
 import DiaryComponent from "../components/DairyComponent";
 import Draw from "../components/Drawing";
+import Navbar from "../components/Navbar";
 
 export default function Diary() {
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
-      <DiaryComponent />
-    </div>
+    <>
+      <Navbar />
+      <div className="flex justify-center items-center w-screen h-screen">
+        <DiaryComponent />
+      </div>
+    </>
   );
 }
