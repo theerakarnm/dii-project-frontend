@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Avatar,
   Textarea,
@@ -7,20 +7,18 @@ import {
   Modal,
   Card,
   Col,
-  Input
-} from '@nextui-org/react';
-import { getCookie } from '../libs/getterSetterCookie';
-
+  Input,
+} from "@nextui-org/react";
+import { getCookie } from "../libs/getterSetterCookie";
 
 const Homeform = () => {
-  const cookie = getCookie('login_data');
-
+  const cookie = getCookie("login_data");
 
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
-    console.log('closed');
+    console.log("closed");
   };
 
   const [cardImgOpen, setCardImgOpen] = React.useState(false);
@@ -53,7 +51,7 @@ const Homeform = () => {
                   className='md:text-[2rem] text-[1.5rem]'
                   weight='bold'
                   css={{
-                    textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                    textGradient: "45deg, $purple600 -20%, $pink600 100%",
                   }}
                 >
                   {`${cookie.firstName} ${cookie.lastName}`}
@@ -62,7 +60,7 @@ const Homeform = () => {
                   h1
                   className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
                   css={{
-                    textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                    textGradient: "45deg, $purple600 -20%, $pink600 100%",
                   }}
                   weight='bold'
                 >
@@ -110,7 +108,7 @@ const Homeform = () => {
                 <div>
                   <Text
                     css={{
-                      textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                      textGradient: "45deg, $purple600 -20%, $pink600 100%",
                     }}
                     weight='bold'
                   >
@@ -120,7 +118,7 @@ const Homeform = () => {
                 <div>
                   <Text
                     css={{
-                      textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                      textGradient: "45deg, $purple600 -20%, $pink600 100%",
                     }}
                     weight='bold'
                   >
@@ -136,50 +134,73 @@ const Homeform = () => {
           {/* card home page */}
           <div className='w-full  flex justify-center md:pt-5 md:pb-2 md:my-2 '>
             <div className='w-[25%] flex justify-center items-center'>
-
               <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
                 <div>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-border-all " width={24} height={24} viewBox="0 0 24 24" stroke-width={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='icon icon-tabler icon-tabler-border-all '
+                    width={24}
+                    height={24}
+                    viewBox='0 0 24 24'
+                    stroke-width={2}
+                    stroke='currentColor'
+                    fill='none'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  >
+                    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
                     <rect x={4} y={4} width={16} height={16} rx={2}></rect>
                     <line x1={4} y1={12} x2={20} y2={12}></line>
                     <line x1={12} y1={4} x2={12} y2={20}></line>
                   </svg>
                 </div>
-                <div className='font-bold mx-1 text-[1.3rem] '>
-                  Post
-                </div>
+                <div className='font-bold mx-1 text-[1.3rem] '>Post</div>
               </div>
 
               <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
                 <div>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-notebook" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"></path>
-                    <line x1="13" y1="8" x2="15" y2="8"></line>
-                    <line x1="13" y1="12" x2="15" y2="12"></line>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    class='icon icon-tabler icon-tabler-notebook'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    stroke-width='2'
+                    stroke='currentColor'
+                    fill='none'
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                  >
+                    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+                    <path d='M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18'></path>
+                    <line x1='13' y1='8' x2='15' y2='8'></line>
+                    <line x1='13' y1='12' x2='15' y2='12'></line>
                   </svg>
                 </div>
-                <div className='font-bold mx-1 text-[1.3rem] '>
-                  Diary
-                </div>
-
+                <div className='font-bold mx-1 text-[1.3rem] '>Diary</div>
               </div>
             </div>
           </div>
 
-
-
           {/* body */}
 
-
           <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
-
-            <div onClick={openImgCard} className='hover:cursor-pointer row-span-4 '>
-              <Card css={{ w: '100%', h: '400px' }}>
+            <div
+              onClick={openImgCard}
+              className='hover:cursor-pointer row-span-4 '
+            >
+              <Card css={{ w: "100%", h: "400px" }}>
                 <Card.Body css={{ p: 0 }}>
-                  <Text css={{ position: 'absolute', zIndex: 1, top: 5, w: '90%', h: '90%' }}
-                    className='text-white pt-2 pl-2 opacity-0 hover:opacity-100'>
+                  <Text
+                    css={{
+                      position: "absolute",
+                      zIndex: 1,
+                      top: 5,
+                      w: "90%",
+                      h: "90%",
+                    }}
+                    className='text-white pt-2 pl-2 opacity-0 hover:opacity-100'
+                  >
                     22/06/2002
                   </Text>
                   <Card.Image
@@ -193,32 +214,37 @@ const Homeform = () => {
               </Card>
             </div>
 
-            <div onClick={openTextCard} className='hover:cursor-pointer row-span-2'>
+            <div
+              onClick={openTextCard}
+              className='hover:cursor-pointer row-span-2'
+            >
               <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
+                <Card css={{ w: "100%", h: "200px" }} className='rounded-lg'>
                   <Card.Header>
-                    <Text css={{ position: 'absolute', zIndex: 1, top: 10, w: '100%', h: '100%' }}
-                      className=' text-black'>
+                    <Text
+                      css={{
+                        position: "absolute",
+                        zIndex: 1,
+                        top: 10,
+                        w: "100%",
+                        h: "100%",
+                      }}
+                      className=' text-black'
+                    >
                       22/06/2002
                     </Text>
                   </Card.Header>
                   <Card.Body className='flex justify-center items-center'>
                     <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
                       <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
-                        <div className='m-5'>
-                          2+2=4
-                        </div>
+                        <div className='m-5'>2+2=4</div>
                       </div>
                     </div>
                   </Card.Body>
                 </Card>
               </div>
             </div>
-
-
-
           </div>
-
 
           {/* Modal card-IMG post */}
           <div className='w-full h-full max-h-lg'>
@@ -230,7 +256,6 @@ const Homeform = () => {
               onClose={closeCardImg}
               width='100%'
             >
-
               <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
                 <div className='w-full flex justify-between'>
                   <div className='w-full  flex justify-start items-center'>
@@ -247,7 +272,7 @@ const Homeform = () => {
                         className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                         weight='bold'
                         css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
                         }}
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
@@ -255,7 +280,8 @@ const Homeform = () => {
                     </div>
                   </div>
                   <div className='w-full flex justify-end items-center'>
-                    <Button auto
+                    <Button
+                      auto
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
                     >
@@ -263,9 +289,7 @@ const Homeform = () => {
                     </Button>
                   </div>
                 </div>
-
               </Modal.Header>
-
 
               <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
                 <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
@@ -273,7 +297,7 @@ const Homeform = () => {
                     <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
                       <img
                         className='w-full md:max-h-full rounded-lg'
-                        src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+                        src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
                       />
                     </div>
                   </div>
@@ -283,14 +307,17 @@ const Homeform = () => {
                     </div>
                     <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
                       <div className='w-[95%] pl-5'>
-                        <input type="text" placeholder='Type your Comment...' className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none' />
+                        <input
+                          type='text'
+                          placeholder='Type your Comment...'
+                          className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                        />
                       </div>
                       <div className='flex justify-center items-center md:w-[5%] '>
                         <img
                           className='cursor-pointer hover:mb-2 transition-all md:w-[80%]'
                           src='/sendIcon.svg'
                           alt='send comment icon'
-
                         />
                       </div>
                     </div>
@@ -310,7 +337,6 @@ const Homeform = () => {
               onClose={closeCardText}
               width='100%'
             >
-
               <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
                 <div className='w-full flex justify-between'>
                   <div className='w-full  flex justify-start items-center'>
@@ -327,7 +353,7 @@ const Homeform = () => {
                         className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                         weight='bold'
                         css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
                         }}
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
@@ -335,7 +361,8 @@ const Homeform = () => {
                     </div>
                   </div>
                   <div className='w-full flex justify-end items-center'>
-                    <Button auto
+                    <Button
+                      auto
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
                     >
@@ -343,16 +370,12 @@ const Homeform = () => {
                     </Button>
                   </div>
                 </div>
-
               </Modal.Header>
-
 
               <Modal.Body className='h-full w-full flex justify-center items-center'>
                 <div className='flex justify-center items-center w-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
                   <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 '>
-                    <div className='m-5'>
-                      2+2=4
-                    </div>
+                    <div className='m-5'>2+2=4</div>
                   </div>
                 </div>
               </Modal.Body>
@@ -363,14 +386,17 @@ const Homeform = () => {
                 </div>
                 <div className='w-[98%] bottom-0 flex justify-center items-center '>
                   <div className='w-[95%] pl-5'>
-                    <input type="text" placeholder='Type your Comment...' className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none' />
+                    <input
+                      type='text'
+                      placeholder='Add your Comment...'
+                      className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                    />
                   </div>
                   <div className='flex justify-center items-center md:w-[5%] w-[8%]'>
                     <img
                       className='cursor-pointer hover:mb-2 transition-all w-[50%] '
                       src='/sendIcon.svg'
                       alt='send comment icon'
-
                     />
                   </div>
                 </div>
@@ -398,7 +424,14 @@ const Homeform = () => {
                       Change Password
                     </div>
                   </div>
-                  <div className='w-[75%] border-2'></div>
+                  <div className='w-[75%] border-2'>
+                    <Input
+                      clearable
+                      underlined
+                      labelPlaceholder='Name'
+                      initialValue='NextUI'
+                    />
+                  </div>
                 </div>
               </Modal.Body>
             </Modal>
@@ -411,8 +444,7 @@ const Homeform = () => {
               open={editOpen}
               onClose={closeEdit}
             >
-              <Modal.Body
-                className='m-0 p-0'>
+              <Modal.Body className='m-0 p-0'>
                 <div className='w-full h-full'>
                   <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'>
                     Edit Post
@@ -420,16 +452,16 @@ const Homeform = () => {
                   <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300 text-red-700'>
                     Delete Post
                   </div>
-                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300' onClick={closeEdit}>
+                  <div
+                    className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'
+                    onClick={closeEdit}
+                  >
                     Cancel
                   </div>
                 </div>
               </Modal.Body>
             </Modal>
           </div>
-
-
-
         </div>
       </div>
     </>

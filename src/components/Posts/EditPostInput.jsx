@@ -1,10 +1,10 @@
-import { Textarea } from '@nextui-org/react';
-import React from 'react';
-import { useContext } from 'react';
-import { useState } from 'react';
-import { fetchApi } from '../../helpers/fetchApi';
-import contextStore from '../../context/contextStore';
-import FeedStore from '../../context/contextStore_feed';
+import { Textarea } from "@nextui-org/react";
+import React from "react";
+import { useContext } from "react";
+import { useState } from "react";
+import { fetchApi } from "../../helpers/fetchApi";
+import contextStore from "../../context/contextStore";
+import FeedStore from "../../context/contextStore_feed";
 
 const EditPostInput = ({ setter, initValue }) => {
   const [values, setValues] = useState(initValue);
@@ -25,7 +25,7 @@ const EditPostInput = ({ setter, initValue }) => {
     console.log(`api/v1/posts/${postId}`);
 
     try {
-      const result = await fetchApi('put', `api/v1/posts/${postId}`, true, {
+      const result = await fetchApi("put", `api/v1/posts/${postId}`, true, {
         content: values,
       });
 
@@ -35,8 +35,8 @@ const EditPostInput = ({ setter, initValue }) => {
     } catch (e) {
       setAlertValue({
         isShow: true,
-        color: 'red',
-        context: 'Comment failed to update',
+        color: "red",
+        context: "Comment failed to update",
       });
     }
   };
@@ -45,7 +45,7 @@ const EditPostInput = ({ setter, initValue }) => {
     <div className='flex flex-col justify-end w-full pr-3'>
       <Textarea
         css={{
-          width: '100%',
+          width: "100%",
         }}
         placeholder='edit here'
         value={values}
