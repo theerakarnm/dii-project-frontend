@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
-import { Link } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 import { Image, Loading, Text } from '@nextui-org/react';
 import { setCookie } from '../libs/getterSetterCookie';
@@ -139,16 +139,14 @@ const LoginComponent = () => {
                         {btnLoading ? <Loading size='sm' /> : 'Sign in'}
                       </button>
                     </div>
-                    <div className='flex flex-col justify-center items-center mt-3'>
-                      <p>
-                        Don't have an account ?
-                        <Link
-                          to='/regis'
-                          className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
-                        >
-                          Sign up
-                        </Link>
-                      </p>
+                    <div className='flex justify-center items-center mt-3'>
+                      <p>Don't have an account ?</p>
+                      <Link
+                        to='/regis'
+                        className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
+                      >
+                        Sign up
+                      </Link>
                     </div>
                     <div className='flex justify-center mt-3'>
                       <small className='text-red-500 text-lg font-bold'>

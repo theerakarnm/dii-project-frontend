@@ -43,14 +43,18 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <Navbar.Link className='underline' to={'/login'}>
-            Sign in
+          <Navbar.Link className='underline'>
+            <Link className='flex justify-center items-center' to={'/login'}>
+              Sign in
+            </Link>
           </Navbar.Link>
           <Navbar.Link
             className='bg-purple-400 px-8 py-4 text-white rounded'
             to={'/regis'}
           >
-            Sign up
+            <Link className='flex justify-center items-center' to={'/regis'}>
+              Sign up
+            </Link>
           </Navbar.Link>
         </Navbar.Content>
         <Navbar.Collapse>
