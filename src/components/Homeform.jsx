@@ -56,20 +56,16 @@ const Homeform = () => {
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
                 >
-                  {/* Nuthipong Pinyai  */}
-
                   {`${cookie.firstName} ${cookie.lastName}`}
                 </Text>
                 <Text
                   h1
-                  className='md:text-[1.3rem] text-[0.8rem]  border-2 md:ml-5 ml-2'
+                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
                   weight='bold'
                 >
-                  {/* click_ntp@testmail.com */}
-
                   {`${cookie.email}`}
                 </Text>
               </dir>
@@ -138,7 +134,6 @@ const Homeform = () => {
           <div className=' w-full h-[2px] bg-gradient-to-r p-[1px] from-[#7928ca] to-[#ff0080]'></div>
 
           {/* card home page */}
-
           <div className='w-full border-t flex justify-center md:pt-5 md:pb-2 md:my-2 '>
             <div className='w-[25%] flex justify-center items-center'>
 
@@ -174,6 +169,10 @@ const Homeform = () => {
           </div>
 
 
+
+          {/* body */}
+
+
           <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
 
             <div onClick={openImgCard} className='hover:cursor-pointer row-span-4 '>
@@ -203,9 +202,13 @@ const Homeform = () => {
                   </Text>
                 </Card.Header>
                 <Card.Body className='flex justify-center items-center'>
-                  <Text className=' border border-purple-500 w-full h-full  flex justify-center rounded-lg pt-2'>
-                    1+1=2
-                  </Text>
+                  <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
+                    <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
+                      <div className='m-5'>
+                        2+2=4
+                      </div>
+                    </div>
+                  </div>
                 </Card.Body>
               </Card>
             </div>
@@ -274,7 +277,7 @@ const Homeform = () => {
                   </div>
                   <div className='w-full '>
                     <div className='w-full h-[90%] border pl-4 pt-2'>
-                        comment area
+                      comment area
                     </div>
                     <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
                       <div className='w-[95%] pl-5'>
