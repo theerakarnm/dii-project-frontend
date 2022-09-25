@@ -1,16 +1,17 @@
-import { Navbar, Dropdown, Avatar, Link, Text } from '@nextui-org/react';
+import { Navbar, Dropdown, Avatar, Text } from '@nextui-org/react';
 import Cookies from 'js-cookie';
 import { Logo } from './Logo.jsx';
+import { Link } from 'react-router-dom';
 
 export default function NavbarComponent({ nameWhichActive }) {
   const collapseItems = [
     {
       name: 'Sign in',
-      href: '/#/login',
+      to: '/login',
     },
     {
       name: 'Sign up',
-      href: '/#/regis',
+      to: '/regis',
     },
   ];
 
@@ -25,12 +26,12 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <a className='flex items-center' href='/#/'>
+          <Link className='flex items-center' to='/'>
             <Logo />
             <Text b color='inherit' hideIn='xs'>
               S-LOG
             </Text>
-          </a>
+          </Link>
         </Navbar.Brand>
         <Navbar.Content></Navbar.Content>
         <Navbar.Content
@@ -42,12 +43,12 @@ export default function NavbarComponent({ nameWhichActive }) {
             },
           }}
         >
-          <Navbar.Link className='underline' href={'/#/login'}>
+          <Navbar.Link className='underline' to={'/login'}>
             Sign in
           </Navbar.Link>
           <Navbar.Link
             className='bg-purple-400 px-8 py-4 text-white rounded'
-            href={'/#/regis'}
+            to={'/regis'}
           >
             Sign up
           </Navbar.Link>
@@ -55,7 +56,7 @@ export default function NavbarComponent({ nameWhichActive }) {
         <Navbar.Collapse>
           {collapseItems.map((item, index) => (
             <Navbar.CollapseItem
-              key={`${item.name}-${item.href}`}
+              key={`${item.name}-${item.to}`}
               activeColor='secondary'
               css={{
                 color: index === collapseItems.length - 1 ? '$secondary' : '',
@@ -67,7 +68,7 @@ export default function NavbarComponent({ nameWhichActive }) {
                 css={{
                   minWidth: '100%',
                 }}
-                href={item.href}
+                to={item.to}
               >
                 {item.name}
               </Link>

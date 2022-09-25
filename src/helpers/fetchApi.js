@@ -18,10 +18,6 @@ export const fetchApi = async (
       }
     : {};
 
-  console.log(`axios.${method}(${apiUrl}, ${body}, ${config})`);
-  console.log(body);
-  console.log(config);
-
   return method === 'get' || method === 'delete'
     ? await axios[method](apiUrl, config)
     : await axios[method](apiUrl, body, config);

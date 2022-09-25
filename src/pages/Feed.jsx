@@ -40,7 +40,6 @@ const Feed = () => {
       const result = await fetchApi('get', 'api/v1/posts/recent', true);
 
       setData(result.data.data);
-      console.log(result.data.data);
       setIsLoading(false);
     };
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import NavbarNoneLogin from '../components/Navbar/NavbarNoneLogin';
+import { Link } from '@nextui-org/react';
 
 import { Image, Loading, Text } from '@nextui-org/react';
 import { setCookie } from '../libs/getterSetterCookie';
@@ -141,12 +142,12 @@ const LoginComponent = () => {
                     <div className='flex flex-col justify-center items-center mt-3'>
                       <p>
                         Don't have an account ?
-                        <a
-                          href='/#/regis'
+                        <Link
+                          to='/regis'
                           className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
                         >
                           Sign up
-                        </a>
+                        </Link>
                       </p>
                     </div>
                     <div className='flex justify-center mt-3'>
