@@ -425,12 +425,12 @@ const Homeform = () => {
                     </div>
                   </div>
                   <div className='w-[75%] border-2'>
-                    <Input
-                      clearable
-                      underlined
-                      labelPlaceholder='Name'
-                      initialValue='NextUI'
-                    />
+                  <Input
+        clearable
+        underlined
+        labelPlaceholder="Name"
+        initialValue="NextUI"
+      />
                   </div>
                 </div>
               </Modal.Body>
