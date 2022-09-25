@@ -134,7 +134,7 @@ const Homeform = () => {
           <div className=' w-full h-[2px] bg-gradient-to-r p-[1px] from-[#7928ca] to-[#ff0080]'></div>
 
           {/* card home page */}
-          <div className='w-full border-t flex justify-center md:pt-5 md:pb-2 md:my-2 '>
+          <div className='w-full  flex justify-center md:pt-5 md:pb-2 md:my-2 '>
             <div className='w-[25%] flex justify-center items-center'>
 
               <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
@@ -194,23 +194,25 @@ const Homeform = () => {
             </div>
 
             <div onClick={openTextCard} className='hover:cursor-pointer row-span-2'>
-              <Card css={{ w: '100%', h: '200px' }} className='border border-purple-500'>
-                <Card.Header>
-                  <Text css={{ position: 'absolute', zIndex: 1, top: 10, w: '100%', h: '100%' }}
-                    className=' text-black'>
-                    22/06/2002
-                  </Text>
-                </Card.Header>
-                <Card.Body className='flex justify-center items-center'>
-                  <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                    <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
-                      <div className='m-5'>
-                        2+2=4
+              <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
+                <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
+                  <Card.Header>
+                    <Text css={{ position: 'absolute', zIndex: 1, top: 10, w: '100%', h: '100%' }}
+                      className=' text-black'>
+                      22/06/2002
+                    </Text>
+                  </Card.Header>
+                  <Card.Body className='flex justify-center items-center'>
+                    <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
+                      <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
+                        <div className='m-5'>
+                          2+2=4
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Card.Body>
-              </Card>
+                  </Card.Body>
+                </Card>
+              </div>
             </div>
 
 
@@ -347,7 +349,7 @@ const Homeform = () => {
 
               <Modal.Body className='h-full w-full flex justify-center items-center'>
                 <div className='flex justify-center items-center w-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                  <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-200 '>
+                  <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 '>
                     <div className='m-5'>
                       2+2=4
                     </div>
