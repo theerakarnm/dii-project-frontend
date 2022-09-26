@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from "react";
 import {
   Avatar,
   Textarea,
@@ -13,6 +14,7 @@ import {
 import { getCookie } from '../libs/getterSetterCookie';
 import { fetchApi } from '../helpers/fetchApi';
 
+
 const Homeform = () => {
   const cookie = getCookie('login_data');
 
@@ -20,22 +22,20 @@ const Homeform = () => {
   const [isBlur, setIsBlur] = useState(false);
   const [postOnHome, setPostOnHome] = useState([]);
 
+  useEffect(() => {
+    async function getPosts() {
+      const postData = await fetchApi('get','api/v1/posts');
+      setPostOnHome(postData.data);
+      console.log(postOnHome.data);
+    }
+    getPosts();
+  }, []);
+
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
     console.log('closed');
   };
-
-
-  // useEffect(() => {
-  //   async function getPostOnHome() {
-  //     postOnHome = async () => {
-  //       await fetchApi('get', 'api/v1/posts');
-  //     }
-  //     setPostOnHome(postOnHome.data);
-  //   }
-  //   getPostOnHome();
-  // }, []);
 
   const [cardImgOpen, setCardImgOpen] = useState(false);
   const openImgCard = () => setCardImgOpen(true);
@@ -208,7 +208,9 @@ const Homeform = () => {
           {/* body */}
 
           <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
-            <div
+
+
+            {/* <div
               onClick={openImgCard}
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
@@ -270,7 +272,10 @@ const Homeform = () => {
                   </Card.Body>
                 </Card>
               </div>
-            </div>
+            </div> */}
+
+
+
           </div>
 
           {/* Modal card-IMG post */}
