@@ -15,6 +15,7 @@ import {
   Loading,
   User,
 } from '@nextui-org/react';
+import CardDiary from '../components/Diary/CardDiary';
 
 export default function Diary() {
   const cookie = getCookie('login_data');
@@ -39,7 +40,7 @@ export default function Diary() {
         }
 
         setUserData(res.data.data);
-        // setDiaries(resDiary.data.data);
+        setDiaries(resDiary.data.data);
         console.log(res.data.data);
         setLoading(false);
       } catch (e) {
@@ -82,6 +83,7 @@ export default function Diary() {
   return (
     <>
       <Navbar nameWhichActive={'Diary'} />
+
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
           <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
@@ -226,6 +228,16 @@ export default function Diary() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className='grid grid-cols-3 gap-4 px-5'>
+            {diaries.map((diary) => {
+              console.log(diary);
+              return (
+                <>
+                  <CardDiary key={diary.id} diaryData={diary} />
+                </>
+              );
+            })}
           </div>
         </div>
       </div>
