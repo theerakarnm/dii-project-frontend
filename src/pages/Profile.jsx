@@ -1,52 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
 import Navbar from '../components/Navbar';
-import { Avatar, Textarea, Text, Button, Modal, Card } from '@nextui-org/react';
+import {
+  Avatar,
+  Textarea,
+  Text,
+  Button,
+  Modal,
+  Card,
+  Loading,
+} from '@nextui-org/react';
+import ErrorComponent from '../components/ErrorComponent';
+import CardHome from '../components/Home/Card';
 
 const Profile = () => {
   const { userId } = useParams();
-
   const cookie = getCookie('login_data');
 
   const [visible, setVisible] = useState(false);
-  const [isBlur, setIsBlur] = useState(false);
+  const [cardImgOpen, setCardImgOpen] = useState(false);
+  const [cardTextOpen, setCardTextOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    post: [],
+  });
+  const [pageLoading, setPageLoading] = useState(false);
+
+  useEffect(() => {
+    setPageLoading(true);
+    const getUserData = async () => {
+      try {
+        setPageLoading(true);
+        const result = await fetchApi('get', `api/v1/users/${userId}`, false);
+        setUserData(result.data.data);
+        console.log(result.data.data);
+        setPageLoading(false);
+      } catch (e) {
+        setPageLoading(false);
+        console.error(e);
+        setUserData([]);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const handler = () => setVisible(true);
-  const closeHandler = () => {
-    setVisible(false);
-    console.log('closed');
-  };
-
-  const [cardImgOpen, setCardImgOpen] = useState(false);
+  const closeHandler = () => setVisible(false);
   const openImgCard = () => setCardImgOpen(true);
-  const closeCardImg = () => {
-    setCardImgOpen(false);
-  };
-
-  const [cardTextOpen, setCardTextOpen] = useState(false);
+  const closeCardImg = () => setCardImgOpen(false);
   const openTextCard = () => setCardTextOpen(true);
-  const closeCardText = () => {
-    setCardTextOpen(false);
-  };
-
-  const [editOpen, setEditOpen] = useState(false);
+  const closeCardText = () => setCardTextOpen(false);
   const openEdit = () => setEditOpen(true);
-  const closeEdit = () => {
-    setEditOpen(false);
-  };
-
-  const onMouseOver = () => {
-    setIsBlur(true);
-  };
-  const onMouseLeave = () => {
-    setIsBlur(false);
-  };
+  const closeEdit = () => setEditOpen(false);
 
   if (!cookie) {
     return <NotLoginInfo />;
+  }
+
+  if (!userData) {
+    return <ErrorComponent />;
+  }
+
+  if (pageLoading) {
+    return (
+      <>
+        <Navbar
+          nameWhichActive={'Profile'}
+          moreRoute={[
+            {
+              name: 'Profile',
+              to: `/profile/${userId}`,
+            },
+          ]}
+        />
+        <div className='flex justify-center items-center w-screen h-screen'>
+          <Loading />
+        </div>
+      </>
+    );
   }
 
   return (
@@ -73,7 +108,7 @@ const Profile = () => {
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
                 >
-                  {`${cookie.firstName} ${cookie.lastName}`}
+                  {`${userData.name}`}
                 </Text>
                 <Text
                   h1
@@ -83,7 +118,7 @@ const Profile = () => {
                   }}
                   weight='bold'
                 >
-                  {`${cookie.email}`}
+                  {`${userData.email}`}
                 </Text>
               </dir>
 
@@ -94,7 +129,7 @@ const Profile = () => {
               <div className='md:h-[12rem] md:w-[12rem] w-[7rem] h-[7rem]'>
                 <Avatar
                   className='w-full h-full'
-                  src={`${cookie.imageUrl}`}
+                  src={`${userData.profileUrl}`}
                   color='secondary'
                   bordered
                 />
@@ -131,7 +166,8 @@ const Profile = () => {
                     }}
                     weight='bold'
                   >
-                    <span className='text-2xl'>500</span> post
+                    <span className='text-2xl'>{`${userData.postCount}`}</span>{' '}
+                    post
                   </Text>
                 </div>
                 <div>
@@ -141,7 +177,8 @@ const Profile = () => {
                     }}
                     weight='bold'
                   >
-                    <span className='text-2xl'>500</span> diary
+                    <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
+                    diary
                   </Text>
                 </div>
               </div>
@@ -161,7 +198,7 @@ const Profile = () => {
                     width={24}
                     height={24}
                     viewBox='0 0 24 24'
-                    stroke-width={2}
+                    strokeWidth={2}
                     stroke='currentColor'
                     fill='none'
                     strokeLinecap='round'
@@ -180,15 +217,15 @@ const Profile = () => {
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
-                    class='icon icon-tabler icon-tabler-notebook'
+                    className='icon icon-tabler icon-tabler-notebook'
                     width='24'
                     height='24'
                     viewBox='0 0 24 24'
-                    stroke-width='2'
+                    strokeWidth='2'
                     stroke='currentColor'
                     fill='none'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   >
                     <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
                     <path d='M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18'></path>
@@ -203,69 +240,17 @@ const Profile = () => {
 
           {/* body */}
 
-          <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
-            <div
-              onClick={openImgCard}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-              className='hover:cursor-pointer row-span-4 '
-            >
-              <Card css={{ w: '100%', h: '400px' }}>
-                <Card.Body css={{ p: 0 }}>
-                  <Text
-                    css={{
-                      position: 'absolute',
-                      zIndex: 1,
-                      top: 5,
-                      w: '90%',
-                      h: '90%',
-                    }}
-                    className='text-white pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
-                  >
-                    22/06/2002
-                  </Text>
-                  <Card.Image
-                    src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
-                    className={`${isBlur ? 'blur-sm' : ''} transition-all`}
-                    width='100%'
-                    height='100%'
-                    objectFit='cover'
-                    alt='Card example background'
-                  />
-                </Card.Body>
-              </Card>
-            </div>
-
-            <div
-              onClick={openTextCard}
-              className='hover:cursor-pointer row-span-2'
-            >
-              <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
-                  <Card.Header>
-                    <Text
-                      css={{
-                        position: 'absolute',
-                        zIndex: 1,
-                        top: 10,
-                        w: '100%',
-                        h: '100%',
-                      }}
-                      className=' text-black'
-                    >
-                      22/06/2002
-                    </Text>
-                  </Card.Header>
-                  <Card.Body className='flex justify-center items-center'>
-                    <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                      <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
-                        <div className='m-5'>2+2=4</div>
-                      </div>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </div>
-            </div>
+          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+            {userData.post.map((p) => {
+              return (
+                <CardHome
+                  key={p.id}
+                  data={p}
+                  openImgCard={openImgCard}
+                  openTextCard={openTextCard}
+                ></CardHome>
+              );
+            })}
           </div>
 
           {/* Modal card-IMG post */}
@@ -351,81 +336,6 @@ const Profile = () => {
           </div>
 
           {/* Modal card-text post */}
-          <div className='w-full h-full max-h-lg'>
-            <Modal
-              blur
-              className='md:max-w-[50rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
-              aria-labelledby='modal-title'
-              open={cardTextOpen}
-              onClose={closeCardText}
-              width='100%'
-            >
-              <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
-                <div className='w-full flex justify-between'>
-                  <div className='w-full  flex justify-start items-center'>
-                    <div className='min-h-lg'>
-                      <Avatar
-                        src={`${cookie.imageUrl}`}
-                        color='secondary'
-                        bordered
-                      />
-                    </div>
-                    <div className='pl-2'>
-                      <Text
-                        h1
-                        className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
-                        weight='bold'
-                        css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                        }}
-                      >
-                        {`${cookie.firstName} ${cookie.lastName}`}
-                      </Text>
-                    </div>
-                  </div>
-                  <div className='w-full flex justify-end items-center'>
-                    <Button
-                      auto
-                      onClick={openEdit}
-                      className='text-purple-600 text-xl'
-                    >
-                      ...
-                    </Button>
-                  </div>
-                </div>
-              </Modal.Header>
-
-              <Modal.Body className='h-full w-full flex justify-center items-center'>
-                <div className='flex justify-center items-center w-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                  <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 '>
-                    <div className='m-5'>2+2=4</div>
-                  </div>
-                </div>
-              </Modal.Body>
-
-              <Modal.Footer className='w-full flex justify-center items-center  pt-0'>
-                <div className='w-[98%] h-full bottom-0 flex justify-center items-center border-2'>
-                  comment area
-                </div>
-                <div className='w-[98%] bottom-0 flex justify-center items-center '>
-                  <div className='w-[95%] pl-5'>
-                    <input
-                      type='text'
-                      placeholder='Type your Comment...'
-                      className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
-                    />
-                  </div>
-                  <div className='flex justify-center items-center md:w-[5%] w-[8%]'>
-                    <img
-                      className='cursor-pointer hover:mb-2 transition-all w-[50%] '
-                      src='/sendIcon.svg'
-                      alt='send comment icon'
-                    />
-                  </div>
-                </div>
-              </Modal.Footer>
-            </Modal>
-          </div>
 
           {/* Modal edit profile */}
           <div className='w-full max-w-lg h-full max-h-lg'>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import {
   Avatar,
   Textarea,
@@ -13,7 +13,6 @@ import { fetchApi } from '../helpers/fetchApi';
 import { data } from 'autoprefixer';
 import CardImg from './Card/CardImg';
 
-
 const Homeform = () => {
   const cookie = getCookie('login_data');
 
@@ -24,8 +23,8 @@ const Homeform = () => {
   useEffect(() => {
     async function getPosts() {
       const postData = await fetchApi('get', 'api/v1/posts');
-      setPostOnHome(postData.data.data);
-      console.log(postData.data.data);
+      setPostOnHome(postData.data);
+      console.log(postOnHome.data);
     }
     getPosts();
   }, []);
@@ -247,11 +246,9 @@ const Homeform = () => {
                     objectFit='cover'
                     alt='Card example background'
                   />
-
                 </Card.Body>
               </Card>
             </div>
-
             <div
               onClick={openTextCard}
               className='hover:cursor-pointer row-span-2'
@@ -281,10 +278,7 @@ const Homeform = () => {
                   </Card.Body>
                 </Card>
               </div>
-            </div> */}
-
-
-
+            </div>{' '}
           </div>
 
           {/* Modal card-IMG post */}
@@ -326,7 +320,8 @@ const Homeform = () => {
                             className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                             weight='bold'
                             css={{
-                              textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                              textGradient:
+                                '45deg, $purple600 -20%, $pink600 100%',
                             }}
                           >
                             {`${cookie.firstName} ${cookie.lastName}`}
@@ -336,7 +331,8 @@ const Homeform = () => {
                             className='md:text-[0.8rem] text-[0.7rem] font-[Nunito] m-0 p-0'
                             weight='bold'
                             css={{
-                              textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                              textGradient:
+                                '45deg, $purple600 -20%, $pink600 100%',
                             }}
                           >
                             Time post
@@ -344,15 +340,27 @@ const Homeform = () => {
                         </div>
                       </div>
                       <div className='w-full flex justify-end items-center'>
-                        <Button auto
+                        <Button
+                          auto
                           onClick={openEdit}
                           className='text-purple-600 text-xl'
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#a905b6" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <circle cx="5" cy="12" r="1" />
-                            <circle cx="12" cy="12" r="1" />
-                            <circle cx="19" cy="12" r="1" />
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            class='icon icon-tabler icon-tabler-dots'
+                            width='24'
+                            height='24'
+                            viewBox='0 0 24 24'
+                            stroke-width='2'
+                            stroke='#a905b6'
+                            fill='none'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                          >
+                            <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                            <circle cx='5' cy='12' r='1' />
+                            <circle cx='12' cy='12' r='1' />
+                            <circle cx='19' cy='12' r='1' />
                           </svg>
                         </Button>
                       </div>
@@ -369,9 +377,10 @@ const Homeform = () => {
                     <div className='w-full flex'>
                       <div className='w-full'>
                         <input
-                          type="text"
+                          type='text'
                           placeholder='Type your Comment...'
-                          className='w-full h-full text-[1.1rem] p-2 border-b-2 border-purple-400 focus:outline-none' />
+                          className='w-full h-full text-[1.1rem] p-2 border-b-2 border-purple-400 focus:outline-none'
+                        />
                       </div>
                       <div className='flex justify-center items-center md:w-[5%] '>
                         <img
@@ -382,7 +391,6 @@ const Homeform = () => {
                       </div>
                     </div>
                   </div>
-
                 </div>
               </Modal.Body>
             </Modal>
@@ -432,15 +440,27 @@ const Homeform = () => {
                     </div>
                   </div>
                   <div className='w-full flex justify-end items-center'>
-                    <Button auto
+                    <Button
+                      auto
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="#a905b6" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <circle cx="5" cy="12" r="1" />
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="19" cy="12" r="1" />
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        class='icon icon-tabler icon-tabler-dots'
+                        width='24'
+                        height='24'
+                        viewBox='0 0 24 24'
+                        stroke-width='2'
+                        stroke='#a905b6'
+                        fill='none'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      >
+                        <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                        <circle cx='5' cy='12' r='1' />
+                        <circle cx='12' cy='12' r='1' />
+                        <circle cx='19' cy='12' r='1' />
                       </svg>
                     </Button>
                   </div>
@@ -499,9 +519,7 @@ const Homeform = () => {
                   </div>
                   <div className='w-[75%] border-2'>
                     <div className=' w- full h-full flex flex-col justify-center items-center'>
-                      <div className=''>
-
-                      </div>
+                      <div className=''></div>
                     </div>
                   </div>
                 </div>
@@ -534,6 +552,7 @@ const Homeform = () => {
               </Modal.Body>
             </Modal>
           </div>
+        </div>
         </div>
       </div>
     </>
