@@ -7,13 +7,11 @@ import { base64URLtoFile } from '../libs/FileConverter';
 import { fetchApi } from '../helpers/fetchApi';
 import { Loading } from '@nextui-org/react';
 
-const Drawing = ({ css }) => {
+const Drawing = ({ assignTo, css }) => {
   const [color, setColor] = useState('gray');
   const boardRef = useRef(null);
   const [dimension] = useWindowDimensions();
   const [btnLoading, setBtnLoading] = useState(false);
-
-  console.log({ dimension });
 
   const onClearBoard = () => {
     boardRef.current.clear();
@@ -24,13 +22,26 @@ const Drawing = ({ css }) => {
     if (boardRef.current.isEmpty()) throw new Error('Please write diary'); //TODO : handle isEmpty alert
 
     const diaryAsB64 = boardRef.current.toDataURL('png');
-    const imgFile = base64URLtoFile(diaryAsB64, 'diaryImage');
+    const imgFile = base64URLtoFile(diaryAsB64, 'diaryImage.png');
+
+    console.log(imgFile);
 
     const formData = new FormData();
-    formData.append('diaryImgFile', imgFile);
+    formData.append('file', imgFile);
+    formData.append('assignTo', assignTo);
 
     try {
-      const response = await fetchApi('post', 'api/v1/diary/');
+      const response = await fetchApi(
+        'post',
+        'api/v1/diaries/',
+        true,
+        formData
+      );
+
+      console.log(response);
+
+      setBtnLoading(false);
+      onClearBoard();
     } catch (e) {
       console.error(e);
       setBtnLoading(false);

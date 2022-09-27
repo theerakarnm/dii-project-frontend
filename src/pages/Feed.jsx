@@ -56,7 +56,7 @@ const Feed = () => {
     try {
       const result = await fetchApi(
         'get',
-        `api/v1/posts/comment/${postId}`,
+        `api/v1/posts/comments/${postId}`,
         true
       );
       console.log(result.data);

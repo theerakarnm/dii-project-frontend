@@ -52,7 +52,7 @@ const AllCommentModel = ({ bindings, setVisible, loading, allComment }) => {
               </svg>
             </div>
           ) : (
-            allComment.map((cmt) => <Comment comment={cmt} />)
+            allComment.map((cmt) => <Comment key={cmt.id} comment={cmt} />)
           )}
         </Modal.Body>
         <Modal.Footer>

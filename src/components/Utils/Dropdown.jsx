@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dropdown, Radio } from '@nextui-org/react';
 
 const RadioSelf = ({ element, defaultChecked, c, value }) => {
   return (
@@ -46,11 +45,6 @@ export default function DropdownCom({ setColor }) {
     },
     {
       defCheck: false,
-      element: <div className='bg-gray-400 w-7 h-4'></div>,
-      value: 'black',
-    },
-    {
-      defCheck: false,
       element: <div className='bg-pink-400 w-7 h-4'></div>,
       value: 'pink',
     },
@@ -76,6 +70,7 @@ export default function DropdownCom({ setColor }) {
         {itemList.map((item) => {
           return (
             <RadioSelf
+              key={item.value}
               element={item.element}
               defaultChecked={item.defCheck}
               c={onChange}
@@ -84,39 +79,6 @@ export default function DropdownCom({ setColor }) {
           );
         })}
       </div>
-
-      {/* <Dropdown>
-        <Dropdown.Button
-          flat
-          className={`bg-${selectedValue.toLowerCase()}-400 hover:bg-${selectedValue.toLowerCase()}-500 text-white`}
-          css={{ tt: 'capitalize' }}
-        >
-          {selectedValue}
-        </Dropdown.Button>
-        <Dropdown.Menu
-          aria-label='Single selection actions'
-          color='secondary'
-          disallowEmptySelection
-          selectionMode='single'
-          selectedKeys={selected}
-          onSelectionChange={(selection) => {
-            setSelected(selection);
-            setColor(selection);
-          }}
-          items={menuItems}
-        >
-          {(item) => <Dropdown.Item key={item.key}>{item.name}</Dropdown.Item>}
-        </Dropdown.Menu>
-        <div className='hidden'>
-          <span className=' bg-gray-400'></span>
-          <span className=' bg-blue-400'></span>
-          <span className='bg-black'></span>
-          <span className='bg-pink-400'></span>
-          <span className='bg-yellow-400'></span>
-          <span className='bg-green-400'></span>
-          <span className='bg-orange-400'></span>
-        </div>
-      </Dropdown> */}
     </>
   );
 }

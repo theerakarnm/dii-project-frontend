@@ -53,7 +53,7 @@ const Post = ({ postData }) => {
 
   const likeHandler = async () => {
     try {
-      setIsLikeLoading(true);
+      // setIsLikeLoading(true);
       isLike
         ? setLikeCount((prev) => prev - 1)
         : setLikeCount((prev) => prev + 1);
@@ -75,7 +75,7 @@ const Post = ({ postData }) => {
           ? setLikeCount((prev) => prev - 1)
           : setLikeCount((prev) => prev + 1);
         setIsLike(!isLike);
-        setIsLikeLoading(false);
+        // setIsLikeLoading(false);
         throw new Error('failed to like');
       }
 
@@ -104,7 +104,7 @@ const Post = ({ postData }) => {
       });
       setIsLoadingComment(true);
 
-      const res = await fetchApi('post', 'api/v1/posts/comment/add', true, {
+      const res = await fetchApi('post', 'api/v1/posts/comments/add', true, {
         postId: postData.id,
         content: commentContent,
       });
