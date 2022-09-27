@@ -35,7 +35,11 @@ const HomeForm = () => {
     const getUserData = async () => {
       try {
         setPageLoading(true);
-        const result = await fetchApi('get', `api/v1/users/${cookie.username}`, false);
+        const result = await fetchApi(
+          'get',
+          `api/v1/users/${cookie.username}`,
+          false
+        );
         setUserData(result.data.data);
         console.log(result.data.data);
         setPageLoading(false);
@@ -78,7 +82,6 @@ const HomeForm = () => {
 
   return (
     <>
-      
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
           <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
@@ -353,7 +356,7 @@ const HomeForm = () => {
                             description='UI/UX Designer @Github'
                           />
 
-                          <div className='flex items-center justify-center p-12'>
+                          <div className='flex items-center justify-center'>
                             <div className='mx-auto w-full max-w-[550px]'>
                               <form action='' method='POST'>
                                 <div className='mb-5'>
