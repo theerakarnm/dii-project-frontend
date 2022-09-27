@@ -7,6 +7,7 @@ import Regis from './pages/Regis';
 import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import Diary from './pages/Diary';
+import MyDiary from './pages/MyDiary';
 import Profile from './pages/Profile';
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <Route path='/feed' element={<Feed />} />
       <Route path='/regis' element={<Regis />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/diary' element={<Diary />} />
+      <Route path='/diary/:userId' element={<Diary />} />
+      <Route path='/myDiary' element={<MyDiary />} />
       <Route path='/profile/:userId' element={<Profile />} />
       <Route path='*' element={<PageNotFound />} />
     </Routes>

@@ -53,7 +53,7 @@ const Post = ({ postData }) => {
 
   const likeHandler = async () => {
     try {
-      setIsLikeLoading(true);
+      // setIsLikeLoading(true);
       isLike
         ? setLikeCount((prev) => prev - 1)
         : setLikeCount((prev) => prev + 1);
@@ -75,7 +75,7 @@ const Post = ({ postData }) => {
           ? setLikeCount((prev) => prev - 1)
           : setLikeCount((prev) => prev + 1);
         setIsLike(!isLike);
-        setIsLikeLoading(false);
+        // setIsLikeLoading(false);
         throw new Error('failed to like');
       }
 

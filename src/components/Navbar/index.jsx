@@ -16,7 +16,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
     },
     {
       name: 'Diary',
-      to: '/diary',
+      to: '/myDiary',
     },
     ...moreRoute,
   ];

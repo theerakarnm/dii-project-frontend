@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
-import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
   Textarea,
@@ -18,7 +17,6 @@ import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 
 const HomeForm = () => {
-  const { userId } = useParams();
   const cookie = getCookie('login_data');
 
   const [visible, setVisible] = useState(false);
@@ -35,7 +33,11 @@ const HomeForm = () => {
     const getUserData = async () => {
       try {
         setPageLoading(true);
-        const result = await fetchApi('get', `api/v1/users/${cookie.username}`, false);
+        const result = await fetchApi(
+          'get',
+          `api/v1/users/${cookie.username}`,
+          false
+        );
         setUserData(result.data.data);
         console.log(result.data.data);
         setPageLoading(false);
@@ -78,7 +80,6 @@ const HomeForm = () => {
 
   return (
     <>
-      
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
           <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
@@ -217,7 +218,9 @@ const HomeForm = () => {
                     <line x1='13' y1='12' x2='15' y2='12'></line>
                   </svg>
                 </div>
-                <div className='font-bold mx-1 text-[1.3rem] '>Diary</div>
+                <div className='font-bold mx-1 text-[1.3rem] '>
+                  <Link to='myDiary'>Diary</Link>
+                </div>
               </div>
             </div>
           </div>
