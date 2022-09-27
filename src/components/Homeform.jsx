@@ -377,9 +377,8 @@ const HomeForm = () => {
                         <>
                           <User
                             className='pl-10'
-                            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
-                            name='Ariana Wattson'
-                            description='UI/UX Designer @Github'
+                            src={`${cookie.imageUrl}`}
+                            name={`${cookie.firstName} ${cookie.lastName}`}
                           />
 
                           <div className='flex items-center justify-center p-12'>
@@ -388,7 +387,7 @@ const HomeForm = () => {
                                 <div className='mb-5'>
                                   <label
                                     htmlFor='name'
-                                    className='mb-3 block text-base font-medium text-[#07074D]'
+                                    className='mb-3 block text-base font-medium text-purple-400'
                                   >
                                     First Name
                                   </label>
@@ -396,12 +395,12 @@ const HomeForm = () => {
                                     type='text'
                                     name='name'
                                     id='name'
-                                    placeholder='Old Firstname'
+                                    value={`${cookie.firstName}`}
                                     className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
                                   />
                                   <label
                                     htmlFor='name'
-                                    className='mb-3 mt-4 block text-base font-medium text-[#07074D]'
+                                    className='mb-3 mt-4 block text-base font-medium text-purple-400'
                                   >
                                     Last Name
                                   </label>
@@ -409,14 +408,14 @@ const HomeForm = () => {
                                     type='text'
                                     name='lastname'
                                     id='lastname'
-                                    placeholder='Old Lastname'
+                                    value={`${cookie.lastName}`}
                                     className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
                                   />
                                 </div>
                                 <div className='mb-5'>
                                   <label
                                     htmlFor='email'
-                                    className='mb-3 block text-base font-medium text-[#07074D]'
+                                    className='mb-3 block text-base font-medium text-purple-400'
                                   >
                                     Email Address
                                   </label>
@@ -424,7 +423,7 @@ const HomeForm = () => {
                                     type='email'
                                     name='email'
                                     id='email'
-                                    placeholder='Old email'
+                                    value={`${cookie.email}`}
                                     className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
                                   />
                                 </div>
@@ -432,7 +431,7 @@ const HomeForm = () => {
                                 <div className='mb-5'>
                                   <label
                                     htmlFor='message'
-                                    className='mb-3 block text-base font-medium text-[#07074D]'
+                                    className='mb-3 block text-base font-medium text-purple-400'
                                   >
                                     Bio
                                   </label>
@@ -446,8 +445,8 @@ const HomeForm = () => {
                                   />
                                 </div>
                                 <div>
-                                  <button className='hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none'>
-                                    Submit
+                                  <button className='hover:shadow-form rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'>
+                                    Save
                                   </button>
                                 </div>
                               </form>

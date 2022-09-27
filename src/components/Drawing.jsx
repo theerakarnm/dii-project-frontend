@@ -1,18 +1,43 @@
 import SignatureCanvas from 'react-signature-canvas';
 
-import { useState, useMemo, useRef } from 'react';
+import { useState, useRef } from 'react';
 import DropdownCom from './Utils/Dropdown';
 import useWindowDimensions from '../hooks/useWindowDimention';
+import { base64URLtoFile } from '../libs/FileConverter';
+import { fetchApi } from '../helpers/fetchApi';
+import { Loading } from '@nextui-org/react';
 
 const Drawing = ({ css }) => {
   const [color, setColor] = useState('gray');
   const boardRef = useRef(null);
   const [dimension] = useWindowDimensions();
+  const [btnLoading, setBtnLoading] = useState(false);
 
   console.log({ dimension });
 
   const onClearBoard = () => {
     boardRef.current.clear();
+  };
+
+  const onPublish = async () => {
+    setBtnLoading(true);
+    if (boardRef.current.isEmpty()) throw new Error('Please write diary'); //TODO : handle isEmpty alert
+
+    const diaryAsB64 = boardRef.current.toDataURL('png');
+    const imgFile = base64URLtoFile(diaryAsB64, 'diaryImage');
+
+    const formData = new FormData();
+    formData.append('diaryImgFile', imgFile);
+
+    try {
+      const response = await fetchApi('post', 'api/v1/diary/');
+    } catch (e) {
+      console.error(e);
+      setBtnLoading(false);
+      return;
+    }
+
+    // console.log(base64URLtoFile(diaryAsB64, 'test'));
   };
 
   return (
@@ -42,6 +67,14 @@ const Drawing = ({ css }) => {
               className: 'sigCanvas',
             }}
           />
+        </div>
+        <div className='flex justify-end items-center mb-2'>
+          <button
+            className='bg-sky-400 hover:bg-sky-500 text-white px-3 py-[0.4rem] rounded-xl ml-2 w-20 mt-2 transition-all hover:-translate-y-1'
+            onClick={onPublish}
+          >
+            {btnLoading ? <Loading /> : 'Publish'}
+          </button>
         </div>
       </div>
     </>

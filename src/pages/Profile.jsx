@@ -62,7 +62,12 @@ const Profile = () => {
   }
 
   if (!userData) {
-    return <ErrorComponent />;
+    return (
+      <ErrorComponent
+        cause={'User not found'}
+        content={'Please check username again'}
+      />
+    );
   }
 
   if (pageLoading) {

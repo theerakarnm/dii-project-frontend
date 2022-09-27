@@ -23,6 +23,9 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
 
   const shareHandler = async () => {
     const cookieData = getCookie('login_data');
+    setTextValue('');
+    setImage('');
+    setFile({});
     let data = new FormData();
 
     data.append('textContent', textValue);
