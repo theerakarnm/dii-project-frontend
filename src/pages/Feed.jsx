@@ -33,7 +33,7 @@ const Feed = () => {
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
-
+      
       if (!cookieData) {
         return;
       }
