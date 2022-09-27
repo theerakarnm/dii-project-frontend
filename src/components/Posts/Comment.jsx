@@ -1,6 +1,7 @@
 import React from 'react';
 import Avatar from '../Avatar';
 import { Loading } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 //TODO : add prop type
 
@@ -24,7 +25,11 @@ const Comment = ({ comment, loading = false }) => {
           >
             <div className='flex justify-between'>
               <div className='flex flex-col'>
-                <p className='font-semibold m-0'>{comment.name}</p>
+                <p className='font-semibold m-0'>
+                  <Link to={`/profile/${comment.username}`}>
+                    {comment.name}
+                  </Link>
+                </p>
                 <span className='text-gray-400 text-xs'>
                   {comment.dateTime}
                 </span>

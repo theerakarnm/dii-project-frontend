@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import pTypes from 'prop-types';
 
 import { Input } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import Avatar from '../Avatar';
 import OptionDropdown from './OptionDropdown';
@@ -183,7 +184,9 @@ const Post = ({ postData }) => {
                 <div className='flex items-center'>
                   <Avatar url={postData.profileImage} />
                   <div className='ml-3 flex flex-col'>
-                    <span>{postData.name}</span>
+                    <Link to={`/profile/${postData.username}`}>
+                      <span>{postData.name}</span>
+                    </Link>
                     <span className='text-gray-400 text-xs'>
                       {postData.dateTime}
                     </span>
