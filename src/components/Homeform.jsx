@@ -1,67 +1,83 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getCookie } from '../libs/getterSetterCookie';
+import NotLoginInfo from '../components/NotLoginInfo';
+import { fetchApi } from '../helpers/fetchApi';
+import Navbar from '../components/Navbar';
 import {
   Avatar,
   Textarea,
   Text,
   Button,
   Modal,
+  Card,
+  Loading,
 } from '@nextui-org/react';
+import ErrorComponent from '../components/ErrorComponent';
+import CardHome from '../components/Home/Card';
 
-import { getCookie } from '../libs/getterSetterCookie';
-import { fetchApi } from '../helpers/fetchApi';
-import { data } from 'autoprefixer';
-import CardImg from './Card/CardImg';
-
-const Homeform = () => {
+const HomeForm = () => {
+  const { userId } = useParams();
   const cookie = getCookie('login_data');
 
   const [visible, setVisible] = useState(false);
-  const [isBlur, setIsBlur] = useState(false);
-  const [postOnHome, setPostOnHome] = useState([]);
+  const [cardImgOpen, setCardImgOpen] = useState(false);
+  const [cardTextOpen, setCardTextOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    post: [],
+  });
+  const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => {
-    async function getPosts() {
-      const postData = await fetchApi('get', 'api/v1/posts');
-      setPostOnHome(postData.data);
-      console.log(postOnHome.data);
-    }
-    getPosts();
+    setPageLoading(true);
+    const getUserData = async () => {
+      try {
+        setPageLoading(true);
+        const result = await fetchApi('get', `api/v1/users/${cookie.username}`, false);
+        setUserData(result.data.data);
+        console.log(result.data.data);
+        setPageLoading(false);
+      } catch (e) {
+        setPageLoading(false);
+        console.error(e);
+        setUserData([]);
+      }
+    };
+
+    getUserData();
   }, []);
 
   const handler = () => setVisible(true);
-  const closeHandler = () => {
-    setVisible(false);
-    console.log('closed');
-  };
-
-  const [cardImgOpen, setCardImgOpen] = useState(false);
+  const closeHandler = () => setVisible(false);
   const openImgCard = () => setCardImgOpen(true);
-  const closeCardImg = () => {
-    setCardImgOpen(false);
-  };
-
-  const [cardTextOpen, setCardTextOpen] = useState(false);
+  const closeCardImg = () => setCardImgOpen(false);
   const openTextCard = () => setCardTextOpen(true);
-  const closeCardText = () => {
-    setCardTextOpen(false);
-  };
-
-  const [editOpen, setEditOpen] = useState(false);
+  const closeCardText = () => setCardTextOpen(false);
   const openEdit = () => setEditOpen(true);
-  const closeEdit = () => {
-    setEditOpen(false);
-  };
+  const closeEdit = () => setEditOpen(false);
 
-  const onMouseOver = () => {
-    setIsBlur(true);
-  };
-  const onMouseLeave = () => {
-    setIsBlur(false);
-  };
+  if (!cookie) {
+    return <NotLoginInfo />;
+  }
+
+  if (!userData) {
+    return <ErrorComponent />;
+  }
+
+  if (pageLoading) {
+    return (
+      <>
+        <div className='flex justify-center items-center w-screen h-screen'>
+          <Loading />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
+      
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
           <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
@@ -75,17 +91,17 @@ const Homeform = () => {
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
                 >
-                  {`${cookie.firstName} ${cookie.lastName}`}
+                  {`${userData.name}`}
                 </Text>
                 <Text
                   h1
-                  className='md:text-[1.3rem] text-[0.8rem]'
+                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
                   weight='bold'
                 >
-                  {`${cookie.email}`}
+                  {`${userData.email}`}
                 </Text>
               </dir>
 
@@ -96,7 +112,7 @@ const Homeform = () => {
               <div className='md:h-[12rem] md:w-[12rem] w-[7rem] h-[7rem]'>
                 <Avatar
                   className='w-full h-full'
-                  src={`${cookie.imageUrl}`}
+                  src={`${userData.profileUrl}`}
                   color='secondary'
                   bordered
                 />
@@ -133,7 +149,8 @@ const Homeform = () => {
                     }}
                     weight='bold'
                   >
-                    <span className='text-2xl'>500</span> post
+                    <span className='text-2xl'>{`${userData.postCount}`}</span>{' '}
+                    post
                   </Text>
                 </div>
                 <div>
@@ -143,7 +160,8 @@ const Homeform = () => {
                     }}
                     weight='bold'
                   >
-                    <span className='text-2xl'>500</span> diary
+                    <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
+                    diary
                   </Text>
                 </div>
               </div>
@@ -163,7 +181,7 @@ const Homeform = () => {
                     width={24}
                     height={24}
                     viewBox='0 0 24 24'
-                    stroke-width={2}
+                    strokeWidth={2}
                     stroke='currentColor'
                     fill='none'
                     strokeLinecap='round'
@@ -182,15 +200,15 @@ const Homeform = () => {
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
-                    class='icon icon-tabler icon-tabler-notebook'
+                    className='icon icon-tabler icon-tabler-notebook'
                     width='24'
                     height='24'
                     viewBox='0 0 24 24'
-                    stroke-width='2'
+                    strokeWidth='2'
                     stroke='currentColor'
                     fill='none'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   >
                     <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
                     <path d='M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18'></path>
@@ -205,205 +223,27 @@ const Homeform = () => {
 
           {/* body */}
 
-          <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
-            {   
-              postOnHome.map((postData) => (
-                  <CardImg key={postData.id} 
-                  data={postData} 
-                  onClick={openImgCard}
-                  onMouseOver={onMouseOver}
-                  onMouseLeave={onMouseLeave}
-                  />
-              ))
-            }
-
-
-            {/* <div
-              onClick={openImgCard}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-              className='hover:cursor-pointer row-span-4 '
-            >
-              <Card css={{ w: '100%', h: '400px' }}>
-                <Card.Body css={{ p: 0 }}>
-                  <Text
-                    css={{
-                      position: 'absolute',
-                      zIndex: 1,
-                      top: 5,
-                      w: '90%',
-                      h: '90%',
-                    }}
-                    className='text-white pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
-                  >
-                    Time post
-                  </Text>
-                  <Card.Image
-                    src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
-                    className={`${isBlur ? 'blur-sm' : ''} transition-all`}
-                    width='100%'
-                    height='100%'
-                    objectFit='cover'
-                    alt='Card example background'
-                  />
-                </Card.Body>
-              </Card>
-            </div>
-            <div
-              onClick={openTextCard}
-              className='hover:cursor-pointer row-span-2'
-            >
-              <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
-                  <Card.Header>
-                    <Text
-                      css={{
-                        position: 'absolute',
-                        zIndex: 1,
-                        top: 10,
-                        w: '100%',
-                        h: '100%',
-                      }}
-                      className=' text-black'
-                    >
-                      22/06/2002
-                    </Text>
-                  </Card.Header>
-                  <Card.Body className='flex justify-center items-center'>
-                    <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                      <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
-                        <div className='m-5'>2+2=4</div>
-                      </div>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </div>
-            </div>{' '}
+          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+            {userData.post.map((p) => {
+              return (
+                <CardHome
+                  key={p.id}
+                  data={p}
+                  openImgCard={openImgCard}
+                  openTextCard={openTextCard}
+                ></CardHome>
+              );
+            })}
           </div>
 
           {/* Modal card-IMG post */}
           <div className='w-full h-full max-h-lg'>
             <Modal
               blur
-              className='md:max-w-[80rem] flex justify-center items-center md:mx-auto mx-5'
+              className='md:max-w-[80rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
               aria-labelledby='modal-title'
               open={cardImgOpen}
               onClose={closeCardImg}
-              width='100%'
-            >
-              <Modal.Header className='m-0 p-0'></Modal.Header>
-              <Modal.Body className='h-full w-full flex m-0 p-2'>
-                <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
-                  <div className='md:max-w-[60%] w-full flex flex-col p-3'>
-                    <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
-                      <img
-                        className='w-full md:max-h-full rounded-lg'
-                        src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
-                        alt='modal'
-                      />
-                    </div>
-                  </div>
-
-                  <div className='md:w-[72rem] p-3 flex flex-col'>
-                    <div className='w-full flex justify-between'>
-                      <div className='w-full  flex justify-start items-center'>
-                        <div className='min-h-lg'>
-                          <Avatar
-                            src={`${cookie.imageUrl}`}
-                            color='secondary'
-                            bordered
-                          />
-                        </div>
-                        <div className='pl-2'>
-                          <Text
-                            h1
-                            className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
-                            weight='bold'
-                            css={{
-                              textGradient:
-                                '45deg, $purple600 -20%, $pink600 100%',
-                            }}
-                          >
-                            {`${cookie.firstName} ${cookie.lastName}`}
-                          </Text>
-                          <Text
-                            h1
-                            className='md:text-[0.8rem] text-[0.7rem] font-[Nunito] m-0 p-0'
-                            weight='bold'
-                            css={{
-                              textGradient:
-                                '45deg, $purple600 -20%, $pink600 100%',
-                            }}
-                          >
-                            Time post
-                          </Text>
-                        </div>
-                      </div>
-                      <div className='w-full flex justify-end items-center'>
-                        <Button
-                          auto
-                          onClick={openEdit}
-                          className='text-purple-600 text-xl'
-                        >
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            class='icon icon-tabler icon-tabler-dots'
-                            width='24'
-                            height='24'
-                            viewBox='0 0 24 24'
-                            stroke-width='2'
-                            stroke='#a905b6'
-                            fill='none'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
-                          >
-                            <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-                            <circle cx='5' cy='12' r='1' />
-                            <circle cx='12' cy='12' r='1' />
-                            <circle cx='19' cy='12' r='1' />
-                          </svg>
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className='w-full h-auto my-2 pt-2 px-2 md:text-[1.2rem] text-[0.9rem] font-[Nunito]'>
-                      content area
-                    </div>
-
-                    <div className='w-full h-full border-t px-2 py-3  border-purple-300 bg-slate-100 font-[Nunito]'>
-                      comment area
-                    </div>
-
-                    <div className='w-full flex'>
-                      <div className='w-full'>
-                        <input
-                          type='text'
-                          placeholder='Type your Comment...'
-                          className='w-full h-full text-[1.1rem] p-2 border-b-2 border-purple-400 focus:outline-none'
-                        />
-                      </div>
-                      <div className='flex justify-center items-center md:w-[5%] '>
-                        <img
-                          className='cursor-pointer hover:mb-2 transition-all md:w-[80%]'
-                          src='/sendIcon.svg'
-                          alt='send comment icon'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Modal.Body>
-            </Modal>
-          </div>
-
-          {/* Modal card-text post */}
-          <div className='w-full h-full max-h-lg'>
-            <Modal
-              blur
-              className='md:max-w-[50rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
-              aria-labelledby='modal-title'
-              open={cardTextOpen}
-              onClose={closeCardText}
               width='100%'
             >
               <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
@@ -427,16 +267,6 @@ const Homeform = () => {
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
                       </Text>
-                      <Text
-                        h1
-                        className='md:text-[0.8rem] text-[0.7rem] font-[Nunito] m-0 p-0 flex justify-start'
-                        weight='bold'
-                        css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                        }}
-                      >
-                        Time post
-                      </Text>
                     </div>
                   </div>
                   <div className='w-full flex justify-end items-center'>
@@ -445,63 +275,57 @@ const Homeform = () => {
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
                     >
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        class='icon icon-tabler icon-tabler-dots'
-                        width='24'
-                        height='24'
-                        viewBox='0 0 24 24'
-                        stroke-width='2'
-                        stroke='#a905b6'
-                        fill='none'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                      >
-                        <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-                        <circle cx='5' cy='12' r='1' />
-                        <circle cx='12' cy='12' r='1' />
-                        <circle cx='19' cy='12' r='1' />
-                      </svg>
+                      ...
                     </Button>
                   </div>
                 </div>
               </Modal.Header>
 
-              <Modal.Body className='h-full w-full flex justify-center items-center'>
-                <div className='flex justify-center items-center w-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                  <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 '>
-                    <div className='m-5'>2+2=4</div>
+              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
+                <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
+                  <div className='md:max-w-[60%] w-full  flex flex-col'>
+                    <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
+                      <img
+                        className='w-full md:max-h-full rounded-lg'
+                        src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
+                        alt='modal'
+                      />
+                    </div>
+                  </div>
+                  <div className='w-full '>
+                    <div className='w-full h-[90%] border pl-4 pt-2'>
+                      comment area
+                    </div>
+                    <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
+                      <div className='w-[95%] pl-5'>
+                        <input
+                          type='text'
+                          placeholder='Type your Comment...'
+                          className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                        />
+                      </div>
+                      <div className='flex justify-center items-center md:w-[5%] '>
+                        <img
+                          className='cursor-pointer hover:mb-2 transition-all md:w-[80%]'
+                          src='/sendIcon.svg'
+                          alt='send comment icon'
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Modal.Body>
-
-              <Modal.Footer className='w-full flex justify-center items-center  pt-0'>
-                <div className='w-full h-full bottom-0 flex justify-start items-center p-2'>
-                  comment area
-                </div>
-                <div className='w-full bottom-0 flex justify-center items-center '>
-                  <input
-                    type='text'
-                    placeholder='Type your Comment...'
-                    className='w-full h-full text-[1.1rem] p-2  border-b-2 border-purple-400 focus:outline-none'
-                  />
-                  <div className='flex justify-center items-center md:w-[5%] w-[8%]'>
-                    <img
-                      className='cursor-pointer hover:mb-2 transition-all w-[50%] '
-                      src='/sendIcon.svg'
-                      alt='send comment icon'
-                    />
-                  </div>
-                </div>
-              </Modal.Footer>
             </Modal>
           </div>
+
+          {/* Modal card-text post */}
 
           {/* Modal edit profile */}
           <div className='w-full max-w-lg h-full max-h-lg'>
             <Modal
               closeButton
               blur
+              className='md:max-w-[80rem] mx-auto'
               aria-labelledby='modal-title'
               open={visible}
               onClose={closeHandler}
@@ -517,11 +341,7 @@ const Homeform = () => {
                       Change Password
                     </div>
                   </div>
-                  <div className='w-[75%] border-2'>
-                    <div className=' w- full h-full flex flex-col justify-center items-center'>
-                      <div className=''></div>
-                    </div>
-                  </div>
+                  <div className='w-[75%] border-2'></div>
                 </div>
               </Modal.Body>
             </Modal>
@@ -530,6 +350,7 @@ const Homeform = () => {
           {/* Model edit post */}
           <div className=''>
             <Modal
+              className=''
               aria-labelledby='modal-title'
               open={editOpen}
               onClose={closeEdit}
@@ -553,10 +374,9 @@ const Homeform = () => {
             </Modal>
           </div>
         </div>
-        </div>
       </div>
     </>
   );
 };
 
-export default Homeform;
+export default HomeForm;
