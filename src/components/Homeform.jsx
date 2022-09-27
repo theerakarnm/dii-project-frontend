@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Avatar,
   Textarea,
@@ -8,11 +8,12 @@ import {
   Card,
   Col,
   Input,
-} from '@nextui-org/react';
-import { getCookie } from '../libs/getterSetterCookie';
+} from "@nextui-org/react";
+import { getCookie } from "../libs/getterSetterCookie";
+import Comment from "./Posts/Comment";
 
 const Homeform = () => {
-  const cookie = getCookie('login_data');
+  const cookie = getCookie("login_data");
 
   const [visible, setVisible] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
@@ -20,7 +21,7 @@ const Homeform = () => {
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
-    console.log('closed');
+    console.log("closed");
   };
 
   const [cardImgOpen, setCardImgOpen] = useState(false);
@@ -60,7 +61,7 @@ const Homeform = () => {
                   className='md:text-[2rem] text-[1.5rem]'
                   weight='bold'
                   css={{
-                    textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                    textGradient: "45deg, $purple600 -20%, $pink600 100%",
                   }}
                 >
                   {`${cookie.firstName} ${cookie.lastName}`}
@@ -69,7 +70,7 @@ const Homeform = () => {
                   h1
                   className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
                   css={{
-                    textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                    textGradient: "45deg, $purple600 -20%, $pink600 100%",
                   }}
                   weight='bold'
                 >
@@ -117,7 +118,7 @@ const Homeform = () => {
                 <div>
                   <Text
                     css={{
-                      textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                      textGradient: "45deg, $purple600 -20%, $pink600 100%",
                     }}
                     weight='bold'
                   >
@@ -127,7 +128,7 @@ const Homeform = () => {
                 <div>
                   <Text
                     css={{
-                      textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                      textGradient: "45deg, $purple600 -20%, $pink600 100%",
                     }}
                     weight='bold'
                   >
@@ -200,15 +201,15 @@ const Homeform = () => {
               onMouseLeave={onMouseLeave}
               className='hover:cursor-pointer row-span-4 '
             >
-              <Card css={{ w: '100%', h: '400px' }}>
+              <Card css={{ w: "100%", h: "400px" }}>
                 <Card.Body css={{ p: 0 }}>
                   <Text
                     css={{
-                      position: 'absolute',
+                      position: "absolute",
                       zIndex: 1,
                       top: 5,
-                      w: '90%',
-                      h: '90%',
+                      w: "90%",
+                      h: "90%",
                     }}
                     className='text-white pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
                   >
@@ -216,7 +217,7 @@ const Homeform = () => {
                   </Text>
                   <Card.Image
                     src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
-                    className={`${isBlur ? 'blur-sm' : ''} transition-all`}
+                    className={`${isBlur ? "blur-sm" : ""} transition-all`}
                     width='100%'
                     height='100%'
                     objectFit='cover'
@@ -231,15 +232,15 @@ const Homeform = () => {
               className='hover:cursor-pointer row-span-2'
             >
               <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
+                <Card css={{ w: "100%", h: "200px" }} className='rounded-lg'>
                   <Card.Header>
                     <Text
                       css={{
-                        position: 'absolute',
+                        position: "absolute",
                         zIndex: 1,
                         top: 10,
-                        w: '100%',
-                        h: '100%',
+                        w: "100%",
+                        h: "100%",
                       }}
                       className=' text-black'
                     >
@@ -284,7 +285,7 @@ const Homeform = () => {
                         className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                         weight='bold'
                         css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
                         }}
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
@@ -366,7 +367,7 @@ const Homeform = () => {
                         className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
                         weight='bold'
                         css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
                         }}
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
