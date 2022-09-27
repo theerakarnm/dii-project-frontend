@@ -9,4 +9,20 @@ const fileToBase64 = (filename, filepath) => {
   });
 };
 
+export const base64URLtoFile = (dataUrl, filename) => {
+  var arr = dataUrl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+
+  console.log(mime);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], filename, { type: mime });
+};
+
 export default fileToBase64;
