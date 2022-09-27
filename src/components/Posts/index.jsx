@@ -104,7 +104,7 @@ const Post = ({ postData }) => {
       });
       setIsLoadingComment(true);
 
-      const res = await fetchApi('post', 'api/v1/posts/comment/add', true, {
+      const res = await fetchApi('post', 'api/v1/posts/comments/add', true, {
         postId: postData.id,
         content: commentContent,
       });
