@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import {
   Avatar,
   Textarea,
@@ -9,14 +10,25 @@ import {
   Col,
   Input,
 } from "@nextui-org/react";
+
 import { getCookie } from "../libs/getterSetterCookie";
-import Comment from "./Posts/Comment";
+import { fetchApi } from "../helpers/fetchApi";
 
 const Homeform = () => {
   const cookie = getCookie("login_data");
 
   const [visible, setVisible] = useState(false);
   const [isBlur, setIsBlur] = useState(false);
+  const [postOnHome, setPostOnHome] = useState([]);
+
+  useEffect(() => {
+    async function getPosts() {
+      const postData = await fetchApi("get", "api/v1/posts");
+      setPostOnHome(postData.data);
+      console.log(postOnHome.data);
+    }
+    getPosts();
+  }, []);
 
   const handler = () => setVisible(true);
   const closeHandler = () => {
@@ -68,7 +80,7 @@ const Homeform = () => {
                 </Text>
                 <Text
                   h1
-                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
+                  className='md:text-[1.3rem] text-[0.8rem]'
                   css={{
                     textGradient: "45deg, $purple600 -20%, $pink600 100%",
                   }}
@@ -213,7 +225,7 @@ const Homeform = () => {
                     }}
                     className='text-white pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
                   >
-                    22/06/2002
+                    Time post
                   </Text>
                   <Card.Image
                     src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
@@ -226,7 +238,6 @@ const Homeform = () => {
                 </Card.Body>
               </Card>
             </div>
-
             <div
               onClick={openTextCard}
               className='hover:cursor-pointer row-span-2'
@@ -256,57 +267,24 @@ const Homeform = () => {
                   </Card.Body>
                 </Card>
               </div>
-            </div>
+            </div>{" "}
+            */}
           </div>
 
           {/* Modal card-IMG post */}
           <div className='w-full h-full max-h-lg'>
             <Modal
               blur
-              className='md:max-w-[80rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
+              className='md:max-w-[80rem] flex justify-center items-center md:mx-auto mx-5'
               aria-labelledby='modal-title'
               open={cardImgOpen}
               onClose={closeCardImg}
               width='100%'
             >
-              <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
-                <div className='w-full flex justify-between'>
-                  <div className='w-full  flex justify-start items-center'>
-                    <div className='min-h-lg'>
-                      <Avatar
-                        src={`${cookie.imageUrl}`}
-                        color='secondary'
-                        bordered
-                      />
-                    </div>
-                    <div className='pl-2'>
-                      <Text
-                        h1
-                        className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
-                        weight='bold'
-                        css={{
-                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
-                        }}
-                      >
-                        {`${cookie.firstName} ${cookie.lastName}`}
-                      </Text>
-                    </div>
-                  </div>
-                  <div className='w-full flex justify-end items-center'>
-                    <Button
-                      auto
-                      onClick={openEdit}
-                      className='text-purple-600 text-xl'
-                    >
-                      ...
-                    </Button>
-                  </div>
-                </div>
-              </Modal.Header>
-
-              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
+              <Modal.Header className='m-0 p-0'></Modal.Header>
+              <Modal.Body className='h-full w-full flex m-0 p-2'>
                 <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
-                  <div className='md:max-w-[60%] w-full  flex flex-col'>
+                  <div className='md:max-w-[60%] w-full flex flex-col p-3'>
                     <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
                       <img
                         className='w-full md:max-h-full rounded-lg'
@@ -315,16 +293,83 @@ const Homeform = () => {
                       />
                     </div>
                   </div>
-                  <div className='w-full '>
-                    <div className='w-full h-[90%] border pl-4 pt-2'>
+
+                  <div className='md:w-[72rem] p-3 flex flex-col'>
+                    <div className='w-full flex justify-between'>
+                      <div className='w-full  flex justify-start items-center'>
+                        <div className='min-h-lg'>
+                          <Avatar
+                            src={`${cookie.imageUrl}`}
+                            color='secondary'
+                            bordered
+                          />
+                        </div>
+                        <div className='pl-2'>
+                          <Text
+                            h1
+                            className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
+                            weight='bold'
+                            css={{
+                              textGradient:
+                                "45deg, $purple600 -20%, $pink600 100%",
+                            }}
+                          >
+                            {`${cookie.firstName} ${cookie.lastName}`}
+                          </Text>
+                          <Text
+                            h1
+                            className='md:text-[0.8rem] text-[0.7rem] font-[Nunito] m-0 p-0'
+                            weight='bold'
+                            css={{
+                              textGradient:
+                                "45deg, $purple600 -20%, $pink600 100%",
+                            }}
+                          >
+                            Time post
+                          </Text>
+                        </div>
+                      </div>
+                      <div className='w-full flex justify-end items-center'>
+                        <Button
+                          auto
+                          onClick={openEdit}
+                          className='text-purple-600 text-xl'
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            class='icon icon-tabler icon-tabler-dots'
+                            width='24'
+                            height='24'
+                            viewBox='0 0 24 24'
+                            stroke-width='2'
+                            stroke='#a905b6'
+                            fill='none'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                          >
+                            <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                            <circle cx='5' cy='12' r='1' />
+                            <circle cx='12' cy='12' r='1' />
+                            <circle cx='19' cy='12' r='1' />
+                          </svg>
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className='w-full h-auto my-2 pt-2 px-2 md:text-[1.2rem] text-[0.9rem] font-[Nunito]'>
+                      content area
+                    </div>
+
+                    <div className='w-full h-full border-t px-2 py-3  border-purple-300 bg-slate-100 font-[Nunito]'>
                       comment area
                     </div>
-                    <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
-                      <div className='w-[95%] pl-5'>
+
+                    <div className='w-full flex'>
+                      <div className='w-full'>
                         <input
                           type='text'
                           placeholder='Type your Comment...'
-                          className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                          className='w-full h-full text-[1.1rem] p-2 border-b-2 border-purple-400 focus:outline-none'
                         />
                       </div>
                       <div className='flex justify-center items-center md:w-[5%] '>
@@ -372,6 +417,16 @@ const Homeform = () => {
                       >
                         {`${cookie.firstName} ${cookie.lastName}`}
                       </Text>
+                      <Text
+                        h1
+                        className='md:text-[0.8rem] text-[0.7rem] font-[Nunito] m-0 p-0 flex justify-start'
+                        weight='bold'
+                        css={{
+                          textGradient: "45deg, $purple600 -20%, $pink600 100%",
+                        }}
+                      >
+                        Time post
+                      </Text>
                     </div>
                   </div>
                   <div className='w-full flex justify-end items-center'>
@@ -380,7 +435,23 @@ const Homeform = () => {
                       onClick={openEdit}
                       className='text-purple-600 text-xl'
                     >
-                      ...
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        class='icon icon-tabler icon-tabler-dots'
+                        width='24'
+                        height='24'
+                        viewBox='0 0 24 24'
+                        stroke-width='2'
+                        stroke='#a905b6'
+                        fill='none'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      >
+                        <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                        <circle cx='5' cy='12' r='1' />
+                        <circle cx='12' cy='12' r='1' />
+                        <circle cx='19' cy='12' r='1' />
+                      </svg>
                     </Button>
                   </div>
                 </div>
@@ -395,17 +466,15 @@ const Homeform = () => {
               </Modal.Body>
 
               <Modal.Footer className='w-full flex justify-center items-center  pt-0'>
-                <div className='w-[98%] h-full bottom-0 flex justify-center items-center border-2'>
+                <div className='w-full h-full bottom-0 flex justify-start items-center p-2'>
                   comment area
                 </div>
-                <div className='w-[98%] bottom-0 flex justify-center items-center '>
-                  <div className='w-[95%] pl-5'>
-                    <input
-                      type='text'
-                      placeholder='Type your Comment...'
-                      className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
-                    />
-                  </div>
+                <div className='w-full bottom-0 flex justify-center items-center '>
+                  <input
+                    type='text'
+                    placeholder='Type your Comment...'
+                    className='w-full h-full text-[1.1rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                  />
                   <div className='flex justify-center items-center md:w-[5%] w-[8%]'>
                     <img
                       className='cursor-pointer hover:mb-2 transition-all w-[50%] '
@@ -438,7 +507,11 @@ const Homeform = () => {
                       Change Password
                     </div>
                   </div>
-                  <div className='w-[75%] border-2'></div>
+                  <div className='w-[75%] border-2'>
+                    <div className=' w- full h-full flex flex-col justify-center items-center'>
+                      <div className=''></div>
+                    </div>
+                  </div>
                 </div>
               </Modal.Body>
             </Modal>
