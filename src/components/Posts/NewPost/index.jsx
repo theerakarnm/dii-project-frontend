@@ -23,7 +23,6 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
 
   const shareHandler = async () => {
     const cookieData = getCookie('login_data');
-    const apiUrl = `${import.meta.env.VITE_API_HOSTNAME}api/v1/post/add`;
     let data = new FormData();
 
     data.append('textContent', textValue);
@@ -82,8 +81,6 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   };
 
   const onDrop = useCallback(async (acceptedFiles) => {
-    console.log(acceptedFiles);
-    console.log(await fileToBase64(acceptedFiles[0]));
     setFile(acceptedFiles[0]);
     setImage(await fileToBase64(acceptedFiles[acceptedFiles.length - 1]));
   }, []);
