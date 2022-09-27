@@ -6,13 +6,12 @@ import {
   Text,
   Button,
   Modal,
-  Card,
-  Col,
-  Input,
 } from '@nextui-org/react';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import { fetchApi } from '../helpers/fetchApi';
+import { data } from 'autoprefixer';
+import CardImg from './Card/CardImg';
 
 
 const Homeform = () => {
@@ -24,9 +23,9 @@ const Homeform = () => {
 
   useEffect(() => {
     async function getPosts() {
-      const postData = await fetchApi('get','api/v1/posts');
-      setPostOnHome(postData.data);
-      console.log(postOnHome.data);
+      const postData = await fetchApi('get', 'api/v1/posts');
+      setPostOnHome(postData.data.data);
+      console.log(postData.data.data);
     }
     getPosts();
   }, []);
@@ -208,6 +207,16 @@ const Homeform = () => {
           {/* body */}
 
           <div className='w-full h-full  grid gap-2  md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+            {   
+              postOnHome.map((postData) => (
+                  <CardImg key={postData.id} 
+                  data={postData} 
+                  onClick={openImgCard}
+                  onMouseOver={onMouseOver}
+                  onMouseLeave={onMouseLeave}
+                  />
+              ))
+            }
 
 
             {/* <div
