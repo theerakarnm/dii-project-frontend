@@ -35,7 +35,11 @@ const HomeForm = () => {
     const getUserData = async () => {
       try {
         setPageLoading(true);
-        const result = await fetchApi('get', `api/v1/users/${cookie.username}`, false);
+        const result = await fetchApi(
+          'get',
+          `api/v1/users/${cookie.username}`,
+          false
+        );
         setUserData(result.data.data);
         console.log(result.data.data);
         setPageLoading(false);
@@ -78,7 +82,6 @@ const HomeForm = () => {
 
   return (
     <>
-      
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
           <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
@@ -346,13 +349,16 @@ const HomeForm = () => {
                     <div className=' w- full h-full flex flex-col justify-center items-center'>
                       <div className='mt-10'>
                         <>
-                          <User
-                            className='pl-10'
-                            src={`${cookie.imageUrl}`}
-                            name={`${cookie.firstName} ${cookie.lastName}`}
-                          />
-
-                          <div className='flex items-center justify-center p-12'>
+                          <div className='flex flex-col justify-center items-center'>
+                            <Avatar
+                              css={{ w: 100, h: 100 }}
+                              size='xl'
+                              src={`${cookie.imageUrl}`}
+                              color='secondary'
+                              bordered
+                            />
+                          </div>
+                          <div className='flex items-center justify-center p-6'>
                             <div className='mx-auto w-full max-w-[550px]'>
                               <form action='' method='POST'>
                                 <div className='mb-5'>
@@ -416,7 +422,7 @@ const HomeForm = () => {
                                   />
                                 </div>
                                 <div>
-                                  <button className='hover:shadow-form rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'>
+                                  <button className='hover:shadow-form hover:bg-purple-700 rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'>
                                     Save
                                   </button>
                                 </div>
