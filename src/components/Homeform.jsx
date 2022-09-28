@@ -217,7 +217,7 @@ const HomeForm = () => {
 
           {/* body */}
 
-          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8'>
             {userData.post.map((p) => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}

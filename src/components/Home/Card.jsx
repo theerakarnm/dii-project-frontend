@@ -24,7 +24,7 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
     return (
       <div onClick={click} className='hover:cursor-pointer row-span-2'>
         <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-          <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
+          <Card css={{ w: '100%', h: '100%' }} className='rounded-lg'>
             <Card.Header>
               <Text
                 css={{
@@ -58,7 +58,7 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
       onMouseLeave={onMouseLeave}
       className='hover:cursor-pointer row-span-4 '
     >
-      <Card css={{ w: '100%', h: '400px' }}>
+      <Card css={{ w: '100%', h: '100%' }}>
         <Card.Body css={{ p: 0 }}>
           <Text
             css={{
