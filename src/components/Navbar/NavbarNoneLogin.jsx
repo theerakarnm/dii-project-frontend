@@ -17,7 +17,7 @@ export default function NavbarComponent({ nameWhichActive }) {
 
   return (
     <>
-      <Navbar className='rounded-br-full rounded-bl-full'>
+      <Navbar className='z-[9999] bg-none' variant='floating'>
         <Navbar.Toggle showIn='xs' />
         <Navbar.Brand
           css={{
