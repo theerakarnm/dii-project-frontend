@@ -142,18 +142,7 @@ const Profile = () => {
             </div>
 
             <div className='flex flex-col justify-center items-end md:p-2'>
-              <div className='w-full flex justify-end items-end mb-2'>
-                <Button
-                  auto
-                  className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
-                                        hover:bg-purple-400 hover:text-white '
-                  onClick={handler}
-                >
-                  Edit Profile
-                </Button>
-              </div>
-
-              <div className='w-full'>
+              <div className='w-full pt-12'>
                 <Textarea
                   width='100%'
                   bordered

@@ -335,7 +335,6 @@ const HomeForm = () => {
             </Modal>
           </div> */}
 
-
           {/* {userData.post.map((data) => {
             console.log({datanp : data});
               return (
@@ -351,7 +350,6 @@ const HomeForm = () => {
                 ></ModelCard>
               );
             })} */}
-         
 
           {/* Modal edit profile */}
           <div className='w-full max-w-lg h-full max-h-lg'>
@@ -367,10 +365,11 @@ const HomeForm = () => {
               <Modal.Body>
                 <div className='w-full h-full flex flex-row'>
                   <div className='w-[25%] border-2 flex flex-col pt-2'>
-                    <div className='w-full p-3 hover:font-bold'>
+                    <div className='w-full p-3 hover:font-bold hover:bg-purple-200'>
                       Edit Profile
                     </div>
-                    <div className='w-full p-3 hover:font-bold'>
+
+                    <div className='w-full p-3 hover:font-bold hover:bg-purple-200'>
                       Change Password
                     </div>
                   </div>
