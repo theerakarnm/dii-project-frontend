@@ -97,7 +97,7 @@ const Signupform = () => {
 
       if (res.status !== 201) throw new Error('register failed');
       setBtnLoading(false);
-      window.location.replace('/#/login');
+      window.location.replace('/login');
     } catch (e) {
       setBtnLoading(false);
       return;

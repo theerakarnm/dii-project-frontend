@@ -16,7 +16,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
     },
     {
       name: 'Diary',
-      to: '/diary',
+      to: '/myDiary',
     },
     ...moreRoute,
   ];
@@ -40,7 +40,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
 
   return (
     <>
-      <Navbar variant='sticky'>
+      <Navbar className='z-[9999]' variant='sticky'>
         <Navbar.Toggle showIn='xs' />
         <Navbar.Brand
           css={{

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
-import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
   Textarea,
@@ -14,16 +13,21 @@ import {
   Loading,
   User,
 } from '@nextui-org/react';
+
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
+import ModelCard from '../components/Home/ModelCard';
 
 const HomeForm = () => {
-  const { userId } = useParams();
   const cookie = getCookie('login_data');
 
   const [visible, setVisible] = useState(false);
   const [cardImgOpen, setCardImgOpen] = useState(false);
   const [cardTextOpen, setCardTextOpen] = useState(false);
+
+  const [modelImgOpen, setModelImgOpen] = useState(false);
+  const [modelTextOpen, setModelTextOpen] = useState(false);
+
   const [editOpen, setEditOpen] = useState(false);
   const [userData, setUserData] = useState({
     post: [],
@@ -55,10 +59,17 @@ const HomeForm = () => {
 
   const handler = () => setVisible(true);
   const closeHandler = () => setVisible(false);
+
   const openImgCard = () => setCardImgOpen(true);
   const closeCardImg = () => setCardImgOpen(false);
   const openTextCard = () => setCardTextOpen(true);
   const closeCardText = () => setCardTextOpen(false);
+
+  const openImgModal = () => setModelImgOpen(true);
+  const closeImgModal = () => setModelImgOpen(false);
+  const openTextModal = () => setModelTextOpen(true);
+  const closeTextModal = () => setModelTextOpen(false);
+
   const openEdit = () => setEditOpen(true);
   const closeEdit = () => setEditOpen(false);
 
@@ -220,7 +231,9 @@ const HomeForm = () => {
                     <line x1='13' y1='12' x2='15' y2='12'></line>
                   </svg>
                 </div>
-                <div className='font-bold mx-1 text-[1.3rem] '>Diary</div>
+                <div className='font-bold mx-1 text-[1.3rem] '>
+                  <Link to='myDiary'>Diary</Link>
+                </div>
               </div>
             </div>
           </div>
@@ -241,7 +254,7 @@ const HomeForm = () => {
           </div>
 
           {/* Modal card-IMG post */}
-          <div className='w-full h-full max-h-lg'>
+          {/* <div className='w-full h-full max-h-lg'>
             <Modal
               blur
               className='md:max-w-[80rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
@@ -320,9 +333,25 @@ const HomeForm = () => {
                 </div>
               </Modal.Body>
             </Modal>
-          </div>
+          </div> */}
 
-          {/* Modal card-text post */}
+
+          {/* {userData.post.map((data) => {
+            console.log({datanp : data});
+              return (
+                <ModelCard
+                  key={data.id}
+                  data={data}
+                  
+                  openImgModal={openImgModal}
+                  openTextModal={openTextModal}
+
+                  closeImgModal={closeImgModal}
+                  closeTextModal={closeTextModal}
+                ></ModelCard>
+              );
+            })} */}
+         
 
           {/* Modal edit profile */}
           <div className='w-full max-w-lg h-full max-h-lg'>

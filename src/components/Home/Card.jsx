@@ -8,6 +8,8 @@ import {
   Card,
   Loading,
 } from '@nextui-org/react';
+import ModelCard from './ModelCard';
+
 
 const CardHome = ({ data, openImgCard, openTextCard }) => {
   const [isBlur, setIsBlur] = useState(false);
@@ -15,9 +17,13 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
   const onMouseOver = () => setIsBlur(true);
   const onMouseLeave = () => setIsBlur(false);
 
-  if (!data.imageUrl)
+  const click = () => {
+    console.log(data.id);
+  }
+
+  if (!data?.imageUrl)
     return (
-      <div onClick={openTextCard} className='hover:cursor-pointer row-span-2'>
+      <div onClick={click} className='hover:cursor-pointer row-span-2'>
         <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
           <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
             <Card.Header>
@@ -48,7 +54,7 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
 
   return (
     <div
-      onClick={openImgCard}
+      onClick={click}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
       className='hover:cursor-pointer row-span-4 '
@@ -79,6 +85,9 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
       </Card>
     </div>
   );
+
+  
+
 };
 
 export default CardHome;

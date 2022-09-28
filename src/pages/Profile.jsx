@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
@@ -62,7 +62,12 @@ const Profile = () => {
   }
 
   if (!userData) {
-    return <ErrorComponent />;
+    return (
+      <ErrorComponent
+        cause={'User not found'}
+        content={'Please check username again'}
+      />
+    );
   }
 
   if (pageLoading) {
@@ -177,7 +182,7 @@ const Profile = () => {
                     }}
                     weight='bold'
                   >
-                    <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
+                    <span className='text-2xl'>{`${userData.diaryCount}`}</span>
                     diary
                   </Text>
                 </div>
@@ -233,7 +238,9 @@ const Profile = () => {
                     <line x1='13' y1='12' x2='15' y2='12'></line>
                   </svg>
                 </div>
-                <div className='font-bold mx-1 text-[1.3rem] '>Diary</div>
+                <div className='font-bold mx-1 text-[1.3rem] '>
+                  <Link to={`/diary/${userData.username}`}>Diary</Link>
+                </div>
               </div>
             </div>
           </div>
