@@ -56,9 +56,9 @@ const LoginComponent = () => {
 
   return (
     <>
-      <div className='h-screen w-screen'>
+      <div className='h-full w-full bg-gradient-to-r from-[#7928ca] to-[#ff0080] pb-[10rem]'>
         <NavbarNoneLogin />
-        <div className='flex justify-center items-center'>
+        <div className=' h-full flex justify-center items-center'>
           <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto'>
             <div className='w-full flex flex-col m-5'>
               <div className=''>

@@ -83,7 +83,11 @@ export default function Diary() {
                   </p>
                 </div>
                 <div>
-                  <p className='text-sm mt-1'>22h ago</p>
+                  <p className='text-sm mt-1'>{`${new Date().toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}`}</p>
                 </div>
               </div>
               <div className='w-full min-h-[28rem] '>

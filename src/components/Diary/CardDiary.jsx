@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const CardDiary = ({ diaryData }) => {
   return (
-    <div className='bg-white rounded-md shadow border-[0.5px] border-gray-50'>
+    <div className='bg-white rounded-md shadow border-[0.5px] border-gray-50 '>
       <div className='flex flex-col p-4'>
         <div className='flex'>
           <div className='mb-2'>
