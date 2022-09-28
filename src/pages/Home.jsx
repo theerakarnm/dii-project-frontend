@@ -2,39 +2,37 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Homeform from '../components/Homeform';
 import NotLoginInfo from '../components/NotLoginInfo';
-import {
-  Avatar,
-  Textarea,
-  Text,
-  Button,
-  Modal,
-  Card,
-  Loading,
-  User,
-} from '@nextui-org/react';
+import ModelCard from '../components/Home/ModelCard';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import HomeStore from '../context/contextStore_home';
+import { fetchApi } from '../helpers/fetchApi';
 
 const Home = () => {
   //TODO : handle login page
   const cookie = getCookie('login_data');
-  const [visible, setVisible] = useState(false);
-  const [cardImgOpen, setCardImgOpen] = useState(false);
-  const [cardTextOpen, setCardTextOpen] = useState(false);
-
-  const [modelImgOpen, setModelImgOpen] = useState(false);
-  const [modelTextOpen, setModelTextOpen] = useState(false);
-
+  const [cardModalData, setCardModalData] = useState({});
+  const [isCardLoading, setIsCardLoading] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
-  const handler = () => setVisible(true);
-  const closeHandler = () => setVisible(false);
+  const openModal = async (id) => {
+    try {
+      setIsModelOpen(true);
+      setIsCardLoading(true);
+      console.log({ id });
+      const res = await fetchApi('get', `api/v1/posts/individual/${id}`);
+      setCardModalData(res.data.data);
+      setIsCardLoading(false);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  };
 
-  const openImgModal = () => setModelImgOpen(true);
-  const closeImgModal = () => setModelImgOpen(false);
-  const openTextModal = () => setModelTextOpen(true);
-  const closeTextModal = () => setModelTextOpen(false);
+  const closeModalHandler = () => {
+    setIsModelOpen(false);
+  };
 
   const openEdit = () => setEditOpen(true);
   const closeEdit = () => setEditOpen(false);
@@ -51,17 +49,16 @@ const Home = () => {
       <Navbar nameWhichActive={'Home'} />
       <HomeStore.Provider
         value={{
-          visible,
-          closeHandler,
-          openTextModal,
-          closeTextModal,
+          openModal,
+          closeModalHandler,
           openEdit,
-          openImgModal,
-          closeImgModal,
-          handler,
+          isModelOpen,
+          editOpen,
+          cardModalData,
         }}
       >
         {/* edit modal */}
+        <ModelCard data={cardModalData} loading={isCardLoading} />
 
         <Homeform />
       </HomeStore.Provider>
