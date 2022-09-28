@@ -40,7 +40,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
 
   return (
     <>
-      <Navbar className='z-[9999]' variant='sticky'>
+      <Navbar className='z-[9999] bg-none' variant='floating'>
         <Navbar.Toggle showIn='xs' />
         <Navbar.Brand
           css={{

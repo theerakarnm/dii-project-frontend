@@ -10,7 +10,6 @@ import {
 } from '@nextui-org/react';
 import ModelCard from './ModelCard';
 
-
 const CardHome = ({ data, openImgCard, openTextCard }) => {
   const [isBlur, setIsBlur] = useState(false);
 
@@ -19,7 +18,7 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
 
   const click = () => {
     console.log(data.id);
-  }
+  };
 
   if (!data?.imageUrl)
     return (
@@ -75,7 +74,9 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
           </Text>
           <Card.Image
             src={data.imageUrl}
-            className={`${isBlur ? 'blur-sm' : ''} transition-all`}
+            className={`${
+              isBlur ? 'blur-sm' : ''
+            } transition-all w-full h-full`}
             width='100%'
             height='100%'
             objectFit='cover'
@@ -85,9 +86,6 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
       </Card>
     </div>
   );
-
-  
-
 };
 
 export default CardHome;

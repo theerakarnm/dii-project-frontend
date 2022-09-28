@@ -56,7 +56,7 @@ const LoginComponent = () => {
 
   return (
     <>
-      <div className='h-screen w-screen'>
+      <div className='h-screen w-screen pattern-bg'>
         <NavbarNoneLogin />
         <div className='flex justify-center items-center'>
           <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto'>
@@ -85,7 +85,7 @@ const LoginComponent = () => {
                   </div>
                 </div>
                 <div
-                  className={`bg-white w-full h-full flex flex-col p-8 rounded-lg  ${
+                  className={`cardLogin w-full h-full flex flex-col p-8 rounded-lg  ${
                     !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
                   }`}
                 >
