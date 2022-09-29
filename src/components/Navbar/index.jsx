@@ -1,7 +1,40 @@
-import { Navbar, Dropdown, Avatar, Text } from '@nextui-org/react';
+import { Navbar, Dropdown, Avatar, Text, Input } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Logo } from './Logo.jsx';
+
+const SearchInput = (w) => {
+  return (
+    <Input
+      css={{
+        width: w,
+      }}
+      underlined
+      placeholder='Search user...'
+      color='secondary'
+      contentRight={
+        <>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            class='icon icon-tabler icon-tabler-search'
+            width='44'
+            height='44'
+            viewBox='0 0 24 24'
+            stroke-width='1.5'
+            stroke='#6f32be'
+            fill='none'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          >
+            <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+            <circle cx='10' cy='10' r='7' />
+            <line x1='21' y1='21' x2='15' y2='15' />
+          </svg>
+        </>
+      }
+    />
+  );
+};
 
 export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
   const cookieData = JSON.parse(Cookies.get('login_data'));
@@ -41,7 +74,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
   return (
     <>
       <Navbar className='z-[9999] bg-none' variant='floating'>
-        <Navbar.Toggle showIn='xs' />
+        <Navbar.Toggle showIn='sm' />
         <Navbar.Brand
           css={{
             '@xs': {
@@ -51,7 +84,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
         >
           <Link className='flex items-center' to='/'>
             <Logo />
-            <Text b color='inherit' hideIn='xs'>
+            <Text b color='inherit' hideIn='sm'>
               S-LOG
             </Text>
           </Link>
@@ -59,7 +92,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
         <Navbar.Content
           enableCursorHighlight
           activeColor='secondary'
-          hideIn='xs'
+          hideIn='sm'
           variant='highlight-rounded'
         >
           {navItem.map((item) => {
@@ -91,6 +124,9 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
             },
           }}
         >
+          <Navbar.Item hideIn='sm'>
+            <SearchInput w={'10rem'} />
+          </Navbar.Item>
           <Dropdown placement='bottom-right'>
             <Navbar.Item>
               <Dropdown.Trigger>
@@ -150,6 +186,10 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
               </Link>
             </Navbar.CollapseItem>
           ))}
+
+          <Navbar.CollapseItem>
+            <SearchInput w={'100%'} />
+          </Navbar.CollapseItem>
         </Navbar.Collapse>
       </Navbar>
     </>
