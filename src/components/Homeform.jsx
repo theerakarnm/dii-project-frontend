@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
@@ -16,23 +16,16 @@ import {
 
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
-import ModelCard from '../components/Home/ModelCard';
+import HomeStore from '../context/contextStore_home';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
 
-  const [visible, setVisible] = useState(false);
-  const [cardImgOpen, setCardImgOpen] = useState(false);
-  const [cardTextOpen, setCardTextOpen] = useState(false);
-
-  const [modelImgOpen, setModelImgOpen] = useState(false);
-  const [modelTextOpen, setModelTextOpen] = useState(false);
-
-  const [editOpen, setEditOpen] = useState(false);
   const [userData, setUserData] = useState({
     post: [],
   });
   const [pageLoading, setPageLoading] = useState(false);
+  const { handler } = useContext(HomeStore);
 
   useEffect(() => {
     setPageLoading(true);
@@ -56,22 +49,6 @@ const HomeForm = () => {
 
     getUserData();
   }, []);
-
-  const handler = () => setVisible(true);
-  const closeHandler = () => setVisible(false);
-
-  const openImgCard = () => setCardImgOpen(true);
-  const closeCardImg = () => setCardImgOpen(false);
-  const openTextCard = () => setCardTextOpen(true);
-  const closeCardText = () => setCardTextOpen(false);
-
-  const openImgModal = () => setModelImgOpen(true);
-  const closeImgModal = () => setModelImgOpen(false);
-  const openTextModal = () => setModelTextOpen(true);
-  const closeTextModal = () => setModelTextOpen(false);
-
-  const openEdit = () => setEditOpen(true);
-  const closeEdit = () => setEditOpen(false);
 
   if (!cookie) {
     return <NotLoginInfo />;
@@ -109,12 +86,11 @@ const HomeForm = () => {
                   {`${userData.name}`}
                 </Text>
                 <Text
-                  h1
-                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
+                  className='md:text-[1.3rem] text-[0.8rem]'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
-                  weight='bold'
+                  weight='light'
                 >
                   {`${userData.email}`}
                 </Text>
@@ -211,7 +187,7 @@ const HomeForm = () => {
                 <div className='font-bold mx-1 text-[1.3rem] '>Post</div>
               </div>
 
-              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
+              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100 '>
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -240,100 +216,13 @@ const HomeForm = () => {
 
           {/* body */}
 
-          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 mt-5'>
+          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8'>
             {userData.post.map((p) => {
-              return (
-                <CardHome
-                  key={p.id}
-                  data={p}
-                  openImgCard={openImgCard}
-                  openTextCard={openTextCard}
-                ></CardHome>
-              );
+              return <CardHome key={p.id} data={p}></CardHome>;
             })}
           </div>
 
           {/* Modal card-IMG post */}
-          {/* <div className='w-full h-full max-h-lg'>
-            <Modal
-              blur
-              className='md:max-w-[80rem]  flex justify-center items-center md:mx-auto mx-[2rem]'
-              aria-labelledby='modal-title'
-              open={cardImgOpen}
-              onClose={closeCardImg}
-              width='100%'
-            >
-              <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
-                <div className='w-full flex justify-between'>
-                  <div className='w-full  flex justify-start items-center'>
-                    <div className='min-h-lg'>
-                      <Avatar
-                        src={`${cookie.imageUrl}`}
-                        color='secondary'
-                        bordered
-                      />
-                    </div>
-                    <div className='pl-2'>
-                      <Text
-                        h1
-                        className='md:text-[1.3rem] text-[1rem] font-[Nunito]'
-                        weight='bold'
-                        css={{
-                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                        }}
-                      >
-                        {`${cookie.firstName} ${cookie.lastName}`}
-                      </Text>
-                    </div>
-                  </div>
-                  <div className='w-full flex justify-end items-center'>
-                    <Button
-                      auto
-                      onClick={openEdit}
-                      className='text-purple-600 text-xl'
-                    >
-                      ...
-                    </Button>
-                  </div>
-                </div>
-              </Modal.Header>
-
-              <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
-                <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
-                  <div className='md:max-w-[60%] w-full  flex flex-col'>
-                    <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
-                      <img
-                        className='w-full md:max-h-full rounded-lg'
-                        src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
-                        alt='modal'
-                      />
-                    </div>
-                  </div>
-                  <div className='w-full '>
-                    <div className='w-full h-[90%] border pl-4 pt-2'>
-                      comment area
-                    </div>
-                    <div className='w-[98%] h-[10%] bottom-0 flex justify-center items-center '>
-                      <div className='w-[95%] pl-5'>
-                        <input
-                          type='text'
-                          placeholder='Type your Comment...'
-                          className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
-                        />
-                      </div>
-                      <div className='flex justify-center items-center md:w-[5%] '>
-                        <img
-                          className='cursor-pointer hover:mb-2 transition-all md:w-[80%]'
-                          src='/sendIcon.svg'
-                          alt='send comment icon'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Modal.Body>
-            </Modal>
-          </div> */}
 
           {/* {userData.post.map((data) => {
             console.log({datanp : data});
@@ -352,146 +241,6 @@ const HomeForm = () => {
             })} */}
 
           {/* Modal edit profile */}
-          <div className='w-full max-w-lg h-full max-h-lg'>
-            <Modal
-              closeButton
-              blur
-              className='md:max-w-[80rem] mx-auto'
-              aria-labelledby='modal-title'
-              open={visible}
-              onClose={closeHandler}
-              width='100%'
-            >
-              <Modal.Body>
-                <div className='w-full h-full flex flex-row'>
-                  <div className='w-[25%] border-2 flex flex-col pt-2'>
-                    <div className='w-full p-3 hover:font-bold hover:bg-purple-200'>
-                      Edit Profile
-                    </div>
-
-                    <div className='w-full p-3 hover:font-bold hover:bg-purple-200'>
-                      Change Password
-                    </div>
-                  </div>
-                  <div className='w-[75%] border-2'>
-                    <div className=' w- full h-full flex flex-col justify-center items-center'>
-                      <div className='mt-10'>
-                        <>
-                          <div className='flex flex-col justify-center items-center'>
-                            <Avatar
-                              css={{ w: 100, h: 100 }}
-                              size='xl'
-                              src={`${cookie.imageUrl}`}
-                              color='secondary'
-                              bordered
-                            />
-                          </div>
-                          <div className='flex items-center justify-center p-6'>
-                            <div className='mx-auto w-full max-w-[550px]'>
-                              <form action='' method='POST'>
-                                <div className='mb-5'>
-                                  <label
-                                    htmlFor='name'
-                                    className='mb-3 block text-base font-medium text-purple-400'
-                                  >
-                                    First Name
-                                  </label>
-                                  <input
-                                    type='text'
-                                    name='name'
-                                    id='name'
-                                    value={`${cookie.firstName}`}
-                                    className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
-                                  />
-                                  <label
-                                    htmlFor='name'
-                                    className='mb-3 mt-4 block text-base font-medium text-purple-400'
-                                  >
-                                    Last Name
-                                  </label>
-                                  <input
-                                    type='text'
-                                    name='lastname'
-                                    id='lastname'
-                                    value={`${cookie.lastName}`}
-                                    className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
-                                  />
-                                </div>
-                                <div className='mb-5'>
-                                  <label
-                                    htmlFor='email'
-                                    className='mb-3 block text-base font-medium text-purple-400'
-                                  >
-                                    Email Address
-                                  </label>
-                                  <input
-                                    type='email'
-                                    name='email'
-                                    id='email'
-                                    value={`${cookie.email}`}
-                                    className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
-                                  />
-                                </div>
-
-                                <div className='mb-5'>
-                                  <label
-                                    htmlFor='message'
-                                    className='mb-3 block text-base font-medium text-purple-400'
-                                  >
-                                    Bio
-                                  </label>
-                                  <textarea
-                                    rows={4}
-                                    name='message'
-                                    id='message'
-                                    placeholder='Edit your bio ...'
-                                    className='w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'
-                                    defaultValue={''}
-                                  />
-                                </div>
-                                <div>
-                                  <button className='hover:shadow-form hover:bg-purple-700 rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'>
-                                    Save
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        </>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Modal.Body>
-            </Modal>
-          </div>
-
-          {/* Model edit post */}
-          <div className=''>
-            <Modal
-              className=''
-              aria-labelledby='modal-title'
-              open={editOpen}
-              onClose={closeEdit}
-            >
-              <Modal.Body className='m-0 p-0'>
-                <div className='w-full h-full'>
-                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'>
-                    Edit Post
-                  </div>
-                  <div className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300 text-red-700'>
-                    Delete Post
-                  </div>
-                  <div
-                    className='w-full flex justify-center py-2 border-b-[0.5px] border-gray-300'
-                    onClick={closeEdit}
-                  >
-                    Cancel
-                  </div>
-                </div>
-              </Modal.Body>
-            </Modal>
-          </div>
         </div>
       </div>
     </>

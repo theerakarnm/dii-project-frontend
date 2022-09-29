@@ -2,11 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   background-color: #f9fafe;
+  overflow-x: hidden;
 }
 
-#root{
+#root {
   font-family: 'Nunito', sans-serif;
+}
+.text-grow{
+  text-shadow : 0 0 60px rgb(192 219 255 / 75%), 0 0 32px rgb(65 120 255 / 24%)
 }
