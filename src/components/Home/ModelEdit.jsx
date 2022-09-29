@@ -4,9 +4,47 @@ import { getCookie } from '../libs/getterSetterCookie';
 import HomeStore from '../context/contextStore_home';
 import { useContext } from 'react';
 
-const ModelEdit = () => {
+import React from 'react';
+
+import { fetchApi } from '../../helpers/fetchApi';
+
+import { useState } from 'react';
+import FeedStore from '../../context/contextStore_feed';
+
+const ModelEdit = ({ setter, initValue }) => {
   const cookie = getCookie('login_data');
   const { visible, closeHandler } = useContext(HomeStore);
+  const { setAlertValue } = useContext(FeedStore);
+  const [values, setValues] = useState(initValue);
+
+  const onType = (e) => {
+    setValues(e.target.value);
+  };
+
+  const onDiscard = () => {
+    setter.setIsAbleEdit(false);
+  };
+
+  const onSave = async () => {
+    setter.setIsAbleEdit(false);
+    setter.setEntireLoading(true);
+
+    try {
+      const result = await fetchApi('put', `api/v1/posts/${''}`, true, {
+        content: values,
+      });
+
+      setter.setEntireLoading(false);
+      setter.setContent(values);
+      console.log(values);
+    } catch (e) {
+      setAlertValue({
+        isShow: true,
+        color: 'red',
+        context: 'Profile failed to update',
+      });
+    }
+  };
 
   return (
     <div className='w-full max-w-lg h-full max-h-lg'>

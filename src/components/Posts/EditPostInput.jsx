@@ -48,6 +48,7 @@ const EditPostInput = ({ setter, initValue }) => {
           width: '100%',
         }}
         placeholder='edit here'
+        w
         value={values}
         onChange={onType}
         rows={4}
