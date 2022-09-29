@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Logo } from './Logo.jsx';
 import useScreenDimension from '../../hooks/useWindowDimention.jsx';
+import { useState } from 'react';
 
-const SearchInput = () => {
+const SearchInput = ({ event: [onSearch, onTyping, searchValue] }) => {
   const [dimension] = useScreenDimension();
 
   return (
     <Input
       css={{
-        width: dimension.width > 960 ? '12rem' : '100%',
+        width: dimension.width > 960 ? '10rem' : '100%',
       }}
+      value={searchValue}
+      onChange={onTyping}
       underlined
       placeholder='Search user...'
       color='secondary'
@@ -20,7 +23,11 @@ const SearchInput = () => {
       }}
       contentRight={
         <>
-          <button className='w-5 h-5 m-1'>
+          <button
+            aria-label='Search'
+            onClick={onSearch}
+            className='w-5 h-5 m-1'
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               className='icon icon-tabler icon-tabler-search w-5 h-5'
@@ -46,6 +53,18 @@ const SearchInput = () => {
 
 export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
   const cookieData = JSON.parse(Cookies.get('login_data'));
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearch = () => {
+    window.location.href = `/search/${searchValue}`;
+  };
+
+  const onTyping = (e) => {
+    setSearchValue(e.target.value);
+    console.log({ vvvvvvvvvvv: e.target.value });
+  };
+
   const navItem = [
     {
       name: 'Home',
@@ -133,7 +152,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
           }}
         >
           <Navbar.Item hideIn='sm'>
-            <SearchInput w={'10rem'} />
+            <SearchInput event={[onSearch, onTyping, searchValue]} />
           </Navbar.Item>
           <Dropdown placement='bottom-right'>
             <Navbar.Item>
@@ -196,7 +215,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
           ))}
 
           <Navbar.CollapseItem>
-            <SearchInput w={'100%'} />
+            <SearchInput event={[onSearch, onTyping, searchValue]} />
           </Navbar.CollapseItem>
         </Navbar.Collapse>
       </Navbar>
