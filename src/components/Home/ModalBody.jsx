@@ -124,8 +124,8 @@ const ModalBody = ({ data, hasImage }) => {
           </div>
           <div className='w-full'>
 
-            <div className='w-full flex justify-between'>
-              <div className='w-full  flex justify-start items-center px-1'>
+            <div className='w-full flex justify-between '>
+              <div className='w-full  flex justify-start items-center px-3'>
                 <div className='min-h-lg'>
                   <Avatar src={`${data.profileImage}`} color='secondary' bordered />
                 </div>
@@ -159,7 +159,7 @@ const ModalBody = ({ data, hasImage }) => {
               </div>
             </div>
 
-            <div className='px-4 py-3 h-auto text-[1rem] text-gray-600'>
+            <div className='px-4 py-3 h-auto text-[0.95rem] text-gray-800'>
               {`${data.postContent}`}
             </div>
 
@@ -173,7 +173,7 @@ const ModalBody = ({ data, hasImage }) => {
                 <input
                   type='text'
                   placeholder='Type your Comment...'
-                  className='w-full h-full text-[1.2rem] p-2  border-b-2 border-purple-400 focus:outline-none'
+                  className='w-full h-full text-[1rem] p-2  border-b-2 border-purple-400 focus:outline-none'
                 />
               </div>
               <div className='flex justify-center items-center md:w-[5%] '>
