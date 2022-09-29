@@ -35,7 +35,7 @@ const HomeForm = () => {
         const result = await fetchApi(
           'get',
           `api/v1/users/${cookie.username}`,
-          false
+          true
         );
         setUserData(result.data.data);
         console.log(result.data.data);
@@ -214,7 +214,7 @@ const HomeForm = () => {
 
           {/* body */}
 
-          <div className='w-full h-full grid gap-2 md:grid-rows-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8'>
+          <div className='w-full h-full grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8 auto-rows-min'>
             {userData.post.map((p) => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}
@@ -237,8 +237,6 @@ const HomeForm = () => {
                 ></ModelCard>
               );
             })} */}
-
-          {/* Modal edit profile */}
         </div>
       </div>
     </>

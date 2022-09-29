@@ -60,7 +60,7 @@ const LoginComponent = () => {
         <NavbarNoneLogin />
         <div className=' h-full flex justify-center items-center'>
           <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto '>
-            <div className='w-full flex flex-col m-5'>
+            <div className='w-full flex flex-col m-5 '>
               <div className=''>
                 <Image
                   width={'10rem'}
@@ -82,8 +82,8 @@ const LoginComponent = () => {
                   </div>
                 </div>
                 <div
-                  className={`cardLogin w-full h-full flex flex-col p-8 rounded-lg  ${
-                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
+                  className={`w-full h-full flex flex-col p-8 rounded-lg bg-slate-100  ${
+                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg' 
                   }`}
                 >
                   <div className='w-full p-2  rounded my-5'>

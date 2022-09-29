@@ -27,10 +27,9 @@ const CardHome = ({ data }) => {
     return (
       <div
         onClick={openModelHandler}
-        className='hover:cursor-pointer row-span-2'
+        className='hover:cursor-pointer row-span-2 '
       >
-        <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-          <Card css={{ w: '100%', h: '100%' }} className='rounded-lg'>
+          <Card css={{ w: '100%', h: '100%' }} className='rounded-lg border border-purple-200'>
             <Card.Header>
               <Text
                 css={{
@@ -40,21 +39,23 @@ const CardHome = ({ data }) => {
                   w: '100%',
                   h: '100%',
                 }}
-                className=' text-black'
+                className=' text-purple-400'
+                weight='bold'
               >
-                {data.dateTime}
+                <span className='font-thin text-black'>Post at </span>{data.dateTime}
               </Text>
             </Card.Header>
             <Card.Body className='flex justify-center items-center'>
-              <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-                <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100'>
-                  <div className='m-5'>{data.content}</div>
+                <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 border border-purple-200'>
+                  <div className='w-full md:max-h-[10rem] max-h-[8rem] text-clip overflow-hidden  p-[0.8rem]'>
+                    <p className='flex  h-full justify-center items-center'>
+                      {data.content}
+                    </p>
+                  </div>
                 </div>
-              </div>
             </Card.Body>
           </Card>
         </div>
-      </div>
     );
 
   return (
@@ -86,7 +87,6 @@ const CardHome = ({ data }) => {
             width='100%'
             height='100%'
             objectFit='cover'
-            alt='Card example background'
           />
         </Card.Body>
       </Card>
