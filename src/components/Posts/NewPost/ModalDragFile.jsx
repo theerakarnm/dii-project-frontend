@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button, Text, Input, Row, Checkbox } from '@nextui-org/react';
+import PropType from 'prop-types';
 
 export default function ModalDragFile({
   visible,
@@ -78,3 +79,13 @@ export default function ModalDragFile({
     </div>
   );
 }
+
+ModalDragFile.PropType = {
+  visible: PropType.bool,
+  closeHandler: PropType.func,
+  cancelImage: PropType.func,
+  getRootProps: PropType.func,
+  getInputProps: PropType.func,
+  isDragActive: PropType.bool,
+  image: PropType.string,
+};

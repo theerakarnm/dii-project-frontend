@@ -10,6 +10,7 @@ import {
 } from '@nextui-org/react';
 import ModelCard from './ModelCard';
 import HomeStore from '../../context/contextStore_home';
+import PropType from 'prop-types';
 
 const CardHome = ({ data }) => {
   const [isBlur, setIsBlur] = useState(false);
@@ -30,33 +31,37 @@ const CardHome = ({ data }) => {
         // row-span-2
         className='hover:cursor-pointer row-span-2'
       >
-          <Card css={{ w: '100%', h: '100%' }} className='rounded-lg border border-purple-200'>
-            <Card.Header>
-              <Text
-                css={{
-                  position: 'absolute',
-                  zIndex: 1,
-                  top: 10,
-                  w: '100%',
-                  h: '100%',
-                }}
-                className=' text-purple-400'
-                weight='bold'
-              >
-                <span className='font-thin text-black'>Post at </span>{data.dateTime}
-              </Text>
-            </Card.Header>
-            <Card.Body className='flex justify-center items-center'>
-                <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 border border-purple-200'>
-                  <div className='w-full max-h-[8rem] text-clip overflow-hidden  p-[0.3rem]'>
-                    <p className='flex h-full justify-center items-center'>
-                      {data.content}
-                    </p>
-                  </div>
-                </div>
-            </Card.Body>
-          </Card>
-        </div>
+        <Card
+          css={{ w: '100%', h: '100%' }}
+          className='rounded-lg border border-purple-200'
+        >
+          <Card.Header>
+            <Text
+              css={{
+                position: 'absolute',
+                zIndex: 1,
+                top: 10,
+                w: '100%',
+                h: '100%',
+              }}
+              className=' text-purple-400'
+              weight='bold'
+            >
+              <span className='font-thin text-black'>Post at </span>
+              {data.dateTime}
+            </Text>
+          </Card.Header>
+          <Card.Body className='flex justify-center items-center'>
+            <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 border border-purple-200'>
+              <div className='w-full md:max-h-[10rem] max-h-[8rem] text-clip overflow-hidden  p-[0.8rem]'>
+                <p className='flex  h-full justify-center items-center'>
+                  {data.content}
+                </p>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
     );
 
   return (
@@ -94,6 +99,10 @@ const CardHome = ({ data }) => {
       </Card>
     </div>
   );
+};
+
+CardHome.PropType = {
+  data: PropType.object.isRequired,
 };
 
 export default CardHome;

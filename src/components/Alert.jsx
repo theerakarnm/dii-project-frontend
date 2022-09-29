@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import FeedStore from '../context/contextStore_feed';
-
+import PropType from 'prop-types';
 const Alert = ({
   isShow,
   color = 'green',
@@ -50,3 +50,9 @@ const Alert = ({
 };
 
 export default Alert;
+
+Alert.PropType = {
+  isShow: PropType.bool.isRequired,
+  color: PropType.string,
+  context: PropType.string,
+};

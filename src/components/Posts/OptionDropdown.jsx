@@ -2,6 +2,8 @@ import React from 'react';
 import { Dropdown } from '@nextui-org/react';
 import { fetchApi } from '../../helpers/fetchApi';
 
+import PropType from 'prop-types';
+
 const OptionDropdown = ({ onAction, content }) => {
   return (
     <>
@@ -29,3 +31,8 @@ const OptionDropdown = ({ onAction, content }) => {
 };
 
 export default OptionDropdown;
+
+OptionDropdown.PropType = {
+  onAction: PropType.func,
+  content: PropType.array,
+};

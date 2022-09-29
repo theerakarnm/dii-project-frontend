@@ -10,6 +10,7 @@ import { fetchApi } from '../../helpers/fetchApi';
 
 import { useState } from 'react';
 import FeedStore from '../../context/contextStore_feed';
+import PropType from 'prop-types';
 
 const ModelEdit = ({ setter, initValue }) => {
   const cookie = getCookie('login_data');
@@ -153,6 +154,11 @@ const ModelEdit = ({ setter, initValue }) => {
       </Modal>
     </div>
   );
+};
+
+ModelEdit.PropType = {
+  setter: PropType.object,
+  initValue: PropType.string,
 };
 
 export default ModelEdit;

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { fetchApi } from '../../helpers/fetchApi';
 import contextStore from '../../context/contextStore';
 import FeedStore from '../../context/contextStore_feed';
-
+import PropType from 'prop-types';
 const EditPostInput = ({ setter, initValue }) => {
   const [values, setValues] = useState(initValue);
   const postId = useContext(contextStore);
@@ -72,3 +72,8 @@ const EditPostInput = ({ setter, initValue }) => {
 };
 
 export default EditPostInput;
+
+EditPostInput.PropType = {
+  setter: PropType.object,
+  initValue: PropType.string,
+};

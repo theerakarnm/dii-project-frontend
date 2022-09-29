@@ -6,6 +6,7 @@ import useWindowDimensions from '../hooks/useWindowDimention';
 import { base64URLtoFile } from '../libs/FileConverter';
 import { fetchApi } from '../helpers/fetchApi';
 import { Loading } from '@nextui-org/react';
+import PropType from 'prop-types';
 
 const Drawing = ({ assignTo, css }) => {
   const [color, setColor] = useState('gray');
@@ -93,3 +94,8 @@ const Drawing = ({ assignTo, css }) => {
 };
 
 export default Drawing;
+
+Drawing.PropType = {
+  assignTo: PropType.string.isRequired,
+  css: PropType.string,
+};

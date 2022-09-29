@@ -6,6 +6,8 @@ import { getCookie } from '../../libs/getterSetterCookie';
 
 import Comment from './Comment';
 
+import PropType from 'prop-types';
+
 const AllCommentModel = ({ bindings, setVisible, loading, allComment }) => {
   const cookieData = getCookie('login_data');
 
@@ -73,3 +75,10 @@ const AllCommentModel = ({ bindings, setVisible, loading, allComment }) => {
 };
 
 export default AllCommentModel;
+
+AllCommentModel.PropType = {
+  bindings: PropType.object,
+  setVisible: PropType.func,
+  loading: PropType.bool,
+  allComment: PropType.array,
+};
