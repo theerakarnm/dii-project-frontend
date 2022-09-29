@@ -173,7 +173,7 @@ const Profile = () => {
                     bordered
                     color='secondary'
                     labelPlaceholder='Add your Bio'
-                    value=' '
+                    value={userData.bio}
                   />
                 </div>
 
