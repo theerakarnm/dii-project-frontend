@@ -80,7 +80,7 @@ const ModalBody = ({ data, hasImage }) => {
 
   return (
     <>
-      <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
+      {/* <Modal.Header className='m-0 p-0 w-full h-full pt-4 pl-4'>
         <div className='w-full flex justify-between'>
           <div className='w-full  flex justify-start items-center'>
             <div className='min-h-lg'>
@@ -109,21 +109,61 @@ const ModalBody = ({ data, hasImage }) => {
             </Button>
           </div>
         </div>
-      </Modal.Header>
+      </Modal.Header> */}
 
       <Modal.Body className='h-full w-full flex justify-center items-center m-0 px-5 md:pb-[1.3rem] '>
         <div className='w-full h-full md:max-h-[40rem] max-h-auto flex md:flex-row flex-col'>
           <div className='md:max-w-[60%] w-full  flex flex-col'>
             <div className='w-full h-full flex justify-center md:min-h-[30rem] min-h-[15rem] items-center bg-black rounded-lg '>
               <img
-                className='w-full md:max-h-full rounded-lg'
+                className='md:max-h-full  w-full-image'
                 src={`${data.imageUrl}`}
                 alt='modal'
               />
             </div>
           </div>
-          <div className='w-full '>
-            <div className='w-full h-[90%] border pl-4 pt-2'>
+          <div className='w-full'>
+
+            <div className='w-full flex justify-between'>
+              <div className='w-full  flex justify-start items-center px-1'>
+                <div className='min-h-lg'>
+                  <Avatar src={`${data.profileImage}`} color='secondary' bordered />
+                </div>
+                <div className='pl-2 flex flex-col items-center'>
+                  <div>
+                    <Text
+                    h1
+                    className='md:text-[1.1rem] text-[0.9rem] font-[Nunito]'
+                    weight='bold'
+                    css={{
+                      textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                    }}
+                  >
+                    {`${data.name}`}
+                  </Text>
+                  </div>
+                  <div className='flex justify-start w-full text-[0.8rem] m-0 p-0 font-bold font-[Nunito]'>
+                    {`${data.dateTime}`}
+                  </div>
+                </div>
+              </div>
+
+              <div className='w-full flex justify-end items-center'>
+                <Button
+                  auto
+                  onClick={'openEdit'}
+                  className='text-purple-600 text-xl'
+                >
+                  ...
+                </Button>
+              </div>
+            </div>
+
+            <div className='px-4 py-3 h-auto text-[1rem] text-gray-600'>
+              {`${data.postContent}`}
+            </div>
+
+            <div className='w-full h-[10rem] px-1 py-2 overflow-auto'>
               {data.comment.map((cmt) => {
                 return <Comment comment={cmt}></Comment>;
               })}
