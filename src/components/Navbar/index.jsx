@@ -2,34 +2,42 @@ import { Navbar, Dropdown, Avatar, Text, Input } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Logo } from './Logo.jsx';
+import useScreenDimension from '../../hooks/useWindowDimention.jsx';
 
-const SearchInput = (w) => {
+const SearchInput = () => {
+  const [dimension] = useScreenDimension();
+
   return (
     <Input
       css={{
-        width: w,
+        width: dimension.width > 960 ? '12rem' : '100%',
       }}
       underlined
       placeholder='Search user...'
       color='secondary'
+      contentRightStyling={{
+        cursor: 'pointer',
+      }}
       contentRight={
         <>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            class='icon icon-tabler icon-tabler-search'
-            width='44'
-            height='44'
-            viewBox='0 0 24 24'
-            stroke-width='1.5'
-            stroke='#6f32be'
-            fill='none'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-          >
-            <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-            <circle cx='10' cy='10' r='7' />
-            <line x1='21' y1='21' x2='15' y2='15' />
-          </svg>
+          <button className='w-5 h-5 m-1'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='icon icon-tabler icon-tabler-search w-5 h-5'
+              width='44'
+              height='44'
+              viewBox='0 0 24 24'
+              stroke-width='1.5'
+              stroke='#6f32be'
+              fill='none'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+              <circle cx='10' cy='10' r='7' />
+              <line x1='21' y1='21' x2='15' y2='15' />
+            </svg>
+          </button>
         </>
       }
     />
