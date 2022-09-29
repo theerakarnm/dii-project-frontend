@@ -42,10 +42,14 @@ const Search = () => {
           ]}
         />
         <Container>
-          <div className='bg-gray-100 rounded-lg min-h-[5rem] shadow px-5 flex justify-start items-center animate-pulse'>
-            <div className='bg-gray-200 rounded-full w-10 h-10'></div>
-            <div className='bg-gray-200 ml-3 w-[30%] h-3 rounded-lg'></div>
-          </div>
+          {new Array(5).map((v) => {
+            return (
+              <div className='bg-gray-100 rounded-lg min-h-[5rem] shadow px-5 flex justify-start items-center animate-pulse'>
+                <div className='bg-gray-200 rounded-full w-10 h-10'></div>
+                <div className='bg-gray-200 ml-3 w-[30%] h-3 rounded-lg'></div>
+              </div>
+            );
+          })}
         </Container>
       </>
     );
@@ -95,6 +99,9 @@ const Search = () => {
               </div>
               <div className='ml-4 mt-2'>
                 <span>{`${user.fname} ${user.lname}`}</span>
+              </div>
+              <div className='ml-2 mt-2'>
+                <span className='text-gray-400'>{`( ${user.username} )`}</span>
               </div>
             </Link>
           </div>
