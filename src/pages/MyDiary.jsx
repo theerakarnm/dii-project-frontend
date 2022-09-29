@@ -5,16 +5,7 @@ import ErrorComponent from '../components/ErrorComponent';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NotLoginInfo from '../components/NotLoginInfo';
-import {
-  Avatar,
-  Textarea,
-  Text,
-  Button,
-  Modal,
-  Card,
-  Loading,
-  User,
-} from '@nextui-org/react';
+import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 import CardDiary from '../components/Diary/CardDiary';
 
 export default function Diary() {

@@ -4,10 +4,7 @@ import { getCookie } from '../libs/getterSetterCookie';
 import HomeStore from '../context/contextStore_home';
 import { useContext } from 'react';
 
-import React from 'react';
-
 import { fetchApi } from '../../helpers/fetchApi';
-
 import { useState } from 'react';
 import FeedStore from '../../context/contextStore_feed';
 
