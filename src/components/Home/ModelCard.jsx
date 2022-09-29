@@ -15,7 +15,7 @@ const ModelCard = ({ data, loading }) => {
       <Modal
         blur
         className={`${
-          data?.imageUrl ? 'md:max-w-[50rem]' : 'md:max-w-[80rem]'
+          data?.imageUrl ? 'md:max-w-[80rem]' : 'md:max-w-[50rem]'
         } flex justify-center items-center md:mx-auto mx-[2rem]`}
         aria-labelledby='modal-title'
         open={isModelOpen}
