@@ -4,15 +4,7 @@ import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
 import Navbar from '../components/Navbar';
-import {
-  Avatar,
-  Textarea,
-  Text,
-  Button,
-  Modal,
-  Card,
-  Loading,
-} from '@nextui-org/react';
+import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
@@ -23,8 +15,6 @@ const Profile = () => {
   const cookie = getCookie('login_data');
 
   const [visible, setVisible] = useState(false);
-  const [cardImgOpen, setCardImgOpen] = useState(false);
-  const [cardTextOpen, setCardTextOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [userData, setUserData] = useState({
     post: [],
