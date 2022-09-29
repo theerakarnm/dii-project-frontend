@@ -1,4 +1,5 @@
 import React from 'react';
+import PropType from 'prop-types';
 
 const ErrorComponent = ({ cause, content }) => {
   return (
@@ -25,3 +26,8 @@ const ErrorComponent = ({ cause, content }) => {
 };
 
 export default ErrorComponent;
+
+ErrorComponent.PropType = {
+  cause: PropType.string.isRequired,
+  content: PropType.string.isRequired,
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Text, Button, Modal } from '@nextui-org/react';
 import Comment from '../Posts/Comment';
+import PropType from 'prop-types';
 
 const ModalBody = ({ data, hasImage }) => {
   console.log({ data, hasImage });
@@ -149,6 +150,11 @@ const ModalBody = ({ data, hasImage }) => {
       </Modal.Body>
     </>
   );
+};
+
+ModalBody.PropType = {
+  data: PropType.object.isRequired,
+  hasImage: PropType.bool.isRequired,
 };
 
 export default ModalBody;

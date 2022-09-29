@@ -3,7 +3,7 @@ import React from 'react';
 import { Loading, Modal } from '@nextui-org/react';
 import ModalBody from './ModalBody';
 import HomeStore from '../../context/contextStore_home';
-
+import PropType from 'prop-types';
 const ModelCard = ({ data, loading }) => {
   const { isModelOpen, closeModalHandler } = useContext(HomeStore);
 
@@ -46,6 +46,11 @@ const ModelCard = ({ data, loading }) => {
       </Modal>
     </div>
   );
+};
+
+ModelCard.PropType = {
+  data: PropType.object,
+  loading: PropType.bool,
 };
 
 export default ModelCard;

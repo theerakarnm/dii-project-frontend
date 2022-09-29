@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '../Avatar';
 import { Loading } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
-
+import PropType from 'prop-types';
 //TODO : add prop type
 
 const Comment = ({ comment, loading = false }) => {
@@ -69,3 +69,7 @@ const Comment = ({ comment, loading = false }) => {
 };
 
 export default Comment;
+Comment.PropType = {
+  comment: PropType.object,
+  loading: PropType.bool,
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropType from 'prop-types';
 const SearchList = ({ userData }) => {
   return (
     <div className='cardGlass rounded-lg min-h-[5rem] shadow px-5 flex justify-start items-center mt-5'>
@@ -10,3 +10,8 @@ const SearchList = ({ userData }) => {
 };
 
 export default SearchList;
+
+SearchList.PropType = {
+  userData: PropType.object,
+};
+
