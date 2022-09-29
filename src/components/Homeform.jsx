@@ -32,11 +32,7 @@ const HomeForm = () => {
     const getUserData = async () => {
       try {
         setPageLoading(true);
-        const result = await fetchApi(
-          'get',
-          `api/v1/users/${cookie.username}`,
-          true
-        );
+        const result = await fetchApi('get', `api/v1/users/${cookie.username}`);
         setUserData(result.data.data);
         console.log(result.data.data);
         setPageLoading(false);
