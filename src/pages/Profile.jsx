@@ -29,7 +29,7 @@ const Profile = () => {
     const getUserData = async () => {
       try {
         setPageLoading(true);
-        const result = await fetchApi('get', `api/v1/users/${userId}`, false);
+        const result = await fetchApi('get', `api/v1/users/${userId}`, true);
         setUserData(result.data.data);
         console.log(result.data.data);
         setPageLoading(false);
