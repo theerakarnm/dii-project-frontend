@@ -54,7 +54,7 @@ const ModalBody = ({ data, hasImage }) => {
         <Modal.Footer className='w-full flex justify-center items-center pt-0'>
           <div className='w-[98%] h-full bottom-0 flex flex-col justify-center items-start border-2 px-6'>
             {data.comment.map((cmt) => {
-              return <Comment comment={cmt}></Comment>;
+              return <Comment key={cmt.id} comment={cmt}></Comment>;
             })}
           </div>
           <div className='w-[98%] bottom-0 flex justify-center items-center '>

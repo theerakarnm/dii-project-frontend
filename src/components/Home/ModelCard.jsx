@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import React from 'react';
-import { Loading, Modal } from '@nextui-org/react';
+import { Modal } from '@nextui-org/react';
 import ModalBody from './ModalBody';
 import HomeStore from '../../context/contextStore_home';
 

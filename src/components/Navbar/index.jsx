@@ -24,11 +24,13 @@ const SearchInput = ({ event: [onSearch, onTyping, searchValue] }) => {
       contentRight={
         <>
           <button
-            aria-label='Search'
+            aria-labelledby='asdfsdaf'
+            aria-label='asdfsdaf'
             onClick={onSearch}
             className='w-5 h-5 m-1'
           >
             <svg
+              aria-label='asdfsdaf'
               xmlns='http://www.w3.org/2000/svg'
               className='icon icon-tabler icon-tabler-search w-5 h-5'
               width='44'
