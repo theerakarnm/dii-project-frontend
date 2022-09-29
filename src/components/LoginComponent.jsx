@@ -82,8 +82,8 @@ const LoginComponent = () => {
                   </div>
                 </div>
                 <div
-                  className={`bg-white w-full h-full flex flex-col p-8 rounded-lg  ${
-                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-xl'
+                  className={`cardLogin w-full h-full flex flex-col p-8 rounded-lg  ${
+                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
                   }`}
                 >
                   <div className='w-full p-2  rounded my-5'>

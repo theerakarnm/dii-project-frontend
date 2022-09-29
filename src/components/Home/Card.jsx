@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import {
   Avatar,
   Textarea,
@@ -9,23 +9,28 @@ import {
   Loading,
 } from '@nextui-org/react';
 import ModelCard from './ModelCard';
+import HomeStore from '../../context/contextStore_home';
 
-
-const CardHome = ({ data, openImgCard, openTextCard }) => {
+const CardHome = ({ data }) => {
   const [isBlur, setIsBlur] = useState(false);
+  const { openModal, setPostId } = useContext(HomeStore);
 
   const onMouseOver = () => setIsBlur(true);
   const onMouseLeave = () => setIsBlur(false);
 
-  const click = () => {
+  const openModelHandler = async () => {
     console.log(data.id);
-  }
+    await openModal(data.id);
+  };
 
   if (!data?.imageUrl)
     return (
-      <div onClick={click} className='hover:cursor-pointer row-span-2'>
+      <div
+        onClick={openModelHandler}
+        className='hover:cursor-pointer row-span-2'
+      >
         <div className='flex justify-center items-center w-full h-full p-[1.5px] rounded-lg border bg-gradient-to-r from-[#7928ca] to-[#ff0080]'>
-          <Card css={{ w: '100%', h: '200px' }} className='rounded-lg'>
+          <Card css={{ w: '100%', h: '100%' }} className='rounded-lg'>
             <Card.Header>
               <Text
                 css={{
@@ -54,12 +59,12 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
 
   return (
     <div
-      onClick={click}
+      onClick={openModelHandler}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
       className='hover:cursor-pointer row-span-4 '
     >
-      <Card css={{ w: '100%', h: '400px' }}>
+      <Card css={{ w: '100%', h: '100%' }}>
         <Card.Body css={{ p: 0 }}>
           <Text
             css={{
@@ -75,7 +80,9 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
           </Text>
           <Card.Image
             src={data.imageUrl}
-            className={`${isBlur ? 'blur-sm' : ''} transition-all`}
+            className={`${
+              isBlur ? 'blur-sm' : ''
+            } transition-all w-full h-full`}
             width='100%'
             height='100%'
             objectFit='cover'
@@ -85,9 +92,6 @@ const CardHome = ({ data, openImgCard, openTextCard }) => {
       </Card>
     </div>
   );
-
-  
-
 };
 
 export default CardHome;

@@ -62,6 +62,8 @@ export default function Diary() {
     );
   }
 
+  //TODO : when same user can't write self diary
+
   return (
     <>
       <Navbar nameWhichActive={'Diary'} />
