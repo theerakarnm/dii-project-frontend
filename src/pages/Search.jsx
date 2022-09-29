@@ -87,6 +87,7 @@ const Search = () => {
           },
         ]}
       />
+
       <Container>
         {data.map((user) => (
           <div>
@@ -97,10 +98,10 @@ const Search = () => {
               <div className='rounded-full w-10 h-10'>
                 <Avatar size='2.5rem' url={user.avatar} />
               </div>
-              <div className='ml-4 mt-2'>
+              <div className='ml-4 mt-2 text-sm sm:text-md md:text-lg'>
                 <span>{`${user.fname} ${user.lname}`}</span>
               </div>
-              <div className='ml-2 mt-2'>
+              <div className='ml-2 mt-2 text-xs sm:text-md md:text-lg'>
                 <span className='text-gray-400'>{`( ${user.username} )`}</span>
               </div>
             </Link>
