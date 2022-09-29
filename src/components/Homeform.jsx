@@ -109,12 +109,11 @@ const HomeForm = () => {
                   {`${userData.name}`}
                 </Text>
                 <Text
-                  h1
-                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
+                  className='md:text-[1.3rem] text-[0.8rem]'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
-                  weight='bold'
+                  weight='light'
                 >
                   {`${userData.email}`}
                 </Text>
@@ -211,7 +210,7 @@ const HomeForm = () => {
                 <div className='font-bold mx-1 text-[1.3rem] '>Post</div>
               </div>
 
-              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
+              <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100 '>
                 <div>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
