@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useModal } from '@nextui-org/react';
 import FeedStore from '../context/contextStore_feed';
 
@@ -33,7 +33,7 @@ const Feed = () => {
   useEffect(() => {
     const resData = async () => {
       setIsLoading(true);
-      
+
       if (!cookieData) {
         return;
       }

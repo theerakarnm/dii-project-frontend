@@ -56,10 +56,10 @@ const LoginComponent = () => {
 
   return (
     <>
-      <div className='h-screen w-screen'>
+      <div className='h-full w-full bg-gradient-to-r from-[#7928ca] to-[#ff0080] pb-[10rem]'>
         <NavbarNoneLogin />
-        <div className='flex justify-center items-center'>
-          <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto'>
+        <div className=' h-full flex justify-center items-center'>
+          <div className='max-w-xl w-full bg-[f9fafe] flex flex-col justify-center items-center m-auto '>
             <div className='w-full flex flex-col m-5'>
               <div className=''>
                 <Image
@@ -72,12 +72,9 @@ const LoginComponent = () => {
 
               <form onSubmit={onSubmit}>
                 <div className='w-full p-2 rounded '>
-                  <div className='flex flex-col justify-center items-center pb-6'>
+                  <div className='flex flex-col justify-center items-center pb-6 '>
                     <Text
-                      className='text-3xl text-center md:text-4xl mx-4'
-                      css={{
-                        textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                      }}
+                      className='text-3xl text-center md:text-4xl mx-4 text-purple-200'
                       weight='bold'
                     >
                       Sign in to your account
@@ -85,7 +82,7 @@ const LoginComponent = () => {
                   </div>
                 </div>
                 <div
-                  className={`bg-white w-full h-full flex flex-col p-8 rounded-lg  ${
+                  className={`cardLogin w-full h-full flex flex-col p-8 rounded-lg  ${
                     !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
                   }`}
                 >

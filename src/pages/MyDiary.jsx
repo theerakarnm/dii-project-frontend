@@ -101,11 +101,11 @@ export default function Diary() {
                 </Text>
                 <Text
                   h1
-                  className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
+                  className='md:text-[1.3rem] text-[0.8rem] '
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
-                  weight='bold'
+                  weight='light'
                 >
                   {`${userData.email}`}
                 </Text>
@@ -229,7 +229,7 @@ export default function Diary() {
               </div>
             </div>
           </div>
-          <div className='grid grid-cols-3 gap-4 px-5'>
+          <div className='grid md:grid-cols-3  sm:grid-cols-2 grid-cols-1 gap-4 px-5'>
             {diaries.map((diary) => {
               console.log(diary);
               return (
