@@ -182,10 +182,14 @@ const Post = ({ postData }) => {
             <div className='font-normal text-md mb-2'>
               <div className='flex items-start justify-between'>
                 <div className='flex items-center'>
-                  <Avatar url={postData.profileImage} />
+                  <Link to={`/profile/${postData.username}`}>
+                    <Avatar url={postData.profileImage} />
+                  </Link>
                   <div className='ml-3 flex flex-col'>
                     <Link to={`/profile/${postData.username}`}>
-                      <span>{postData.name}</span>
+                      <span className='hover:underline hover:font-semibold'>
+                        {postData.name}
+                      </span>
                     </Link>
                     <span className='text-gray-400 text-xs'>
                       {postData.dateTime}

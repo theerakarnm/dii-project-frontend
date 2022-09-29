@@ -18,6 +18,8 @@ export const fetchApi = async (
       }
     : {};
 
+  console.log({ withAuthHeader });
+
   return method === 'get' || method === 'delete'
     ? await axios[method](apiUrl, config)
     : await axios[method](apiUrl, body, config);
