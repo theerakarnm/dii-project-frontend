@@ -49,7 +49,7 @@ export default function NavbarComponent({ nameWhichActive }) {
             </Link>
           </Navbar.Link>
           <Navbar.Link
-            className='bg-purple-400 px-8 py-4 text-white rounded'
+            className='bg-purple-500 px-8 py-4 text-white rounded'
             to={'/regis'}
           >
             <Link className='flex justify-center items-center' to={'/regis'}>
