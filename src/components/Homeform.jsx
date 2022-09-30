@@ -8,6 +8,7 @@ import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
+import PropType from 'prop-types';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
@@ -204,10 +205,8 @@ const HomeForm = () => {
           </div>
 
           {/* body */}
-          <div
-            className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
-                          grid-auto-row-max grid-flow-row-dense'
-          >
+          <div className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
+                          grid-auto-row-min grid-flow-row-dense'>
             {userData.post.map((p) => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}
@@ -219,3 +218,8 @@ const HomeForm = () => {
 };
 
 export default HomeForm;
+
+HomeForm.PropType = {
+  userData: PropType.object.isRequired,
+  handler: PropType.func.isRequired,
+};

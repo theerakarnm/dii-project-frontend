@@ -153,9 +153,9 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className='flex flex-col justify-center items-end md:p-2'>
-                <div className='w-full'>
-                  <Text>{userData.bio}fix fix this ui</Text>
+              <div className='flex flex-col justify-center items-end pt-3'>
+                <div className='w-full border-b-2 border-purple-300'>
+                <Textarea placeholder="MY BIO" disabled readOnly value={userData.bio} />
                 </div>
 
                 <div className='w-full flex flex-row justify-around items-center mt-5 '>
