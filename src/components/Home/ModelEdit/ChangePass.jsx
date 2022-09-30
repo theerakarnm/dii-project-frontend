@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useRef, useContext } from 'react';
-import { Modal, User } from '@nextui-org/react';
+import { Loading, Modal, User } from '@nextui-org/react';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import { fetchApi } from '../../../helpers/fetchApi';
 
@@ -11,8 +11,11 @@ const ChangePass = ({ closeHandler }) => {
     newPass: '',
     newPassConfirm: '',
   });
+  const [err, setErr] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onType = (e) => {
+    setErr('');
     setValue({
       ...value,
       [e.target.name]: e.target.value,
@@ -22,15 +25,31 @@ const ChangePass = ({ closeHandler }) => {
   const onSubmit = async (e) => {
     try {
       e.preventDefault();
-      if (value.newPass !== value.newPassConfirm) return;
+      if (value.newPass !== value.newPassConfirm) {
+        setErr('password and confirm password not match');
+        return;
+      }
+      setLoading(true);
 
-      const result = await fetchApi('put', `api/v1/posts/${''}`, true, {
-        pass: value.pass,
-        newPass: value.newPass,
-      });
+      const result = await fetchApi(
+        'put',
+        `api/v1/users/password/reset`,
+        true,
+        {
+          pass: value.pass,
+          newPass: value.newPass,
+        }
+      );
+      setLoading(false);
 
-      closeHandler();
+      if (result.status !== 200) throw new Error('error');
+
+      closeHandler(true);
     } catch (e) {
+      console.error(e);
+      setErr(e?.response?.data?.msg || 'internal error');
+      setLoading(false);
+
       console.error(e);
       return;
     }
@@ -89,11 +108,11 @@ const ChangePass = ({ closeHandler }) => {
               type='submit'
               className='hover:shadow-form rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'
             >
-              Save
+              {loading ? <Loading color={'white'} size='sm' /> : 'Submit'}
             </button>
           </div>
         </form>
-        <small className='text-red-500'>error here</small>
+        <small className='text-red-500'>{!err ? '' : err}</small>
       </div>
     </div>
   );

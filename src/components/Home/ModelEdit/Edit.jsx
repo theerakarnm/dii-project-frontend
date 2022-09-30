@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useContext, useCallback } from 'react';
+import { useState, useContext } from 'react';
 import { Loading, Modal, User } from '@nextui-org/react';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import { fetchApi } from '../../../helpers/fetchApi';
