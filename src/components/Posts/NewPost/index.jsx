@@ -9,6 +9,8 @@ import moment from 'moment/moment';
 import FeedStore from '../../../context/contextStore_feed';
 import { fetchApi } from '../../../helpers/fetchApi';
 
+import PropType from 'prop-types';
+
 const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [margin, setMargin] = useState('0.75rem');
   const [visible, setVisible] = useState(false);
@@ -181,6 +183,11 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
       </div>
     </>
   );
+};
+
+NewPost.PropType = {
+  setPost: PropType.func.isRequired,
+  setIsFirstPostLoading: PropType.func.isRequired,
 };
 
 export default NewPost;

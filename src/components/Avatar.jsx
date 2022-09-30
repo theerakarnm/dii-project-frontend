@@ -1,4 +1,5 @@
 import React from 'react';
+import PropType from 'prop-types';
 
 const Avatar = ({ size = '3', url }) => {
   const [className, setClassName] = React.useState(
@@ -13,3 +14,8 @@ const Avatar = ({ size = '3', url }) => {
 };
 
 export default Avatar;
+
+Avatar.PropType = {
+  size: PropType.string,
+  url: PropType.string,
+};

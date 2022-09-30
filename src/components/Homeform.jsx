@@ -17,6 +17,7 @@ import {
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
+import PropType from 'prop-types';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
@@ -244,3 +245,8 @@ const HomeForm = () => {
 };
 
 export default HomeForm;
+
+HomeForm.PropType = {
+  userData: PropType.object.isRequired,
+  handler: PropType.func.isRequired,
+};
