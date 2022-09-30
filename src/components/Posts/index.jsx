@@ -126,7 +126,6 @@ const Post = ({ postData }) => {
 
       setIsLoadingComment(false);
     } catch (e) {
-      console.log(e);
       setComment((prev) =>
         prev.map((item, idex) => {
           return idex === 0
@@ -152,7 +151,6 @@ const Post = ({ postData }) => {
         setIsAbleEdit(true);
         break;
       case 'delete':
-        console.log('delete');
         setEntireLoading(true);
         await fetchApi('delete', `api/v1/posts/${postData.id}`, true);
         setData((prev) => prev.filter((item) => item.id !== postData.id));

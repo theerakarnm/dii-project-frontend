@@ -50,7 +50,6 @@ const Signupform = () => {
     event.preventDefault();
     try {
       setBtnLoading(true);
-      console.log(value);
       Object.entries(value).forEach(([key, item]) => {
         if (item.trim() === '') {
           setInputError({
@@ -84,7 +83,6 @@ const Signupform = () => {
           },
         });
       }
-      console.log('test');
 
       const res = await fetchApi('post', 'api/v1/auth/register', false, {
         firstName: value.firstName,
@@ -93,8 +91,6 @@ const Signupform = () => {
         username: value.username,
         password: value.password,
       });
-
-      console.log(res);
 
       if (res.status !== 201) throw new Error('register failed');
       setBtnLoading(false);
@@ -136,8 +132,9 @@ const Signupform = () => {
             <div className='flex flex-col md:flex-row items-center justify-between'>
               <div className='flex items-center w-full md:w-[48%]'>
                 <input
-                  className={`w-full p-2 border mb-6 md:mb-0 border-gray-300 rounded ${inputError.firstName.error ? 'ring-2 ring-red-400' : ''
-                    }`}
+                  className={`w-full p-2 border mb-6 md:mb-0 border-gray-300 rounded ${
+                    inputError.firstName.error ? 'ring-2 ring-red-400' : ''
+                  }`}
                   placeholder='First Name'
                   type='text'
                   name='firstName'
@@ -145,12 +142,15 @@ const Signupform = () => {
                   value={value.firstName}
                   onChange={onChange}
                 />
-                <small className='text-red-500'>{inputError.firstName.msg}</small>
+                <small className='text-red-500'>
+                  {inputError.firstName.msg}
+                </small>
               </div>
               <div className='flex items-center w-full md:w-[48%]'>
                 <input
-                  className={`w-full p-2 border border-gray-300 rounded ${inputError.lastName.error ? 'ring-2 ring-red-400' : ''
-                    }`}
+                  className={`w-full p-2 border border-gray-300 rounded ${
+                    inputError.lastName.error ? 'ring-2 ring-red-400' : ''
+                  }`}
                   placeholder='Last Name'
                   type='text'
                   name='lastName'
@@ -158,14 +158,17 @@ const Signupform = () => {
                   value={value.lastName}
                   onChange={onChange}
                 />
-                <small className='text-red-500'>{inputError.lastName.msg}</small>
+                <small className='text-red-500'>
+                  {inputError.lastName.msg}
+                </small>
               </div>
             </div>
 
             <div>
               <input
-                className={`w-full p-2 border border-gray-300 rounded ${inputError.email.error ? 'ring-2 ring-red-400' : ''
-                  }`}
+                className={`w-full p-2 border border-gray-300 rounded ${
+                  inputError.email.error ? 'ring-2 ring-red-400' : ''
+                }`}
                 placeholder='Email'
                 type='email'
                 name='email'
@@ -177,8 +180,9 @@ const Signupform = () => {
             </div>
             <div>
               <input
-                className={`w-full p-2 border border-gray-300 rounded ${inputError.username.error ? 'ring-2 ring-red-400' : ''
-                  }`}
+                className={`w-full p-2 border border-gray-300 rounded ${
+                  inputError.username.error ? 'ring-2 ring-red-400' : ''
+                }`}
                 placeholder='Username'
                 type='text'
                 name='username'
@@ -190,8 +194,9 @@ const Signupform = () => {
             </div>
             <div>
               <input
-                className={`w-full p-2 border border-gray-300 rounded ${inputError.password.error ? 'ring-2 ring-red-400' : ''
-                  }`}
+                className={`w-full p-2 border border-gray-300 rounded ${
+                  inputError.password.error ? 'ring-2 ring-red-400' : ''
+                }`}
                 placeholder='Password'
                 type='password'
                 name='password'
@@ -203,8 +208,9 @@ const Signupform = () => {
             </div>
             <div>
               <input
-                className={`w-full p-2 border border-gray-300 rounded ${inputError.confirmPassword.error ? 'ring-2 ring-red-400' : ''
-                  }`}
+                className={`w-full p-2 border border-gray-300 rounded ${
+                  inputError.confirmPassword.error ? 'ring-2 ring-red-400' : ''
+                }`}
                 placeholder='Confirm Password'
                 type='password'
                 name='confirmPassword'
@@ -218,8 +224,11 @@ const Signupform = () => {
             </div>
             <div>
               <button
-                className={`w-full py-2 px-4 ${btnLoading ? 'bg-gray-300' : 'bg-purple-500 hover:bg-purple-600'
-                  } rounded-md text-white text-medium`}
+                className={`w-full py-2 px-4 ${
+                  btnLoading
+                    ? 'bg-gray-300'
+                    : 'bg-purple-500 hover:bg-purple-600'
+                } rounded-md text-white text-medium`}
               >
                 {btnLoading ? <Loading size='sm' /> : 'Submit'}
               </button>

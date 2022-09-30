@@ -6,7 +6,6 @@ import PropType from 'prop-types';
 //TODO : add prop type
 
 const Comment = ({ comment, loading = false }) => {
-  // console.log(comment);
   return (
     <>
       <div

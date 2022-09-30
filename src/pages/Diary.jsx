@@ -22,17 +22,14 @@ export default function Diary() {
         setLoading(true);
         const res = await fetchApi('get', `api/v1/users/${userId}`);
 
-        console.log(res);
-
         if (res.status === 204) {
           throw new Error('User not found');
         }
 
         setUserData(res.data.data);
-        console.log(res.data.data);
+
         setLoading(false);
       } catch (e) {
-        console.log(e);
         setLoading(false);
         setHasError(true);
         return;
@@ -85,11 +82,14 @@ export default function Diary() {
                   </p>
                 </div>
                 <div>
-                  <p className='text-sm mt-1'>{`${new Date().toLocaleDateString('th-TH', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}`}</p>
+                  <p className='text-sm mt-1'>{`${new Date().toLocaleDateString(
+                    'th-TH',
+                    {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    }
+                  )}`}</p>
                 </div>
               </div>
               <div className='w-full min-h-[28rem] '>

@@ -64,7 +64,6 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
 
   const onTyping = (e) => {
     setSearchValue(e.target.value);
-    console.log({ vvvvvvvvvvv: e.target.value });
   };
 
   const navItem = [

@@ -12,7 +12,6 @@ const CardHome = ({ data }) => {
   const onMouseLeave = () => setIsBlur(false);
 
   const openModelHandler = async () => {
-    console.log(data.id);
     await openModal(data.id);
   };
 

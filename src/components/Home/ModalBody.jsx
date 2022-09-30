@@ -4,7 +4,6 @@ import Comment from '../Posts/Comment';
 import PropType from 'prop-types';
 
 const ModalBody = ({ data, hasImage }) => {
-  console.log({ data, hasImage });
   if (!data) return <></>;
   if (!hasImage) {
     return (

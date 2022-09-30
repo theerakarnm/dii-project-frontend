@@ -17,7 +17,6 @@ const Edit = ({ closeHandler }) => {
   });
 
   const onType = (e) => {
-    console.log(e.target.name);
     setValue({
       ...value,
       [e.target.name]: e.target.value,
@@ -35,7 +34,6 @@ const Edit = ({ closeHandler }) => {
         value
       );
 
-      console.log(result);
       setLoading(false);
       closeHandler(true);
     } catch (e) {

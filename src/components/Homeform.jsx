@@ -39,12 +39,7 @@ const HomeForm = () => {
 
   const saveBio = async () => {
     try {
-      console.log(userData.bio);
-      console.log({
-        bio,
-        fname: userData.name.split(' ')[0],
-        lname: userData.name.split(' ')[1],
-      });
+      
 
       if (userData.bio === bio) return;
 

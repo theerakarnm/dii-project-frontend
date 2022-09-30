@@ -22,7 +22,6 @@ const EditPostInput = ({ setter, initValue }) => {
   const onConfirm = async () => {
     setter.setIsAbleEdit(false);
     setter.setEntireLoading(true);
-    console.log(`api/v1/posts/${postId}`);
 
     try {
       const result = await fetchApi('put', `api/v1/posts/${postId}`, true, {
@@ -31,7 +30,6 @@ const EditPostInput = ({ setter, initValue }) => {
 
       setter.setEntireLoading(false);
       setter.setContent(values);
-      console.log(values);
     } catch (e) {
       setAlertValue({
         isShow: true,
