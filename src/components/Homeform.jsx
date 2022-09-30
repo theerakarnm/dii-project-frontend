@@ -9,38 +9,12 @@ import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
 import PropType from 'prop-types';
+import { data } from 'autoprefixer';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
 
-  const [userData, setUserData] = useState({
-    post: [],
-  });
-  const [pageLoading, setPageLoading] = useState(false);
-  const { handler } = useContext(HomeStore);
-
-  useEffect(() => {
-    setPageLoading(true);
-    const getUserData = async () => {
-      try {
-        setPageLoading(true);
-        const result = await fetchApi(
-          'get',
-          `api/v1/users/${cookie.username}`,
-          true
-        );
-        setUserData(result.data.data);
-        console.log(result.data.data);
-        setPageLoading(false);
-      } catch (e) {
-        setPageLoading(false);
-        console.error(e);
-        setUserData([]);
-      }
-    };
-
-    getUserData();
-  }, []);
+  const { setVisible, pageLoading, userData } = useContext(HomeStore);
 
   if (!cookie) {
     return <NotLoginInfo />;
@@ -110,11 +84,11 @@ const HomeForm = () => {
                     auto
                     className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                    onClick={handler}
-                  >
-                    Edit Profile
-                  </Button>
-                </div>
+                  onClick={() => setVisible(true)}
+                >
+                  Edit Profile
+                </Button>
+              </div>
 
                 <div className='w-full'>
                   <Textarea
@@ -211,8 +185,10 @@ const HomeForm = () => {
           </div>
 
           {/* body */}
-          <div className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
-                          grid-auto-row-min grid-flow-row-dense'>
+          <div
+            className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
+                          grid-auto-row-min grid-flow-row-dense'
+          >
             {userData.post.map((p) => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}
