@@ -73,7 +73,7 @@ const CardHome = ({ data }) => {
               w: '90%',
               h: '90%',
             }}
-            className='text-white pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
+            className='text-purple-500 font-bold pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
           >
             {data.dateTime}
           </Text>

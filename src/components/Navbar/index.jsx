@@ -185,9 +185,6 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
                   {cookieData.email}
                 </Text>
               </Dropdown.Item>
-              <Dropdown.Item key='settings' withDivider>
-                My Settings
-              </Dropdown.Item>
               <Dropdown.Item key='logout' withDivider color='error'>
                 <button onClick={handlerLogout}>Log Out</button>
               </Dropdown.Item>
