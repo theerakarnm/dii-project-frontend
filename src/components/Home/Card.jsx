@@ -28,7 +28,7 @@ const CardHome = ({ data }) => {
       <div
         onClick={openModelHandler}
         // row-span-2
-        className='hover:cursor-pointer row-span-2'
+        className='hover:cursor-pointer row-span-2 '
       >
           <Card css={{ w: '100%', h: '100%' }} className='rounded-lg border border-purple-200'>
             <Card.Header>
@@ -65,7 +65,7 @@ const CardHome = ({ data }) => {
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
       // row-span-4
-      className='hover:cursor-pointer row-span-4 '
+      className='hover:cursor-pointer row-span-4'
     >
       <Card css={{ w: '100%', h: '100%' }}>
         <Card.Body css={{ p: 0 }}>
