@@ -140,7 +140,6 @@ const Profile = () => {
                     {`${userData.email}`}
                   </Text>
                 </div>
-
               </div>
 
               <div className=' flex justify-center items-center '>
@@ -157,7 +156,11 @@ const Profile = () => {
               <div className='flex justify-center md:p-2 '>
                 <div className='sm:w-[100%] w-[80%] m-auto'>
                   <div className='w-full border-b-2 border-purple-300 text-gray-700'>
-                    <Textarea readOnly value={userData.bio || '< Empty Bio >'} />
+                    <textarea
+                      className='bg-[#f9fafe] w-full focus:outline-0 resize-none'
+                      readOnly
+                      value={userData.bio || '< Empty Bio >'}
+                    />
                   </div>
 
                   <div className='flex flex-row justify-center items-center mt-5 '>
@@ -184,7 +187,6 @@ const Profile = () => {
                       </Text>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

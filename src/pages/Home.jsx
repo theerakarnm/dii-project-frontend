@@ -44,7 +44,6 @@ const Home = () => {
           true
         );
         setUserData(result.data.data);
-        console.log(result.data.data);
         setPageLoading(false);
       } catch (e) {
         setPageLoading(false);

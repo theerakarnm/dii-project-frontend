@@ -9,12 +9,15 @@ import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
 import PropType from 'prop-types';
-import { data } from 'autoprefixer';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
-
   const { setVisible, pageLoading, userData } = useContext(HomeStore);
+  const [bio, setBio] = useState(userData.bio);
+
+  useEffect(() => {
+    setBio(userData.bio);
+  }, [userData]);
 
   if (!cookie) {
     return <NotLoginInfo />;
@@ -33,6 +36,28 @@ const HomeForm = () => {
       </>
     );
   }
+
+  const saveBio = async () => {
+    try {
+      console.log(userData.bio);
+      console.log({
+        bio,
+        fname: userData.name.split(' ')[0],
+        lname: userData.name.split(' ')[1],
+      });
+
+      if (userData.bio === bio) return;
+
+      await fetchApi('put', `api/v1/users/${cookie.username}`, true, {
+        bio,
+        fname: userData.name.split(' ')[0],
+        lname: userData.name.split(' ')[1],
+      });
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  };
 
   return (
     <>
@@ -63,7 +88,6 @@ const HomeForm = () => {
                   {`${userData.email}`}
                 </Text>
               </div>
-
             </div>
 
             <div className=' flex justify-center items-center '>
@@ -84,11 +108,11 @@ const HomeForm = () => {
                     auto
                     className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                  onClick={() => setVisible(true)}
-                >
-                  Edit Profile
-                </Button>
-              </div>
+                    onClick={() => setVisible(true)}
+                  >
+                    Edit Profile
+                  </Button>
+                </div>
 
                 <div className='w-full'>
                   <Textarea
@@ -96,7 +120,9 @@ const HomeForm = () => {
                     width='100%'
                     color='secondary'
                     labelPlaceholder='Add your Bio'
-                    value={userData.bio}
+                    onBlur={saveBio}
+                    value={`${bio}`}
+                    onChange={(e) => setBio(e.target.value)}
                   />
                 </div>
               </div>
@@ -125,7 +151,6 @@ const HomeForm = () => {
                   </Text>
                 </div>
               </div>
-              
             </div>
           </div>
 
