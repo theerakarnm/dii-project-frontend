@@ -25,8 +25,6 @@ const Drawing = ({ assignTo, css }) => {
     const diaryAsB64 = boardRef.current.toDataURL('png');
     const imgFile = base64URLtoFile(diaryAsB64, 'diaryImage.png');
 
-    console.log(imgFile);
-
     const formData = new FormData();
     formData.append('file', imgFile);
     formData.append('assignTo', assignTo);
@@ -39,8 +37,6 @@ const Drawing = ({ assignTo, css }) => {
         formData
       );
 
-      console.log(response);
-
       setBtnLoading(false);
       onClearBoard();
     } catch (e) {
@@ -48,8 +44,6 @@ const Drawing = ({ assignTo, css }) => {
       setBtnLoading(false);
       return;
     }
-
-    // console.log(base64URLtoFile(diaryAsB64, 'test'));
   };
 
   return (

@@ -59,7 +59,6 @@ const Home = () => {
     try {
       setIsModelOpen(true);
       setIsCardLoading(true);
-      console.log({ id });
       const res = await fetchApi('get', `api/v1/posts/individual/${id}`, true);
       setCardModalData(res.data.data);
       setIsCardLoading(false);

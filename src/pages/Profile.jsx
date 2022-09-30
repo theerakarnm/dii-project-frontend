@@ -29,7 +29,6 @@ const Profile = () => {
         setPageLoading(true);
         const result = await fetchApi('get', `api/v1/users/${userId}`, true);
         setUserData(result.data.data);
-        console.log(result.data.data);
         setPageLoading(false);
       } catch (e) {
         setPageLoading(false);
@@ -45,7 +44,6 @@ const Profile = () => {
     try {
       setIsModelOpen(true);
       setIsCardLoading(true);
-      console.log({ id });
       const res = await fetchApi('get', `api/v1/posts/individual/${id}`);
       setCardModalData(res.data.data);
       setIsCardLoading(false);
@@ -260,26 +258,6 @@ const Profile = () => {
                 return <CardHome key={p.id} data={p}></CardHome>;
               })}
             </div>
-
-            {/* Modal card-IMG post */}
-
-            {/* {userData.post.map((data) => {
-            console.log({datanp : data});
-              return (
-                <ModelCard
-                  key={data.id}
-                  data={data}
-                  
-                  openImgModal={openImgModal}
-                  openTextModal={openTextModal}
-
-                  closeImgModal={closeImgModal}
-                  closeTextModal={closeTextModal}
-                ></ModelCard>
-              );
-            })} */}
-
-            {/* Modal edit profile */}
           </div>
         </div>
       </HomeStore.Provider>

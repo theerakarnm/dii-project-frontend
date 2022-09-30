@@ -24,7 +24,6 @@ const RadioSelf = ({ element, defaultChecked, c, value }) => {
 
 export default function DropdownCom({ setColor }) {
   const onChange = (v) => {
-    console.log(v.target.value);
     setColor(v.target.value);
   };
   const itemList = [

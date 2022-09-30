@@ -77,7 +77,6 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
 
   const closeHandler = () => {
     setVisible(false);
-    console.log('closed');
   };
 
   const cancelImage = () => {

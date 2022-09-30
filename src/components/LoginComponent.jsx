@@ -19,7 +19,6 @@ const LoginComponent = () => {
     try {
       event.preventDefault();
       setBtnLoading(true);
-      console.log({ valueInput });
 
       const res = await fetchApi(
         'post',
@@ -27,8 +26,6 @@ const LoginComponent = () => {
         false,
         valueInput
       );
-
-      console.log(res);
 
       setBtnLoading(false);
       if (res.status !== 200) {
@@ -39,7 +36,6 @@ const LoginComponent = () => {
       setCookie('login_data', res.data.data);
       window.location.replace('/');
     } catch (e) {
-      console.log(e);
       setGlobalError(`${e.response.statusText} : ${e.response.data.msg}`);
       setBtnLoading(false);
       return;
@@ -83,7 +79,7 @@ const LoginComponent = () => {
                 </div>
                 <div
                   className={`w-full h-full flex flex-col p-8 rounded-lg bg-slate-100  ${
-                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg' 
+                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
                   }`}
                 >
                   <div className='w-full p-2  rounded my-5'>

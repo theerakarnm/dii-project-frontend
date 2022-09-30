@@ -16,8 +16,6 @@ export const base64URLtoFile = (dataUrl, filename) => {
     n = bstr.length,
     u8arr = new Uint8Array(n);
 
-  console.log(mime);
-
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }

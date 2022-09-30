@@ -59,7 +59,7 @@ const Feed = () => {
         `api/v1/posts/comments/${postId}`,
         true
       );
-      console.log(result.data);
+
       setAllComment(result.data.data);
       setLoading(false);
     } catch (e) {

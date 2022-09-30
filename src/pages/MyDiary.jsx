@@ -31,10 +31,9 @@ export default function Diary() {
 
         setUserData(res.data.data);
         setDiaries(resDiary.data.data);
-        console.log(res.data.data);
+
         setLoading(false);
       } catch (e) {
-        console.log(e);
         setLoading(false);
         setHasError(true);
         return;
@@ -208,7 +207,6 @@ export default function Diary() {
           </div>
           <div className='grid md:grid-cols-3  sm:grid-cols-2 grid-cols-1 gap-4 px-5'>
             {diaries.map((diary) => {
-              console.log(diary);
               return (
                 <>
                   <CardDiary key={diary.id} diaryData={diary} />

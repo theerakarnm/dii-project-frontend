@@ -64,7 +64,6 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
 
   const onTyping = (e) => {
     setSearchValue(e.target.value);
-    console.log({ vvvvvvvvvvv: e.target.value });
   };
 
   const navItem = [
@@ -184,9 +183,6 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
                 >
                   {cookieData.email}
                 </Text>
-              </Dropdown.Item>
-              <Dropdown.Item key='settings' withDivider>
-                My Settings
               </Dropdown.Item>
               <Dropdown.Item key='logout' withDivider color='error'>
                 <button onClick={handlerLogout}>Log Out</button>

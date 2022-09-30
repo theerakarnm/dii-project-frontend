@@ -18,7 +18,6 @@ const Search = () => {
         const res = await fetchApi('get', `api/v1/users/search/${context}`);
 
         setData(res.data.data);
-        console.log(res.data.data);
         setLoading(false);
       } catch (e) {
         console.error(e);
