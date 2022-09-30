@@ -4,7 +4,7 @@ import { Modal, User } from '@nextui-org/react';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import { fetchApi } from '../../../helpers/fetchApi';
 
-const ChangePass = () => {
+const ChangePass = ({ closeHandler }) => {
   const cookie = getCookie('login_data');
   const [value, setValue] = useState({
     pass: '',
@@ -28,6 +28,8 @@ const ChangePass = () => {
         pass: value.pass,
         newPass: value.newPass,
       });
+
+      closeHandler();
     } catch (e) {
       console.error(e);
       return;

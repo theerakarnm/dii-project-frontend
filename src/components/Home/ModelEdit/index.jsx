@@ -48,7 +48,11 @@ const ModelEdit = ({ data }) => {
               </div>
             </div>
             <div className='border-[1px] w-full lg:w-[75%]  rounded-lg lg:rounded-tr-lg lg:rounded-br-lg'>
-              {selectShow === 0 ? <Edit /> : <ChangePass />}
+              {selectShow === 0 ? (
+                <Edit closeHandler={closeHandler} />
+              ) : (
+                <ChangePass closeHandler={closeHandler} />
+              )}
             </div>
           </div>
         </Modal.Body>

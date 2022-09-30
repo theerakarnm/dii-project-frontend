@@ -17,11 +17,21 @@ const Home = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [hasChange, setHasChange] = useState(false);
 
   const [userData, setUserData] = useState({
     post: [],
   });
   const [pageLoading, setPageLoading] = useState(false);
+  const closeModalHandler = () => {
+    setIsModelOpen(false);
+  };
+
+  const openEdit = () => setEditOpen(true);
+  const closeHandler = (isChange = false) => {
+    if (isChange) setHasChange(true);
+    setVisible(false);
+  };
 
   useEffect(() => {
     setPageLoading(true);
@@ -44,7 +54,7 @@ const Home = () => {
     };
 
     getUserData();
-  }, []);
+  }, [hasChange]);
 
   const openModal = async (id) => {
     try {
@@ -59,13 +69,6 @@ const Home = () => {
       return;
     }
   };
-
-  const closeModalHandler = () => {
-    setIsModelOpen(false);
-  };
-
-  const openEdit = () => setEditOpen(true);
-  const closeHandler = () => setVisible(false);
 
   if (cookie === undefined)
     return (
