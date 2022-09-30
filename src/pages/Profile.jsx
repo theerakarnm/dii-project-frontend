@@ -114,9 +114,9 @@ const Profile = () => {
         <ModelCard data={cardModalData} loading={isCardLoading} />
         <div className='h-screen w-screen flex justify-center items-center '>
           <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
-            <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
+            <div className=' w-full  grid sm:grid-cols-3 sm:grid-row-1 grid-cols-1 sm:gap-4 gap-0 items-center my-3 p-2 '>
               <div className=''>
-                <dir>
+                <div className='w-full flex sm:justify-start justify-center'>
                   <Text
                     h1
                     className='md:text-[2rem] text-[1.5rem]'
@@ -127,23 +127,24 @@ const Profile = () => {
                   >
                     {`${userData.name}`}
                   </Text>
+                </div>
+                <div className='w-full flex sm:justify-start justify-center sm:m-0 mt-[0.2rem] my-[0.8rem]'>
                   <Text
                     h1
-                    className='md:text-[1.3rem] text-[0.8rem]  md:ml-5 ml-2'
+                    className='md:text-[1.3rem] sm:[1rem] text-[0.9rem]'
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
                     }}
-                    weight='bold'
+                    weight='light'
                   >
                     {`${userData.email}`}
                   </Text>
-                </dir>
+                </div>
 
-                <div className=''></div>
               </div>
 
               <div className=' flex justify-center items-center '>
-                <div className='md:h-[12rem] md:w-[12rem] w-[7rem] h-[7rem]'>
+                <div className='md:h-[12rem] md:w-[12rem] sm:h-[10rem] sm:w-[10rem] w-[8rem] h-[8rem]'>
                   <Avatar
                     className='w-full h-full'
                     src={`${userData.profileUrl}`}
@@ -153,34 +154,37 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className='flex flex-col justify-center items-end pt-3'>
-                <div className='w-full border-b-2 border-purple-300'>
-                <Textarea placeholder="MY BIO" disabled readOnly value={userData.bio} />
-                </div>
+              <div className='flex justify-center md:p-2 '>
+                <div className='sm:w-[100%] w-[80%] m-auto'>
+                  <div className='w-full border-b-2 border-purple-300 text-gray-700'>
+                    <Textarea readOnly value={userData.bio || '< Empty Bio >'} />
+                  </div>
 
-                <div className='w-full flex flex-row justify-around items-center mt-5 '>
-                  <div>
-                    <Text
-                      css={{
-                        textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                      }}
-                      weight='bold'
-                    >
-                      <span className='text-2xl'>{`${userData.postCount}`}</span>{' '}
-                      post
-                    </Text>
+                  <div className='flex flex-row justify-center items-center mt-5 '>
+                    <div className='w-full flex justify-center items-center'>
+                      <Text
+                        css={{
+                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                        }}
+                        weight='bold'
+                      >
+                        <span className='text-2xl'>{`${userData.postCount}`}</span>{' '}
+                        post
+                      </Text>
+                    </div>
+                    <div className='w-full flex justify-center items-center'>
+                      <Text
+                        css={{
+                          textGradient: '45deg, $purple600 -20%, $pink600 100%',
+                        }}
+                        weight='bold'
+                      >
+                        <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
+                        diary
+                      </Text>
+                    </div>
                   </div>
-                  <div>
-                    <Text
-                      css={{
-                        textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                      }}
-                      weight='bold'
-                    >
-                      <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
-                      diary
-                    </Text>
-                  </div>
+
                 </div>
               </div>
             </div>

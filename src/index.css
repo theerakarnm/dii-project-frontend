@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+::placeholder{
+  color:"#c083fc" !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: darkgrey;
+  background-color: rgba(198, 198, 198, 0.445);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -33,3 +37,4 @@ body {
   border-radius: 12px;
   border: 1px solid rgba(230, 230, 230, 0.125);
 }
+
