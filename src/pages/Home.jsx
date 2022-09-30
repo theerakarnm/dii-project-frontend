@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import HomeForm from '../components/Homeform';
 import NotLoginInfo from '../components/NotLoginInfo';
@@ -17,6 +17,34 @@ const Home = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const [userData, setUserData] = useState({
+    post: [],
+  });
+  const [pageLoading, setPageLoading] = useState(false);
+
+  useEffect(() => {
+    setPageLoading(true);
+    const getUserData = async () => {
+      try {
+        setPageLoading(true);
+        const result = await fetchApi(
+          'get',
+          `api/v1/users/${cookie.username}`,
+          true
+        );
+        setUserData(result.data.data);
+        console.log(result.data.data);
+        setPageLoading(false);
+      } catch (e) {
+        setPageLoading(false);
+        console.error(e);
+        setUserData([]);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const openModal = async (id) => {
     try {
@@ -58,6 +86,8 @@ const Home = () => {
           editOpen,
           cardModalData,
           setVisible,
+          userData,
+          pageLoading,
         }}
       >
         {/* edit modal */}
