@@ -16,7 +16,7 @@ const HomeForm = () => {
     post: [],
   });
   const [pageLoading, setPageLoading] = useState(false);
-  const { handler } = useContext(HomeStore);
+  const { handler, setVisible } = useContext(HomeStore);
 
   useEffect(() => {
     setPageLoading(true);
@@ -105,7 +105,7 @@ const HomeForm = () => {
                   auto
                   className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                  onClick={handler}
+                  onClick={() => setVisible(true)}
                 >
                   Edit Profile
                 </Button>

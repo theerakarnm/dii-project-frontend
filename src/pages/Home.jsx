@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
-import Homeform from '../components/Homeform';
+import HomeForm from '../components/Homeform';
 import NotLoginInfo from '../components/NotLoginInfo';
-import ModelCard from '../components/Home/ModelCard';
+import ModalCard from '../components/Home/ModelCard';
+import ModalEdit from '../components/Home/ModelEdit';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import HomeStore from '../context/contextStore_home';
@@ -15,6 +16,7 @@ const Home = () => {
   const [isCardLoading, setIsCardLoading] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const openModal = async (id) => {
     try {
@@ -35,7 +37,7 @@ const Home = () => {
   };
 
   const openEdit = () => setEditOpen(true);
-  const closeEdit = () => setEditOpen(false);
+  const closeHandler = () => setVisible(false);
 
   if (cookie === undefined)
     return (
@@ -55,12 +57,14 @@ const Home = () => {
           isModelOpen,
           editOpen,
           cardModalData,
+          setVisible,
         }}
       >
         {/* edit modal */}
-        <ModelCard data={cardModalData} loading={isCardLoading} />
+        <ModalCard data={cardModalData} loading={isCardLoading} />
+        <ModalEdit data={{ visible, closeHandler }} />
 
-        <Homeform />
+        <HomeForm />
       </HomeStore.Provider>
     </>
   );
