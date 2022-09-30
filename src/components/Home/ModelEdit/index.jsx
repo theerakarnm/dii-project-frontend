@@ -2,7 +2,6 @@ import { useState, useRef, useContext } from 'react';
 import { Modal, User } from '@nextui-org/react';
 
 import { getCookie } from '../../../libs/getterSetterCookie';
-import HomeStore from '../../../context/contextStore_home';
 import Edit from './Edit';
 import ChangePass from './ChangePass';
 

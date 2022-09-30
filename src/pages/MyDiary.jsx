@@ -13,7 +13,6 @@ export default function Diary() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [diaries, setDiaries] = useState([]);
 
   useEffect(() => {
@@ -69,8 +68,6 @@ export default function Diary() {
     );
   }
 
-  const handler = () => setVisible(true);
-
   return (
     <>
       <Navbar nameWhichActive={'Diary'} />
@@ -117,23 +114,12 @@ export default function Diary() {
             </div>
 
             <div className='flex flex-col justify-center items-end md:p-2'>
-              <div className='w-full flex justify-end items-end mb-2'>
-                <Button
-                  auto
-                  className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
-                                        hover:bg-purple-400 hover:text-white '
-                  onClick={handler}
-                >
-                  Edit Profile
-                </Button>
-              </div>
+              <div className='w-full flex justify-end items-end mb-2'></div>
 
               <div className='w-full'>
-                <Textarea
-                  width='100%'
-                  bordered
-                  color='secondary'
-                  labelPlaceholder='Add your Bio'
+                <textarea
+                  className='bg-[#f9fafe] w-full focus:outline-0 resize-none'
+                  readOnly
                   value={userData.bio}
                 />
               </div>
