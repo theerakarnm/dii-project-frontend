@@ -80,9 +80,9 @@ const Drawing = ({ assignTo, css }) => {
             }}
           />
         </div>
-        <div className='flex justify-end items-center mb-2'>
+        <div className='flex justify-end items-center mb-2 pt-3'>
           <button
-            className='bg-sky-400 hover:bg-sky-500 text-white px-3 py-[0.4rem] rounded-xl ml-2 w-20 mt-2 transition-all hover:-translate-y-1'
+            className='bg-purple-400 hover:bg-purple-500 text-white px-3 py-[0.4rem] rounded-xl ml-2 w-20 mt-2 transition-all hover:-translate-y-1 '
             onClick={onPublish}
           >
             {btnLoading ? <Loading /> : 'Publish'}

@@ -16,7 +16,7 @@ const NotFound = () => {
                   Forbidden
                 </h1>
                 <p className='mt-1 text-base text-gray-400'>
-                  You do not have permission to this page before you sign in
+                  You do not have access to this page unless you sign in.
                 </p>
               </div>
               <div className='mt-10 flex space-x-3 sm:border-l sm:border-transparent sm:pl-6'>
