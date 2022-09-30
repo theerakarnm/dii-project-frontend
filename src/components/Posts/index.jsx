@@ -187,11 +187,11 @@ const Post = ({ postData }) => {
                   </Link>
                   <div className='ml-3 flex flex-col'>
                     <Link to={`/profile/${postData.username}`}>
-                      <span className='hover:underline hover:font-semibold'>
+                      <span className='hover:underline hover:font-semibold text-gray-900'>
                         {postData.name}
                       </span>
                     </Link>
-                    <span className='text-gray-400 text-xs'>
+                    <span className='text-purple-400 text-xs'>
                       {postData.dateTime}
                     </span>
                   </div>
