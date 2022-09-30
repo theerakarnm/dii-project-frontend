@@ -3,16 +3,7 @@ import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
 import { Link } from 'react-router-dom';
-import {
-  Avatar,
-  Textarea,
-  Text,
-  Button,
-  Modal,
-  Card,
-  Loading,
-  User,
-} from '@nextui-org/react';
+import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
@@ -220,24 +211,6 @@ const HomeForm = () => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}
           </div>
-
-          {/* Modal card-IMG post */}
-
-          {/* {userData.post.map((data) => {
-            console.log({datanp : data});
-              return (
-                <ModelCard
-                  key={data.id}
-                  data={data}
-                  
-                  openImgModal={openImgModal}
-                  openTextModal={openTextModal}
-
-                  closeImgModal={closeImgModal}
-                  closeTextModal={closeTextModal}
-                ></ModelCard>
-              );
-            })} */}
         </div>
       </div>
     </>

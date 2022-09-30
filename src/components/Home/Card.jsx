@@ -1,13 +1,5 @@
 import { useContext, useState, useCallback } from 'react';
-import {
-  Avatar,
-  Textarea,
-  Text,
-  Button,
-  Modal,
-  Card,
-  Loading,
-} from '@nextui-org/react';
+import { Text, Card } from '@nextui-org/react';
 import ModelCard from './ModelCard';
 import HomeStore from '../../context/contextStore_home';
 import PropType from 'prop-types';
@@ -69,8 +61,7 @@ const CardHome = ({ data }) => {
       onClick={openModelHandler}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
-      // row-span-4
-      className='hover:cursor-pointer row-span-4'
+      className='hover:cursor-pointer row-span-4 '
     >
       <Card css={{ w: '100%', h: '100%' }}>
         <Card.Body css={{ p: 0 }}>

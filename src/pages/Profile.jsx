@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getCookie } from '../libs/getterSetterCookie';
-import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
 import Navbar from '../components/Navbar';
 import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
@@ -14,7 +13,6 @@ const Profile = () => {
   const { userId } = useParams();
   const cookie = getCookie('login_data');
 
-  const [visible, setVisible] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [userData, setUserData] = useState({
     post: [],
@@ -248,8 +246,10 @@ const Profile = () => {
 
             {/* body */}
 
-            <div className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
-                          grid-auto-row-max grid-flow-row-dense'>
+            <div
+              className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
+                          grid-auto-row-max grid-flow-row-dense'
+            >
               {userData.post.map((p) => {
                 return <CardHome key={p.id} data={p}></CardHome>;
               })}

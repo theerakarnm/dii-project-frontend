@@ -7,9 +7,6 @@ import PropType from 'prop-types';
 const ModelCard = ({ data, loading }) => {
   const { isModelOpen, closeModalHandler } = useContext(HomeStore);
 
-  const hasImage = !!data?.imageUrl;
-
-  // console.log({ data, hasImage });
   return (
     <div className='w-full h-full max-h-lg'>
       <Modal
