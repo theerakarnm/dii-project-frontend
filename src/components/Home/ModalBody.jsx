@@ -59,7 +59,7 @@ const ModalBody = ({ data, hasImage }) => {
             </div>
           </div>
 
-          <div className='w-full h-auto px-1 py-2 '>
+          <div className='w-full max-h-[13rem] px-1 py-2 overflow-auto'>
             {data.comment.map((cmt) => {
               return <Comment key={cmt.id} comment={cmt}></Comment>;
             })}
@@ -67,8 +67,8 @@ const ModalBody = ({ data, hasImage }) => {
 
         </Modal.Body>
 
-        <Modal.Footer className='w-full flex justify-center  pt-0'>
-          <div className='w-[98%] bottom-0 flex justify-center items-center '>
+        {/* <Modal.Footer className='w-full flex justify-center pt-0'>
+          <div className='w-full bottom-0 flex justify-center items-center '>
             <div className='w-[95%] pl-5'>
               <input
                 type='text'
@@ -84,7 +84,7 @@ const ModalBody = ({ data, hasImage }) => {
               />
             </div>
           </div>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </>
     );
   }
@@ -149,12 +149,13 @@ const ModalBody = ({ data, hasImage }) => {
               {`${data.postContent}`}
             </div>
 
-            <div className='w-full h-auto px-1 py-2 '>
+            <div className='w-full h-auto px-1 py-2 overflow-auto'>
               {data.comment.map((cmt) => {
                 return <Comment comment={cmt}></Comment>;
               })}
             </div>
-            <div className='w-full  bottom-0 flex justify-center items-center mt-auto'>
+
+            {/* <div className='w-full  bottom-0 flex justify-center items-center mt-auto'>
               <div className='w-full '>
                 <input
                   type='text'
@@ -169,7 +170,7 @@ const ModalBody = ({ data, hasImage }) => {
                   alt='send comment icon'
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </Modal.Body>

@@ -12,35 +12,12 @@ import PropType from 'prop-types';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
-
-  const [userData, setUserData] = useState({
-    post: [],
-  });
-  const [pageLoading, setPageLoading] = useState(false);
-  const { handler } = useContext(HomeStore);
+  const { setVisible, pageLoading, userData } = useContext(HomeStore);
+  const [bio, setBio] = useState(userData.bio);
 
   useEffect(() => {
-    setPageLoading(true);
-    const getUserData = async () => {
-      try {
-        setPageLoading(true);
-        const result = await fetchApi(
-          'get',
-          `api/v1/users/${cookie.username}`,
-          true
-        );
-        setUserData(result.data.data);
-        console.log(result.data.data);
-        setPageLoading(false);
-      } catch (e) {
-        setPageLoading(false);
-        console.error(e);
-        setUserData([]);
-      }
-    };
-
-    getUserData();
-  }, []);
+    setBio(userData.bio);
+  }, [userData]);
 
   if (!cookie) {
     return <NotLoginInfo />;
@@ -60,16 +37,38 @@ const HomeForm = () => {
     );
   }
 
+  const saveBio = async () => {
+    try {
+      console.log(userData.bio);
+      console.log({
+        bio,
+        fname: userData.name.split(' ')[0],
+        lname: userData.name.split(' ')[1],
+      });
+
+      if (userData.bio === bio) return;
+
+      await fetchApi('put', `api/v1/users/${cookie.username}`, true, {
+        bio,
+        fname: userData.name.split(' ')[0],
+        lname: userData.name.split(' ')[1],
+      });
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  };
+
   return (
     <>
       <div className='h-screen w-screen flex justify-center items-center '>
         <div className='max-w-5xl w-full h-full flex flex-col m-auto'>
-          <div className=' w-full  grid grid-cols-3 md:gap-4 gap-0 items-center my-3 p-2 '>
+          <div className=' w-full  grid sm:grid-cols-3 sm:grid-row-1 grid-cols-1 sm:gap-4 gap-0 items-center my-3 p-2 '>
             <div className=''>
-              <dir>
+              <div className='w-full flex sm:justify-start justify-center'>
                 <Text
                   h1
-                  className='md:text-[2rem] text-[1.5rem]'
+                  className='md:text-[2rem] sm:text-[1.8] text-[1.5rem]'
                   weight='bold'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
@@ -77,8 +76,10 @@ const HomeForm = () => {
                 >
                   {`${userData.name}`}
                 </Text>
+              </div>
+              <div className='w-full flex sm:justify-start justify-center sm:m-0 mt-[0.2rem] my-[0.8rem]'>
                 <Text
-                  className='md:text-[1.3rem] text-[0.8rem]'
+                  className='md:text-[1.3rem] sm:[1rem] text-[0.9rem]'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
@@ -86,11 +87,11 @@ const HomeForm = () => {
                 >
                   {`${userData.email}`}
                 </Text>
-              </dir>
+              </div>
             </div>
 
             <div className=' flex justify-center items-center '>
-              <div className='md:h-[12rem] md:w-[12rem] w-[7rem] h-[7rem]'>
+              <div className='md:h-[12rem] md:w-[12rem] sm:h-[10rem] sm:w-[10rem] w-[8rem] h-[8rem]'>
                 <Avatar
                   className='w-full h-full'
                   src={`${userData.profileUrl}`}
@@ -100,30 +101,34 @@ const HomeForm = () => {
               </div>
             </div>
 
-            <div className='flex flex-col justify-center items-end md:p-2'>
-              <div className='w-full flex justify-end items-end mb-2'>
-                <Button
-                  auto
-                  className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
+            <div className='flex flex-col justify-center md:p-2 '>
+              <div className='sm:w-[100%] w-[80%] m-auto'>
+                <div className='w-full flex justify-end items-end mb-2'>
+                  <Button
+                    auto
+                    className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                  onClick={handler}
-                >
-                  Edit Profile
-                </Button>
+                    onClick={() => setVisible(true)}
+                  >
+                    Edit Profile
+                  </Button>
+                </div>
+
+                <div className='w-full'>
+                  <Textarea
+                    bordered
+                    width='100%'
+                    color='secondary'
+                    labelPlaceholder='Add your Bio'
+                    onBlur={saveBio}
+                    value={`${bio}`}
+                    onChange={(e) => setBio(e.target.value)}
+                  />
+                </div>
               </div>
 
-              <div className='w-full'>
-                <Textarea
-                  width='100%'
-                  bordered
-                  color='secondary'
-                  labelPlaceholder='Add your Bio'
-                  value={userData.bio}
-                />
-              </div>
-
-              <div className='w-full flex flex-row justify-around items-center mt-5 '>
-                <div>
+              <div className='flex flex-row justify-center items-center mt-5 '>
+                <div className='w-full flex justify-center items-center'>
                   <Text
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
@@ -134,7 +139,7 @@ const HomeForm = () => {
                     post
                   </Text>
                 </div>
-                <div>
+                <div className='w-full flex justify-center items-center'>
                   <Text
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
@@ -152,7 +157,7 @@ const HomeForm = () => {
           <div className=' w-full h-[2px] bg-gradient-to-r p-[1px] from-[#7928ca] to-[#ff0080]'></div>
 
           {/* card home page */}
-          <div className='w-full  flex justify-center md:pt-5 md:pb-2 md:my-2 '>
+          <div className='w-full  flex justify-center pt-3 pb-2 my-2  '>
             <div className='w-[25%] flex justify-center items-center'>
               <div className='w-full flex justify-center items-center opacity-50 hover:opacity-100'>
                 <div>
@@ -205,8 +210,10 @@ const HomeForm = () => {
           </div>
 
           {/* body */}
-          <div className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
-                          grid-auto-row-min grid-flow-row-dense'>
+          <div
+            className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
+                          grid-auto-row-min grid-flow-row-dense'
+          >
             {userData.post.map((p) => {
               return <CardHome key={p.id} data={p}></CardHome>;
             })}
