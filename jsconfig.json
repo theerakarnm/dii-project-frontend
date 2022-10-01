@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "paths": {
-      "Component": ["./src/components"],
-      "Libs": ["./src/libs"]
-    }
-  }
-}
