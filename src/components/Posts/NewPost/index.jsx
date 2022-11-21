@@ -17,7 +17,6 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
   const [image, setImage] = useState('');
   const [textValue, setTextValue] = useState('');
   const [file, setFile] = useState({});
-  const { setAlertValue } = useContext(FeedStore);
 
   const textHandler = (event) => {
     setTextValue(event.target.value);
@@ -57,18 +56,10 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
       await fetchApi('post', 'api/v1/posts/', true, data);
 
       setIsFirstPostLoading(false);
-      setAlertValue({
-        isShow: true,
-        color: 'green',
-        context: 'Post has been published!',
-      });
+      console.log('Ok');
     } catch (e) {
       console.error(e);
-      setAlertValue({
-        isShow: true,
-        color: 'red',
-        context: 'Post failed to published!',
-      });
+      console.log('On')
       return;
     }
   };
@@ -88,6 +79,7 @@ const NewPost = ({ setIsFirstPostLoading, setPost }) => {
     setFile(acceptedFiles[0]);
     setImage(await fileToBase64(acceptedFiles[acceptedFiles.length - 1]));
   }, []);
+  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (

@@ -12,17 +12,20 @@ import { fetchApi } from '../helpers/fetchApi';
 const Home = () => {
   //TODO : handle login page
   const cookie = getCookie('login_data');
+  console.log(cookie);
   const [cardModalData, setCardModalData] = useState({});
   const [isCardLoading, setIsCardLoading] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hasChange, setHasChange] = useState(false);
-
+  const [pageLoading, setPageLoading] = useState(false);
+  
   const [userData, setUserData] = useState({
     post: [],
   });
-  const [pageLoading, setPageLoading] = useState(false);
+
+  
   const closeModalHandler = () => {
     setIsModelOpen(false);
   };

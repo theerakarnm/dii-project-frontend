@@ -113,7 +113,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
           <Link className='flex items-center' to='/'>
             <Logo />
             <Text b color='inherit' hideIn='sm'>
-              S-LOG
+              AGRI-FLOW
             </Text>
           </Link>
         </Navbar.Brand>
@@ -162,8 +162,8 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
                   bordered
                   as='button'
                   color='secondary'
-                  size='md'
-                  src={cookieData.imageUrl}
+                  size='md' 
+                  src={user.imageProfile}
                 />
               </Dropdown.Trigger>
             </Navbar.Item>
@@ -181,11 +181,11 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
                   className='flex text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[13rem] overflow-hidden'
                   // color='inherit'
                 >
-                  {cookieData.email}
+                  {user.username}
                 </Text>
               </Dropdown.Item>
               <Dropdown.Item key='logout' withDivider color='error'>
-                <button onClick={handlerLogout}>Log Out</button>
+                <button className='bg-red' onClick={handlerLogout}>Log Out</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

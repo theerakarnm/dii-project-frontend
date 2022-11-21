@@ -12,7 +12,9 @@ import PropType from 'prop-types';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
+
   const { setVisible, pageLoading, userData } = useContext(HomeStore);
+
   const [bio, setBio] = useState(userData.bio);
 
   useEffect(() => {
@@ -39,10 +41,7 @@ const HomeForm = () => {
 
   const saveBio = async () => {
     try {
-      
-
       if (userData.bio === bio) return;
-
       await fetchApi('put', `api/v1/users/${cookie.username}`, true, {
         bio,
         fname: userData.name.split(' ')[0],
