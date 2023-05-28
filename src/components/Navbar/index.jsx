@@ -27,8 +27,7 @@ const SearchInput = ({ event: [onSearch, onTyping, searchValue] }) => {
             aria-labelledby='asdfsdaf'
             aria-label='asdfsdaf'
             onClick={onSearch}
-            className='w-5 h-5 m-1'
-          >
+            className='w-5 h-5 m-1'>
             <svg
               aria-label='asdfsdaf'
               xmlns='http://www.w3.org/2000/svg'
@@ -40,11 +39,23 @@ const SearchInput = ({ event: [onSearch, onTyping, searchValue] }) => {
               stroke='#6f32be'
               fill='none'
               strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-              <circle cx='10' cy='10' r='7' />
-              <line x1='21' y1='21' x2='15' y2='15' />
+              strokeLinejoin='round'>
+              <path
+                stroke='none'
+                d='M0 0h24v24H0z'
+                fill='none'
+              />
+              <circle
+                cx='10'
+                cy='10'
+                r='7'
+              />
+              <line
+                x1='21'
+                y1='21'
+                x2='15'
+                y2='15'
+              />
             </svg>
           </button>
         </>
@@ -54,7 +65,7 @@ const SearchInput = ({ event: [onSearch, onTyping, searchValue] }) => {
 };
 
 export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
-  const cookieData = JSON.parse(Cookies.get('login_data'));
+  const user = JSON.parse(Cookies.get('login_data'));
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -62,7 +73,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
     window.location.href = `/search/${searchValue}`;
   };
 
-  const onTyping = (e) => {
+  const onTyping = e => {
     setSearchValue(e.target.value);
   };
 
@@ -101,18 +112,24 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
 
   return (
     <>
-      <Navbar className='z-[9999] bg-none' variant='floating'>
+      <Navbar
+        className='z-[9999] bg-none'
+        variant='floating'>
         <Navbar.Toggle showIn='sm' />
         <Navbar.Brand
           css={{
             '@xs': {
               w: '12%',
             },
-          }}
-        >
-          <Link className='flex items-center' to='/'>
+          }}>
+          <Link
+            className='flex items-center'
+            to='/'>
             <Logo />
-            <Text b color='inherit' hideIn='sm'>
+            <Text
+              b
+              color='inherit'
+              hideIn='sm'>
               AGRI-FLOW
             </Text>
           </Link>
@@ -121,23 +138,25 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
           enableCursorHighlight
           activeColor='secondary'
           hideIn='sm'
-          variant='highlight-rounded'
-        >
-          {navItem.map((item) => {
+          variant='highlight-rounded'>
+          {navItem.map(item => {
             if (nameWhichActive === item.name)
               return (
-                <Navbar.Link key={`${item.name}navItem`} isActive>
+                <Navbar.Link
+                  key={`${item.name}navItem`}
+                  isActive>
                   <Link
                     className='flex justify-center items-center'
-                    to={item.to}
-                  >
+                    to={item.to}>
                     {item.name}
                   </Link>
                 </Navbar.Link>
               );
             return (
               <Navbar.Link key={`${item.name}navItem`}>
-                <Link className='flex justify-center items-center' to={item.to}>
+                <Link
+                  className='flex justify-center items-center'
+                  to={item.to}>
                   {item.name}
                 </Link>
               </Navbar.Link>
@@ -150,8 +169,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
               w: '12%',
               jc: 'flex-end',
             },
-          }}
-        >
+          }}>
           <Navbar.Item hideIn='sm'>
             <SearchInput event={[onSearch, onTyping, searchValue]} />
           </Navbar.Item>
@@ -162,7 +180,7 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
                   bordered
                   as='button'
                   color='secondary'
-                  size='md' 
+                  size='md'
                   src={user.imageProfile}
                 />
               </Dropdown.Trigger>
@@ -170,22 +188,31 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
             <Dropdown.Menu
               aria-label='User menu actions'
               color='secondary'
-              onAction={(actionKey) => console.log({ actionKey })}
-            >
-              <Dropdown.Item key='profile' css={{ height: '$18' }}>
-                <Text b color='inherit' css={{ d: 'flex' }}>
+              onAction={actionKey => console.log({ actionKey })}>
+              <Dropdown.Item
+                key='profile'
+                css={{ height: '$18' }}>
+                <Text
+                  b
+                  color='inherit'
+                  css={{ d: 'flex' }}>
                   Signed in as
                 </Text>
                 <Text
                   b
-                  className='flex text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[13rem] overflow-hidden'
-                  // color='inherit'
-                >
+                  className='flex text-ellipsis whitespace-nowrap max-w-[10rem] sm:max-w-[13rem] overflow-hidden'>
                   {user.username}
                 </Text>
               </Dropdown.Item>
-              <Dropdown.Item key='logout' withDivider color='error'>
-                <button className='bg-red' onClick={handlerLogout}>Log Out</button>
+              <Dropdown.Item
+                key='logout'
+                withDivider
+                color='error'>
+                <button
+                  className='bg-red'
+                  onClick={handlerLogout}>
+                  Log Out
+                </button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -198,15 +225,13 @@ export default function NavbarComponent({ nameWhichActive, moreRoute = [] }) {
               css={{
                 color: index === collapseItems.length - 1 ? '$error' : '',
               }}
-              isActive={item.name === nameWhichActive}
-            >
+              isActive={item.name === nameWhichActive}>
               <Link
                 color='inherit'
                 css={{
                   minWidth: '100%',
                 }}
-                to={item.to}
-              >
+                to={item.to}>
                 {item.name}
               </Link>
             </Navbar.CollapseItem>

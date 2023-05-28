@@ -3,10 +3,12 @@ import { Text, Card } from '@nextui-org/react';
 import ModelCard from './ModelCard';
 import HomeStore from '../../context/contextStore_home';
 import PropType from 'prop-types';
+import { useSelector } from 'react-redux';
+import { selectCommon } from '../../redux/reducers/commonSlicer';
 
 const CardHome = ({ data }) => {
   const [isBlur, setIsBlur] = useState(false);
-  const { openModal, setPostId } = useContext(HomeStore);
+  const { openModal, setPostId } = useSelector(selectCommon);
 
   const onMouseOver = () => setIsBlur(true);
   const onMouseLeave = () => setIsBlur(false);
@@ -20,12 +22,10 @@ const CardHome = ({ data }) => {
       <div
         onClick={openModelHandler}
         // row-span-2
-        className='hover:cursor-pointer row-span-2 '
-      >
+        className='hover:cursor-pointer row-span-2 '>
         <Card
           css={{ w: '100%', h: '100%' }}
-          className='rounded-lg border border-purple-200'
-        >
+          className='rounded-lg border border-purple-200'>
           <Card.Header>
             <Text
               css={{
@@ -36,8 +36,7 @@ const CardHome = ({ data }) => {
                 h: '100%',
               }}
               className=' text-purple-400'
-              weight='bold'
-            >
+              weight='bold'>
               <span className='font-thin text-black'>Post at </span>
               {data.dateTime}
             </Text>
@@ -45,9 +44,7 @@ const CardHome = ({ data }) => {
           <Card.Body className='flex justify-center items-center'>
             <div className='w-full h-full flex justify-center items-center rounded-md bg-slate-100 border border-purple-200'>
               <div className='w-full md:max-h-[10rem] max-h-[8rem] text-clip overflow-hidden  p-[0.8rem]'>
-                <p className='flex  h-full justify-center items-center'>
-                  {data.content}
-                </p>
+                <p className='flex  h-full justify-center items-center'>{data.content}</p>
               </div>
             </div>
           </Card.Body>
@@ -60,8 +57,7 @@ const CardHome = ({ data }) => {
       onClick={openModelHandler}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
-      className='hover:cursor-pointer row-span-4 '
-    >
+      className='hover:cursor-pointer row-span-4 '>
       <Card css={{ w: '100%', h: '100%' }}>
         <Card.Body css={{ p: 0 }}>
           <Text
@@ -72,15 +68,12 @@ const CardHome = ({ data }) => {
               w: '90%',
               h: '90%',
             }}
-            className='text-purple-500 font-bold pt-2 ml-3 opacity-0 transition-all hover:opacity-100'
-          >
+            className='text-purple-500 font-bold pt-2 ml-3 opacity-0 transition-all hover:opacity-100'>
             {data.dateTime}
           </Text>
           <Card.Image
             src={data.imageUrl}
-            className={`${
-              isBlur ? 'blur-sm' : ''
-            } transition-all w-full h-full`}
+            className={`${isBlur ? 'blur-sm' : ''} transition-all w-full h-full`}
             width='100%'
             height='100%'
             objectFit='cover'

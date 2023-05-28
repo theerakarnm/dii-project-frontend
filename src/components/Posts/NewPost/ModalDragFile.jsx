@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Text } from '@nextui-org/react';
+import { Button, Modal, Text } from '@nextui-org/react';
 import PropType from 'prop-types';
 
 export default function ModalDragFile({

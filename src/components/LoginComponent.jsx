@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Image, Loading, Text } from '@nextui-org/react';
 import { setCookie } from '../libs/getterSetterCookie';
-import { fetchApi } from '../helpers/fetchApi';
+import { fetchApi, fetchApiHelper } from '../helpers/fetchApi';
 
 const LoginComponent = () => {
   const [valueInput, setValueInput] = useState({
@@ -20,12 +20,17 @@ const LoginComponent = () => {
       event.preventDefault();
       setBtnLoading(true);
 
-      const res = await fetchApi(
-        'post',
-        'api/v1/auth/login',
-        false,
-        valueInput
-      );
+      // const res = await fetchApi(
+      //   'post',
+      //   'api/v1/auth/login',
+      //   false,
+      //   valueInput
+      // );
+
+      const res = await fetchApiHelper('api/v1/auth/login', {
+        body: valueInput,
+        withAuthHeader: false,
+      }).post();
 
       setBtnLoading(false);
       if (res.status !== 200) {
@@ -42,7 +47,7 @@ const LoginComponent = () => {
     }
   }
 
-  const onChangeHandle = (event) => {
+  const onChangeHandle = event => {
     setGlobalError('');
     setValueInput({
       ...valueInput,
@@ -71,23 +76,16 @@ const LoginComponent = () => {
                   <div className='flex flex-col justify-center items-center pb-6 '>
                     <Text
                       className='text-3xl text-center md:text-4xl mx-4 text-purple-200'
-                      weight='bold'
-                    >
+                      weight='bold'>
                       Sign in to your account
                     </Text>
                   </div>
                 </div>
-                <div
-                  className={`w-full h-full flex flex-col p-8 rounded-lg bg-slate-100  ${
-                    !globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'
-                  }`}
-                >
+                <div className={`w-full h-full flex flex-col p-8 rounded-lg bg-slate-100  ${!globalError ? 'shadow-xl' : 'shadow-red-400 shadow-lg'}`}>
                   <div className='w-full p-2  rounded my-5'>
                     <div className='flex flex-col justify-center items-center my-10`'>
                       <input
-                        className={`w-full p-3 border rounded text-[1.25rem] ${
-                          isError ? 'ring-2 ring-red-400' : ''
-                        }`}
+                        className={`w-full p-3 border rounded text-[1.25rem] ${isError ? 'ring-2 ring-red-400' : ''}`}
                         type='text'
                         name='username'
                         id='username'
@@ -97,9 +95,7 @@ const LoginComponent = () => {
                       />
                       {isError ? (
                         <div className='flex justify-start w-full pt-1 '>
-                          <small className='text-left text-red-400'>
-                            {isError}
-                          </small>
+                          <small className='text-left text-red-400'>{isError}</small>
                         </div>
                       ) : (
                         <></>
@@ -120,15 +116,10 @@ const LoginComponent = () => {
 
                     <div className='flex flex-col justify-center items-center mt-10'>
                       <button
-                        className={`w-full flex justify-center items-center p-3 transition-all ${
-                          btnLoading
-                            ? 'bg-gray-300'
-                            : 'bg-purple-500 hover:bg-purple-600'
-                        }   text-white rounded text-[1.25rem]`}
+                        className={`w-full flex justify-center items-center p-3 transition-all ${btnLoading ? 'bg-gray-300' : 'bg-purple-500 hover:bg-purple-600'}   text-white rounded text-[1.25rem]`}
                         name='bt_submit'
                         id='bt_submit'
-                        type='submit'
-                      >
+                        type='submit'>
                         {btnLoading ? <Loading size='sm' /> : 'Sign in'}
                       </button>
                     </div>
@@ -136,15 +127,12 @@ const LoginComponent = () => {
                       <p>Don't have an account ?</p>
                       <Link
                         to='/regis'
-                        className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'
-                      >
+                        className=' text-purple-600 cursor-pointer hover:text-purple-700 hover:font-bold pl-1'>
                         Sign up
                       </Link>
                     </div>
                     <div className='flex justify-center mt-3'>
-                      <small className='text-red-500 text-lg font-bold'>
-                        {globalError}
-                      </small>
+                      <small className='text-red-500 text-lg font-bold'>{globalError}</small>
                     </div>
                   </div>
                 </div>

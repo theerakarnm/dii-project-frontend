@@ -59,8 +59,6 @@ export default function Diary() {
     );
   }
 
-  //TODO : when same user can't write self diary
-
   return (
     <>
       <Navbar nameWhichActive={'Diary'} />
@@ -77,19 +75,14 @@ export default function Diary() {
             <div className='flex flex-col w-full'>
               <div className='flex justify-between'>
                 <div>
-                  <p className='text-xl font-semibold mb-2'>
-                    {`${userData.name}`}
-                  </p>
+                  <p className='text-xl font-semibold mb-2'>{`${userData.name}`}</p>
                 </div>
                 <div>
-                  <p className='text-sm mt-1'>{`${new Date().toLocaleDateString(
-                    'th-TH',
-                    {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    }
-                  )}`}</p>
+                  <p className='text-sm mt-1'>{`${new Date().toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}`}</p>
                 </div>
               </div>
               <div className='w-full min-h-[28rem] '>

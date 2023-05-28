@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { getCookie } from '../libs/getterSetterCookie';
 import NotLoginInfo from '../components/NotLoginInfo';
-import { fetchApi } from '../helpers/fetchApi';
+import { fetchApi, fetchApiHelper } from '../helpers/fetchApi';
 import { Link } from 'react-router-dom';
 import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 
@@ -9,16 +9,19 @@ import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
 import HomeStore from '../context/contextStore_home';
 import PropType from 'prop-types';
+import { useSelector } from 'react-redux';
+import { selectCommon } from '../redux/reducers/commonSlicer';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
 
-  const { setVisible, pageLoading, userData } = useContext(HomeStore);
+  const { setVisible, pageLoading, userData } = useSelector(selectCommon);
 
-  const [bio, setBio] = useState(userData.bio);
+  const [bio, setBio] = useState(userData?.bio || '');
 
   useEffect(() => {
-    setBio(userData.bio);
+    console.log(userData);
+    setBio(userData?.bio || '');
   }, [userData]);
 
   if (!cookie) {
@@ -42,11 +45,13 @@ const HomeForm = () => {
   const saveBio = async () => {
     try {
       if (userData.bio === bio) return;
-      await fetchApi('put', `api/v1/users/${cookie.username}`, true, {
-        bio,
-        fname: userData.name.split(' ')[0],
-        lname: userData.name.split(' ')[1],
-      });
+      await fetchApiHelper(`api/v1/users/${cookie.username}`, {
+        body: {
+          bio,
+          fname: userData.name.split(' ')[0],
+          lname: userData.name.split(' ')[1],
+        },
+      }).put();
     } catch (e) {
       console.error(e);
       return;
@@ -66,8 +71,7 @@ const HomeForm = () => {
                   weight='bold'
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                  }}
-                >
+                  }}>
                   {`${userData.name}`}
                 </Text>
               </div>
@@ -77,8 +81,7 @@ const HomeForm = () => {
                   css={{
                     textGradient: '45deg, $purple600 -20%, $pink600 100%',
                   }}
-                  weight='light'
-                >
+                  weight='light'>
                   {`${userData.email}`}
                 </Text>
               </div>
@@ -102,8 +105,7 @@ const HomeForm = () => {
                     auto
                     className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                    onClick={() => setVisible(true)}
-                  >
+                    onClick={() => setVisible(true)}>
                     Edit Profile
                   </Button>
                 </div>
@@ -116,7 +118,7 @@ const HomeForm = () => {
                     labelPlaceholder='Add your Bio'
                     onBlur={saveBio}
                     value={`${bio}`}
-                    onChange={(e) => setBio(e.target.value)}
+                    onChange={e => setBio(e.target.value)}
                   />
                 </div>
               </div>
@@ -127,10 +129,8 @@ const HomeForm = () => {
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
                     }}
-                    weight='bold'
-                  >
-                    <span className='text-2xl'>{`${userData.postCount}`}</span>{' '}
-                    post
+                    weight='bold'>
+                    <span className='text-2xl'>{`${userData.postCount}`}</span> post
                   </Text>
                 </div>
                 <div className='w-full flex justify-center items-center'>
@@ -138,10 +138,8 @@ const HomeForm = () => {
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
                     }}
-                    weight='bold'
-                  >
-                    <span className='text-2xl'>{`${userData.diaryCount}`}</span>{' '}
-                    diary
+                    weight='bold'>
+                    <span className='text-2xl'>{`${userData.diaryCount}`}</span> diary
                   </Text>
                 </div>
               </div>
@@ -165,12 +163,27 @@ const HomeForm = () => {
                     stroke='currentColor'
                     fill='none'
                     strokeLinecap='round'
-                    strokeLinejoin='round'
-                  >
-                    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-                    <rect x={4} y={4} width={16} height={16} rx={2}></rect>
-                    <line x1={4} y1={12} x2={20} y2={12}></line>
-                    <line x1={12} y1={4} x2={12} y2={20}></line>
+                    strokeLinejoin='round'>
+                    <path
+                      stroke='none'
+                      d='M0 0h24v24H0z'
+                      fill='none'></path>
+                    <rect
+                      x={4}
+                      y={4}
+                      width={16}
+                      height={16}
+                      rx={2}></rect>
+                    <line
+                      x1={4}
+                      y1={12}
+                      x2={20}
+                      y2={12}></line>
+                    <line
+                      x1={12}
+                      y1={4}
+                      x2={12}
+                      y2={20}></line>
                   </svg>
                 </div>
                 <div className='font-bold mx-1 text-[1.3rem] '>Post</div>
@@ -188,12 +201,22 @@ const HomeForm = () => {
                     stroke='currentColor'
                     fill='none'
                     strokeLinecap='round'
-                    strokeLinejoin='round'
-                  >
-                    <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
+                    strokeLinejoin='round'>
+                    <path
+                      stroke='none'
+                      d='M0 0h24v24H0z'
+                      fill='none'></path>
                     <path d='M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18'></path>
-                    <line x1='13' y1='8' x2='15' y2='8'></line>
-                    <line x1='13' y1='12' x2='15' y2='12'></line>
+                    <line
+                      x1='13'
+                      y1='8'
+                      x2='15'
+                      y2='8'></line>
+                    <line
+                      x1='13'
+                      y1='12'
+                      x2='15'
+                      y2='12'></line>
                   </svg>
                 </div>
                 <div className='font-bold mx-1 text-[1.3rem] '>
@@ -206,10 +229,13 @@ const HomeForm = () => {
           {/* body */}
           <div
             className='w-full h-auto grid gap-4 md:grid-rows-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-5 my-8
-                          grid-auto-row-min grid-flow-row-dense'
-          >
-            {userData.post.map((p) => {
-              return <CardHome key={p.id} data={p}></CardHome>;
+                          grid-auto-row-min grid-flow-row-dense'>
+            {userData.post.map(p => {
+              return (
+                <CardHome
+                  key={p.id}
+                  data={p}></CardHome>
+              );
             })}
           </div>
         </div>

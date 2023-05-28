@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import DropdownCom from './Utils/Dropdown';
 import useWindowDimensions from '../hooks/useWindowDimention';
 import { base64URLtoFile } from '../libs/FileConverter';
-import { fetchApi } from '../helpers/fetchApi';
+import { fetchApi, fetchApiHelper } from '../helpers/fetchApi';
 import { Loading } from '@nextui-org/react';
 import PropType from 'prop-types';
 
@@ -30,12 +30,7 @@ const Drawing = ({ assignTo, css }) => {
     formData.append('assignTo', assignTo);
 
     try {
-      const response = await fetchApi(
-        'post',
-        'api/v1/diaries/',
-        true,
-        formData
-      );
+      const response = await fetchApiHelper('api/v1/diaries/', { body: formData }).post();
 
       setBtnLoading(false);
       onClearBoard();
@@ -53,16 +48,14 @@ const Drawing = ({ assignTo, css }) => {
           <DropdownCom setColor={setColor} />
           <button
             className='bg-red-400 hover:bg-red-500 text-white px-3 py-1 rounded-xl ml-2 w-20 mt-4'
-            onClick={onClearBoard}
-          >
+            onClick={onClearBoard}>
             clear
           </button>
         </div>
         <div
           className={`bg-[url('/src/assets/gridLine.png')] bg-cover bg-blend-overlay ${{
             css,
-          }}`}
-        >
+          }}`}>
           <SignatureCanvas
             ref={boardRef}
             throttle={5}
@@ -77,8 +70,7 @@ const Drawing = ({ assignTo, css }) => {
         <div className='flex justify-end items-center mb-2 pt-3'>
           <button
             className='bg-purple-400 hover:bg-purple-500 text-white px-3 py-[0.4rem] rounded-xl ml-2 w-20 mt-2 transition-all hover:-translate-y-1 '
-            onClick={onPublish}
-          >
+            onClick={onPublish}>
             {btnLoading ? <Loading /> : 'Publish'}
           </button>
         </div>

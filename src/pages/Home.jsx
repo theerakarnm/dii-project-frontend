@@ -8,24 +8,22 @@ import ModalEdit from '../components/Home/ModelEdit';
 import { getCookie } from '../libs/getterSetterCookie';
 import HomeStore from '../context/contextStore_home';
 import { fetchApi } from '../helpers/fetchApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCardModalData, setIsCardLoading, setIsModelOpen, setEditOpen, setVisible, setHasChange, setPageLoading, setUserData, setOpenModal } from '../redux/actions/commonAction';
+import { selectCommon } from '../redux/reducers/commonSlicer';
+import { action } from '../redux/reducers/commonSlicer';
 
 const Home = () => {
-  //TODO : handle login page
+  const dispatch = useDispatch();
   const cookie = getCookie('login_data');
-  console.log(cookie);
-  const [cardModalData, setCardModalData] = useState({});
-  const [isCardLoading, setIsCardLoading] = useState(false);
-  const [isModelOpen, setIsModelOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [hasChange, setHasChange] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
-  
-  const [userData, setUserData] = useState({
-    post: [],
-  });
+  const { hasChange } = useSelector(selectCommon);
+  // const [cardModalData, setCardModalData] = useState({});
+  // const [isCardLoading, setIsCardLoading] = useState(false);
+  // const [isModelOpen, setIsModelOpen] = useState(false);
+  // const [editOpen, setEditOpen] = useState(false);
+  // const [visible, setVisible] = useState(false);
+  // const [hasChange, setHasChange] = useState(false);
 
-  
   const closeModalHandler = () => {
     setIsModelOpen(false);
   };
@@ -37,28 +35,24 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setPageLoading(true);
+    dispatch(setPageLoading(true));
     const getUserData = async () => {
       try {
-        setPageLoading(true);
-        const result = await fetchApi(
-          'get',
-          `api/v1/users/${cookie.username}`,
-          true
-        );
-        setUserData(result.data.data);
-        setPageLoading(false);
+        const result = await fetchApi('get', `api/v1/users/${cookie.username}`, true);
+        console.log(result.data.data);
+        dispatch(action.setUserData(result.data.data));
       } catch (e) {
-        setPageLoading(false);
         console.error(e);
-        setUserData([]);
+        dispatch(action.setUserData([]));
+      } finally {
+        dispatch(action.setPageLoading(false));
       }
     };
 
     getUserData();
   }, [hasChange]);
 
-  const openModal = async (id) => {
+  const openModal = async id => {
     try {
       setIsModelOpen(true);
       setIsCardLoading(true);
@@ -81,25 +75,10 @@ const Home = () => {
   return (
     <>
       <Navbar nameWhichActive={'Home'} />
-      <HomeStore.Provider
-        value={{
-          openModal,
-          closeModalHandler,
-          openEdit,
-          isModelOpen,
-          editOpen,
-          cardModalData,
-          setVisible,
-          userData,
-          pageLoading,
-        }}
-      >
-        {/* edit modal */}
-        <ModalCard data={cardModalData} loading={isCardLoading} />
-        <ModalEdit data={{ visible, closeHandler }} />
+      <ModalCard />
+      <ModalEdit />
 
-        <HomeForm />
-      </HomeStore.Provider>
+      <HomeForm />
     </>
   );
 };
