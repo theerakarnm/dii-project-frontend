@@ -1,3 +1,3 @@
 export * as userReducer from './userReducer';
-export * as postReducer from './postReducer';
-export * as commonReducer from './commonSlicer';
+export { postSlicer } from './postReducer';
+export { commonSlicer } from './commonSlicer';

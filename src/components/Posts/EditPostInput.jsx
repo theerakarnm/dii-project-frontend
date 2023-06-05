@@ -1,41 +1,41 @@
 import { Textarea } from '@nextui-org/react';
 import React from 'react';
-import { useContext } from 'react';
 import { useState } from 'react';
 import { fetchApi } from '../../helpers/fetchApi';
-import contextStore from '../../context/contextStore';
-import FeedStore from '../../context/contextStore_feed';
 import PropType from 'prop-types';
-const EditPostInput = ({ setter, initValue }) => {
+import { useDispatch } from 'react-redux';
+import { postAction } from '../../redux/reducers/postReducer';
+const EditPostInput = ({ initValue, postId }) => {
   const [values, setValues] = useState(initValue);
-  const postId = useContext(contextStore);
-  const { setAlertValue } = useContext(FeedStore);
+  const dispatch = useDispatch();
 
-  const onType = (e) => {
+  const onType = e => {
     setValues(e.target.value);
   };
 
   const onDiscard = () => {
-    setter.setIsAbleEdit(false);
+    dispatch(postAction.setIsAbleEdit(false));
   };
 
   const onConfirm = async () => {
-    setter.setIsAbleEdit(false);
-    setter.setEntireLoading(true);
+    dispatch(postAction.setIsAbleEdit(false));
+    dispatch(postAction.setEntireLoading(false));
 
     try {
       const result = await fetchApi('put', `api/v1/posts/${postId}`, true, {
         content: values,
       });
 
-      setter.setEntireLoading(false);
-      setter.setContent(values);
+      dispatch(postAction.setEntireLoading(false));
+      dispatch(postAction.setContent(values));
     } catch (e) {
-      setAlertValue({
-        isShow: true,
-        color: 'red',
-        context: 'Comment failed to update',
-      });
+      dispatch(
+        postAction.setAlertValue({
+          isShow: true,
+          color: 'red',
+          context: 'Comment failed to update',
+        })
+      );
     }
   };
 
@@ -54,14 +54,12 @@ const EditPostInput = ({ setter, initValue }) => {
       <div className='flex justify-end'>
         <button
           onClick={onDiscard}
-          className='bg-red-400 text-white py-1 px-3 rounded-lg ml-1 mt-2 hover:bg-red-500'
-        >
+          className='bg-red-400 text-white py-1 px-3 rounded-lg ml-1 mt-2 hover:bg-red-500'>
           Discard
         </button>
         <button
           onClick={onConfirm}
-          className='bg-sky-400 text-white py-1 px-3 rounded-lg ml-1 mt-2 hover:bg-sky-500'
-        >
+          className='bg-sky-400 text-white py-1 px-3 rounded-lg ml-1 mt-2 hover:bg-sky-500'>
           Confirm
         </button>
       </div>

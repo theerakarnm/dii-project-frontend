@@ -1,5 +1,5 @@
-import * as COMMON_ACTION from '../actions/commonAction';
-import { createReducer, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { fetchApi } from '../../helpers/fetchApi';
 
 const initialState = {
   hasChange: false,
@@ -19,33 +19,45 @@ const initialState = {
     email: '',
     post: [],
   },
-  openModal: () => {},
-  closeHandler: () => {},
 };
 
 export const commonSlicer = createSlice({
   name: 'common',
   initialState,
   reducers: {
-    TEST: (state, action) => {},
-    setCardModalData: (state, action) => {},
-    setIsCardLoading: (state, action) => {},
-    setIsModelOpen: (state, action) => {},
-    setEditOpen: (state, action) => {},
-    setVisible: (state, action) => {},
-    setHasChange: (state, action) => {},
-    setPageLoading: (state, action) => {},
+    setCardModalData: (state, action) => {
+      state.cardModalData = action.payload;
+    },
+    setIsCardLoading: (state, action) => {
+      state.isCardLoading = action.payload;
+    },
+    setIsModelOpen: (state, action) => {
+      state.isModelOpen = action.payload;
+    },
+    setEditOpen: (state, action) => {
+      state.editOpen = action.payload;
+    },
+    setVisible: (state, action) => {
+      state.visible = action.payload;
+    },
+    setHasChange: (state, action) => {
+      state.hasChange = action.payload;
+    },
+    setPageLoading: (state, action) => {
+      state.pageLoading = action.payload;
+    },
     setUserData: (state, action) => {
       console.log(action.payload);
       state.userData = action.payload;
     },
-    setOpenModal: (state, action) => {},
+    setPostId: (state, action) => {
+      state.postId = action.payload;
+    },
   },
 });
 
 export const selectCommon = state => {
-  console.log(state.common);
   return state.common;
 };
 
-export const action = commonSlicer.actions;
+export const commonAction = commonSlicer.actions;

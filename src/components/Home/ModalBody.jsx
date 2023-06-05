@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Text, Button, Modal } from '@nextui-org/react';
+import { Avatar, Text, Modal } from '@nextui-org/react';
 import Comment from '../Posts/Comment';
 import PropType from 'prop-types';
 
@@ -26,14 +26,11 @@ const ModalBody = ({ data, hasImage }) => {
                     weight='bold'
                     css={{
                       textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                    }}
-                  >
+                    }}>
                     {`${data.name}`}
                   </Text>
                 </div>
-                <div className='flex justify-start w-full text-[0.8rem] m-0 p-0 font-bold font-[Nunito]'>
-                  {`${data.dateTime}`}
-                </div>
+                <div className='flex justify-start w-full text-[0.8rem] m-0 p-0 font-bold font-[Nunito]'>{`${data.dateTime}`}</div>
               </div>
             </div>
           </div>
@@ -47,8 +44,12 @@ const ModalBody = ({ data, hasImage }) => {
           </div>
 
           <div className='w-full max-h-[13rem] px-1 py-2 overflow-auto'>
-            {data.comment.map((cmt) => {
-              return <Comment key={cmt.id} comment={cmt}></Comment>;
+            {data.comment.map(cmt => {
+              return (
+                <Comment
+                  key={cmt.id}
+                  comment={cmt}></Comment>
+              );
             })}
           </div>
         </Modal.Body>
@@ -88,24 +89,19 @@ const ModalBody = ({ data, hasImage }) => {
                       weight='bold'
                       css={{
                         textGradient: '45deg, $purple600 -20%, $pink600 100%',
-                      }}
-                    >
+                      }}>
                       {`${data.name}`}
                     </Text>
                   </div>
-                  <div className='flex  w-full text-[0.8rem] m-0 p-0 font-bold font-[Nunito]'>
-                    {`${data.dateTime}`}
-                  </div>
+                  <div className='flex  w-full text-[0.8rem] m-0 p-0 font-bold font-[Nunito]'>{`${data.dateTime}`}</div>
                 </div>
               </div>
             </div>
 
-            <div className='w-full  text-[0.95rem] text-gray-800 font-[Nunito] border-b border-purple-300 px-4 py-3'>
-              {`${data.postContent}`}
-            </div>
+            <div className='w-full  text-[0.95rem] text-gray-800 font-[Nunito] border-b border-purple-300 px-4 py-3'>{`${data.postContent}`}</div>
 
             <div className='w-full h-auto px-1 py-2 overflow-auto'>
-              {data.comment.map((cmt) => {
+              {data.comment.map(cmt => {
                 return <Comment comment={cmt}></Comment>;
               })}
             </div>

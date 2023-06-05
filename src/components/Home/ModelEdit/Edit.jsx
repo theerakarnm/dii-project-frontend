@@ -1,13 +1,14 @@
 import React from 'react';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Loading, Modal, User } from '@nextui-org/react';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import { fetchApi } from '../../../helpers/fetchApi';
-import HomeStore from '../../../context/contextStore_home';
+import { useSelector } from 'react-redux';
+import { selectCommon } from '../../../redux/reducers/commonSlicer';
 
 const Edit = ({ closeHandler }) => {
   const cookie = getCookie('login_data');
-  const { userData } = useContext(HomeStore);
+  const { userData } = useSelector(selectCommon);
   const [loading, setLoading] = useState(false);
 
   const [value, setValue] = useState({
@@ -16,23 +17,18 @@ const Edit = ({ closeHandler }) => {
     bio: userData.bio,
   });
 
-  const onType = (e) => {
+  const onType = e => {
     setValue({
       ...value,
       [e.target.name]: e.target.value,
     });
   };
 
-  const onSave = async (e) => {
+  const onSave = async e => {
     try {
       if (!value.fname && !value.lname && !value.bio) return;
       setLoading(true);
-      const result = await fetchApi(
-        'put',
-        `api/v1/users/${cookie.username}`,
-        true,
-        value
-      );
+      const result = await fetchApi('put', `api/v1/users/${cookie.username}`, true, value);
 
       setLoading(false);
       closeHandler(true);
@@ -57,8 +53,7 @@ const Edit = ({ closeHandler }) => {
             <div className='mb-5'>
               <label
                 htmlFor='fname'
-                className='mb-3 block text-base font-medium text-purple-400'
-              >
+                className='mb-3 block text-base font-medium text-purple-400'>
                 First Name
               </label>
               <input
@@ -71,8 +66,7 @@ const Edit = ({ closeHandler }) => {
               />
               <label
                 htmlFor='lname'
-                className='mb-3 mt-4 block text-base font-medium text-purple-400'
-              >
+                className='mb-3 mt-4 block text-base font-medium text-purple-400'>
                 Last Name
               </label>
               <input
@@ -87,8 +81,7 @@ const Edit = ({ closeHandler }) => {
             <div className='mb-5'>
               <label
                 htmlFor='email'
-                className='mb-3 block text-base font-medium text-purple-400 '
-              >
+                className='mb-3 block text-base font-medium text-purple-400 '>
                 Email Address
               </label>
               <input
@@ -104,8 +97,7 @@ const Edit = ({ closeHandler }) => {
             <div className='mb-5'>
               <label
                 htmlFor='bio'
-                className='mb-3 block text-base font-medium text-purple-400'
-              >
+                className='mb-3 block text-base font-medium text-purple-400'>
                 Bio
               </label>
               <textarea
@@ -123,9 +115,15 @@ const Edit = ({ closeHandler }) => {
               <button
                 onClick={onSave}
                 type='button'
-                className='hover:shadow-form rounded-md bg-purple-400 hover:bg-purple-500 py-3 px-8 text-base font-semibold text-white outline-none transition-all'
-              >
-                {loading ? <Loading color={'white'} size='sm' /> : 'Submit'}
+                className='hover:shadow-form rounded-md bg-purple-400 hover:bg-purple-500 py-3 px-8 text-base font-semibold text-white outline-none transition-all'>
+                {loading ? (
+                  <Loading
+                    color={'white'}
+                    size='sm'
+                  />
+                ) : (
+                  'Submit'
+                )}
               </button>
             </div>
           </div>

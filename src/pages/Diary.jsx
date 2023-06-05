@@ -6,40 +6,39 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchApi } from '../helpers/fetchApi';
 import ErrorComponent from '../components/ErrorComponent';
-import LoginComponent from '../components/LoginComponent';
 import { Loading } from '@nextui-org/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { commonAction, selectCommon } from '../redux/reducers/commonSlicer';
 
 export default function Diary() {
-  const cookie = getCookie('login_data');
   const { userId } = useParams();
-  const [userData, setUserData] = useState({});
-  const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+
+  const dispatch = useDispatch();
+  const { pageLoading, userData } = useSelector(selectCommon);
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        setLoading(true);
+        dispatch(commonAction.setPageLoading(true));
         const res = await fetchApi('get', `api/v1/users/${userId}`);
 
         if (res.status === 204) {
           throw new Error('User not found');
         }
-
-        setUserData(res.data.data);
-
-        setLoading(false);
+        dispatch(commonAction.setUserData(res.data.data));
       } catch (e) {
-        setLoading(false);
         setHasError(true);
         return;
+      } finally {
+        dispatch(commonAction.setPageLoading(false));
       }
     };
 
     getUserData();
   }, []);
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <>
         <Navbar nameWhichActive={'Diary'} />

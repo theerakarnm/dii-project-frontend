@@ -1,22 +1,65 @@
+import { fetchApi } from '../../helpers/fetchApi';
 import * as POST from '../actions/postAction';
-import { createReducer } from '@reduxjs/toolkit';
+import { createAsyncThunk, createReducer, createSlice } from '@reduxjs/toolkit';
 
-const userReducer = createReducer([], {
-  [POST.fetchPosts]: (state) => {
-    state.isLoading = true;
+const initialState = {
+  alertValue: {
+    isShow: false,
+    color: 'green',
+    context: '',
   },
-  [POST.addPost]: (state, action) => {
-    state.posts = action.payload;
-    state.isLoading = false;
+  data: [],
+  comments: [],
+  loading: false,
+  CommentModalVisible: false,
+  postId: '',
+  isFirstPostLoading: false,
+  editPostProps: {
+    content: '',
+    entireLoading: false,
+    isAbleEdit: false,
   },
-  [POST.updatePost]: (state, action) => {
-    state.posts = action.payload;
-    state.isLoading = false;
-  },
-  [POST.deletePost]: (state, action) => {
-    state.posts = action.payload;
-    state.isLoading = false;
+};
+
+export const postSlicer = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setIsAbleEdit: (state, action) => {
+      state.editPostProps.isAbleEdit = action.payload;
+    },
+    setContent: (state, action) => {
+      state.editPostProps.content = action.payload;
+    },
+    setEntireLoading: (state, action) => {
+      state.editPostProps.entireLoading = action.payload;
+    },
+    setAlertValue: (state, action) => {
+      state.alertValue = action.payload;
+    },
+    setData: (state, action) => {
+      state.data = action.payload;
+    },
+    unshiftData: (state, action) => {
+      state.data = [action.payload, ...state.data];
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    setCommentModalVisible: (state, action) => {
+      state.CommentModalVisible = action.payload;
+    },
+    setComments: (state, action) => {
+      state.comments = action.payload;
+    },
+    setPostId: (state, action) => {
+      state.postId = action.payload;
+    },
+    setIsFirstPostLoading: (state, action) => {
+      state.isFirstPostLoading = action.payload;
+    },
   },
 });
 
-export default userReducer;
+export const selectPost = state => state.post;
+export const postAction = postSlicer.actions;

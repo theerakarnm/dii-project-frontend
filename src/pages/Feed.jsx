@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useModal } from '@nextui-org/react';
-import FeedStore from '../context/contextStore_feed';
 
 import { getCookie } from '../libs/getterSetterCookie';
 import Navbar from '../components/Navbar';
@@ -13,20 +11,14 @@ import AllCommentModel from '../components/Posts/AllCommentModel';
 import NotLoginInfo from '../components/NotLoginInfo';
 import { fetchApi } from '../helpers/fetchApi';
 import Alert from '../components/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPost, postAction } from '../redux/reducers/postReducer';
 
 const Feed = () => {
-  const [data, setData] = useState([]);
+  const { data, isFirstPostLoading } = useSelector(selectPost);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFirstPostLoading, setIsFirstPostLoading] = useState(false);
-  const { setVisible, bindings } = useModal();
-  const [postId, setPostId] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [allComment, setAllComment] = useState([]);
-  const [alertValue, setAlertValue] = useState({
-    isShow: false,
-    color: 'green',
-    context: '',
-  });
+
+  const dispatch = useDispatch();
 
   const cookieData = getCookie('login_data');
 
@@ -37,9 +29,10 @@ const Feed = () => {
       if (!cookieData) {
         return;
       }
+
       const result = await fetchApi('get', 'api/v1/posts/recent', true);
 
-      setData(result.data.data);
+      dispatch(postAction.setData(result.data.data));
       setIsLoading(false);
     };
 
@@ -50,72 +43,33 @@ const Feed = () => {
     return <NotLoginInfo />;
   }
 
-  const openAllCommentModal = async (postId) => {
-    setVisible(true);
-    setLoading(true);
-    try {
-      const result = await fetchApi(
-        'get',
-        `api/v1/posts/comments/${postId}`,
-        true
-      );
-
-      setAllComment(result.data.data);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      return;
-    }
-  };
-
   return (
     <>
-      <FeedStore.Provider
-        value={{
-          setAlertValue,
-          setData,
-          openAllCommentModal,
-        }}
-      >
-        <Navbar nameWhichActive={'Feed'} />
-        <Container>
-          <Alert
-            isShow={alertValue.isShow}
-            color={alertValue.color}
-            context={alertValue.context}
-          />
-          <AllCommentModel
-            bindings={bindings}
-            setVisible={setVisible}
-            loading={loading}
-            allComment={allComment}
-          />
-          <div className='flex flex-col gap-5 justify-center items-center'>
-            <NewPost
-              setIsFirstPostLoading={setIsFirstPostLoading}
-              setPost={setData}
-            />
-            {isLoading ? (
-              <ComplexWithAnimation />
-            ) : (
-              data.map((item, i) => {
-                return i === 0 ? (
-                  <PostLayout
-                    isFirstPostLoading={isFirstPostLoading}
-                    key={item.id}
-                  >
-                    <Post postData={item} />
-                  </PostLayout>
-                ) : (
-                  <PostLayout key={item.id}>
-                    <Post postData={item} />
-                  </PostLayout>
-                );
-              })
-            )}
-          </div>
-        </Container>
-      </FeedStore.Provider>
+      <Navbar nameWhichActive={'Feed'} />
+      <Container>
+        <Alert />
+        <AllCommentModel />
+        <div className='flex flex-col gap-5 justify-center items-center'>
+          <NewPost />
+          {isLoading ? (
+            <ComplexWithAnimation />
+          ) : (
+            data.map((item, i) => {
+              return i === 0 ? (
+                <PostLayout
+                  isFirstPostLoading={isFirstPostLoading}
+                  key={item.id}>
+                  <Post postData={item} />
+                </PostLayout>
+              ) : (
+                <PostLayout key={item.id}>
+                  <Post postData={item} />
+                </PostLayout>
+              );
+            })
+          )}
+        </div>
+      </Container>
     </>
   );
 };

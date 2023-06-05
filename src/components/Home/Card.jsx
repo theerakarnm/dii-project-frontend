@@ -1,27 +1,38 @@
-import { useContext, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Text, Card } from '@nextui-org/react';
-import ModelCard from './ModelCard';
-import HomeStore from '../../context/contextStore_home';
 import PropType from 'prop-types';
-import { useSelector } from 'react-redux';
-import { selectCommon } from '../../redux/reducers/commonSlicer';
+import { useDispatch } from 'react-redux';
+import { commonAction } from '../../redux/reducers/commonSlicer';
+import { fetchApi } from '../../helpers/fetchApi';
 
 const CardHome = ({ data }) => {
+  const dispatch = useDispatch();
   const [isBlur, setIsBlur] = useState(false);
-  const { openModal, setPostId } = useSelector(selectCommon);
 
   const onMouseOver = () => setIsBlur(true);
   const onMouseLeave = () => setIsBlur(false);
 
+  const getPost = async () => {
+    try {
+      dispatch(commonAction.setIsModelOpen(true));
+      dispatch(commonAction.setIsCardLoading(true));
+      const res = await fetchApi('get', `api/v1/posts/individual/${data.id}`, true);
+      dispatch(commonAction.setCardModalData(res.data.data));
+    } catch (err) {
+      dispatch(commonAction.setIsModelOpen(false));
+    } finally {
+      dispatch(commonAction.setIsCardLoading(false));
+    }
+  };
+
   const openModelHandler = async () => {
-    await openModal(data.id);
+    getPost();
   };
 
   if (!data?.imageUrl)
     return (
       <div
         onClick={openModelHandler}
-        // row-span-2
         className='hover:cursor-pointer row-span-2 '>
         <Card
           css={{ w: '100%', h: '100%' }}

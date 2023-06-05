@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useRef, useContext } from 'react';
-import { Loading, Modal, User } from '@nextui-org/react';
+import { useState } from 'react';
+import { Loading } from '@nextui-org/react';
 import { getCookie } from '../../../libs/getterSetterCookie';
 import { fetchApi } from '../../../helpers/fetchApi';
 
@@ -14,7 +14,7 @@ const ChangePass = ({ closeHandler }) => {
   const [err, setErr] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const onType = (e) => {
+  const onType = e => {
     setErr('');
     setValue({
       ...value,
@@ -22,7 +22,7 @@ const ChangePass = ({ closeHandler }) => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     try {
       e.preventDefault();
       if (value.newPass !== value.newPassConfirm) {
@@ -31,15 +31,10 @@ const ChangePass = ({ closeHandler }) => {
       }
       setLoading(true);
 
-      const result = await fetchApi(
-        'put',
-        `api/v1/users/password/reset`,
-        true,
-        {
-          pass: value.pass,
-          newPass: value.newPass,
-        }
-      );
+      const result = await fetchApi('put', `api/v1/users/password/reset`, true, {
+        pass: value.pass,
+        newPass: value.newPass,
+      });
       setLoading(false);
 
       if (result.status !== 200) throw new Error('error');
@@ -62,8 +57,7 @@ const ChangePass = ({ closeHandler }) => {
           <div className='mb-5'>
             <label
               htmlFor='pass'
-              className='mb-3 block text-base font-medium text-purple-400 text-normal'
-            >
+              className='mb-3 block text-base font-medium text-purple-400 text-normal'>
               Old password
             </label>
             <input
@@ -76,8 +70,7 @@ const ChangePass = ({ closeHandler }) => {
             />
             <label
               htmlFor='newPass'
-              className='mb-3 mt-4 block text-base font-medium text-purple-400 text-normal'
-            >
+              className='mb-3 mt-4 block text-base font-medium text-purple-400 text-normal'>
               New password
             </label>
             <input
@@ -90,8 +83,7 @@ const ChangePass = ({ closeHandler }) => {
             />
             <label
               htmlFor='newPassConfirm'
-              className='mb-3 mt-4 block text-base font-medium text-purple-400 text-normal'
-            >
+              className='mb-3 mt-4 block text-base font-medium text-purple-400 text-normal'>
               Confirm new password
             </label>
             <input
@@ -106,9 +98,15 @@ const ChangePass = ({ closeHandler }) => {
           <div>
             <button
               type='submit'
-              className='hover:shadow-form rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'
-            >
-              {loading ? <Loading color={'white'} size='sm' /> : 'Submit'}
+              className='hover:shadow-form rounded-md bg-purple-400 py-3 px-8 text-base font-semibold text-white outline-none'>
+              {loading ? (
+                <Loading
+                  color={'white'}
+                  size='sm'
+                />
+              ) : (
+                'Submit'
+              )}
             </button>
           </div>
         </form>

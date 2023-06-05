@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from 'react';
+import { useState } from 'react';
 import { Modal, User } from '@nextui-org/react';
 
 import { getCookie } from '../../../libs/getterSetterCookie';
@@ -9,9 +9,6 @@ import { selectCommon } from '../../../redux/reducers/commonSlicer';
 
 const ModelEdit = () => {
   const { visible, closeHandler } = useSelector(selectCommon);
-
-  const cookie = getCookie('login_data');
-
   const [selectShow, setSelectShow] = useState(0); // 0 <- normal edit, 1 <- change password
 
   return (

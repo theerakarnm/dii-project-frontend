@@ -7,15 +7,15 @@ import { Avatar, Textarea, Text, Button, Loading } from '@nextui-org/react';
 
 import ErrorComponent from '../components/ErrorComponent';
 import CardHome from '../components/Home/Card';
-import HomeStore from '../context/contextStore_home';
 import PropType from 'prop-types';
-import { useSelector } from 'react-redux';
-import { selectCommon } from '../redux/reducers/commonSlicer';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCommon, commonAction } from '../redux/reducers/commonSlicer';
 
 const HomeForm = () => {
   const cookie = getCookie('login_data');
+  const dispatch = useDispatch();
 
-  const { setVisible, pageLoading, userData } = useSelector(selectCommon);
+  const { pageLoading, userData } = useSelector(selectCommon);
 
   const [bio, setBio] = useState(userData?.bio || '');
 
@@ -105,7 +105,7 @@ const HomeForm = () => {
                     auto
                     className='text-purple-600 border-solid border-purple-300 border-[1px] px-2
                                         hover:bg-purple-400 hover:text-white '
-                    onClick={() => setVisible(true)}>
+                    onPress={() => dispatch(commonAction.setVisible(true))}>
                     Edit Profile
                   </Button>
                 </div>

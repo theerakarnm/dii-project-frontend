@@ -30,7 +30,7 @@ const Drawing = ({ assignTo, css }) => {
     formData.append('assignTo', assignTo);
 
     try {
-      const response = await fetchApiHelper('api/v1/diaries/', { body: formData }).post();
+      await fetchApiHelper('api/v1/diaries/', { body: formData }).post();
 
       setBtnLoading(false);
       onClearBoard();

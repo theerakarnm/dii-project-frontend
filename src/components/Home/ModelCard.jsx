@@ -2,11 +2,12 @@ import React from 'react';
 import { Modal } from '@nextui-org/react';
 import ModalBody from './ModalBody';
 import PropType from 'prop-types';
-import { useSelector } from 'react-redux';
-import { selectCommon } from '../../redux/reducers/commonSlicer';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCommon, commonAction } from '../../redux/reducers/commonSlicer';
 
 const ModelCard = () => {
-  const { isModelOpen, closeModalHandler, cardModalData: data, isCardLoading: loading } = useSelector(selectCommon);
+  const dispatch = useDispatch();
+  const { isModelOpen, cardModalData: data, isCardLoading: loading } = useSelector(selectCommon);
 
   return (
     <div className='w-full h-full max-h-lg'>
@@ -15,7 +16,9 @@ const ModelCard = () => {
         className={`${data?.imageUrl ? 'md:max-w-[80rem]' : 'md:max-w-[50rem]'} flex justify-center items-center md:mx-auto mx-[2rem]`}
         aria-labelledby='modal-title'
         open={isModelOpen}
-        onClose={closeModalHandler}
+        onClose={() => {
+          dispatch(commonAction.setIsModelOpen(false));
+        }}
         width='100%'>
         {loading ? (
           <div className='flex flex-col w-full h-full animate-pulse px-5 py-8'>
